@@ -1,0 +1,164 @@
+body
+{
+	background-image: url("../images/ground.jpg");
+	background-repeat:repeat;
+	margin: 0;
+	padding: 0;
+}
+
+#header
+{
+	width: 800px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	position: relative;
+}
+
+#scoreCanvas
+{
+	position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+#canvas-container
+{
+	width: 800px;
+	text-align: center;
+	margin-top: 5px;
+	margin-right: auto;
+	margin-left: auto;
+	position: relative;
+}
+
+#credits
+{
+	position: relative;
+	display:inline-block;
+	width: 100%;
+	text-align: center;
+	margin-top: 537px;
+	font-family: "zorque" ,Serif,Georgia; 
+    z-index: 10;
+}
+
+.gameCanvas
+{
+	position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#backgroundCanvas
+{
+	z-index: 0;
+}
+
+#playerCanvas
+{
+	z-index: 1;
+}
+
+#effectsCanvas
+{
+	z-index: 2;
+}
+
+#menuCanvas
+{
+	z-index: 3;
+}
+
+#formDiv
+{
+	z-index: 4;
+	/*border: 2px solid red;*/
+	position:absolute;
+	font-family: "zorque" ,Serif,Georgia;
+	font-size:30px;
+	color: white;
+	display: none;
+	width: 100%;
+}
+
+#goalForm
+{
+	position: absolute;
+    top: 40%;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+input{ 
+    text-align:right; 
+}
+
+button{
+	font-family: "zorque" ,Serif,Georgia;
+}
+
+#loadingDiv
+{
+	position: fixed;
+    z-index: 999;
+	padding:0;
+    margin:0;
+    width: 100%;
+    height: 100%;
+	line-height: 550px;
+	font-family: "zorque" ,Serif,Georgia;
+	font-size:60px;
+	background: transparent url('../images/blackBkg.png') repeat center bottom;
+	color: white;
+	text-align: center;
+}
+
+#titleImage
+{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+}
+
+#logDiv
+{
+	display:none;
+	color: white;
+}
+
+a:link {
+    color: #FFFF00;
+}
+
+a:visited {
+    color: #FFFF00;
+}
+
+a:hover {
+    color: #AA0000;
+}
+
+a:active {
+    color: #FFFF00;
+}
+
+#indiedbImage
+{
+	/*margin: auto;*/
+   	vertical-align: middle;
+   	/*display: inline-block;*/
+    height: 20px;
+}
+
+@font-face { 
+	font-family: 'zorque'; 
+	src: url('../fonts/zorque.eot');
+	src: local('zorque'), 
+		url('../fonts/zorque.ttf') format('truetype'), 
+		url('../fonts/zorque.woff') format('woff'),
+		url('../fonts/zorque.svg#font') format('svg');
+	}

@@ -154,6 +154,10 @@ a:active {
     height: 20px;
 }
 
+.fade-element {
+  transition: opacity 1.5s ease;
+}
+
 @font-face { 
 	font-family: 'zorque'; 
 	src: url('../fonts/zorque.eot');

@@ -1,9 +1,9 @@
 export class DomHandler {
-    public readonly mainVanvas : HTMLCanvasElement;
-    public readonly backgroundContext : CanvasRenderingContext2D;
+    public readonly mainCanvas: HTMLCanvasElement;
+    public readonly backgroundContext: CanvasRenderingContext2D;
 
     public constructor() {
-        this.mainVanvas = document.getElementById('backgroundCanvas') as HTMLCanvasElement;
-        this.backgroundContext = this.mainVanvas.getContext("2d")!;
+        this.mainCanvas = document.getElementById("backgroundCanvas") as HTMLCanvasElement;
+        this.backgroundContext = this.mainCanvas.getContext("2d")!;
     }
 }

@@ -4,13 +4,15 @@ import { DomHandler } from "./utils/DomHandler";
 import { GameConfigs } from "./utils/GameConfigs";
 
 class Main {
-
     public async init() {
         await AssetLoader.getInstance().init();
         this.closeLoadingWindow();
 
         const domHandler = new DomHandler();
-        const gameConfigs = new GameConfigs(domHandler.mainVanvas.width, domHandler.mainVanvas.height);
+        const gameConfigs = new GameConfigs(
+            domHandler.mainCanvas.width,
+            domHandler.mainCanvas.height,
+        );
         const gameLoop = new GameLoop(gameConfigs, domHandler);
         gameLoop.main();
     }
@@ -19,10 +21,14 @@ class Main {
         const element = document.getElementById("loadingDiv");
 
         element!.style.opacity = "0";
-        element!.addEventListener("transitionend", function onTransitionEnd() {
-            element!.style.display = "none";
-            element!.removeEventListener("transitionend", onTransitionEnd);
-        }, { once: true });   
+        element!.addEventListener(
+            "transitionend",
+            function onTransitionEnd() {
+                element!.style.display = "none";
+                element!.removeEventListener("transitionend", onTransitionEnd);
+            },
+            { once: true },
+        );
 
         this.showMainMenu();
     }

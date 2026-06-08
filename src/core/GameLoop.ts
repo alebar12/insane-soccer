@@ -1,39 +1,33 @@
-import { GameWorld } from "../game/world/GameWorld";
 import { MainRender } from "../rendering/MainRender";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 
 export class GameLoop {
+    //private delta : number = 0;
+    private prevTime: number = 0;
+    private mainRender: MainRender;
 
-    private delta : number = 0;
-    private prevTime : number = 0; 
-    private mainRender : MainRender;
-    private gameWorld : GameWorld;
-
-    public constructor(gameConfigs: GameConfigs, domHandler : DomHandler) {
+    public constructor(gameConfigs: GameConfigs, domHandler: DomHandler) {
         this.mainRender = new MainRender(gameConfigs, domHandler.backgroundContext);
-        this.gameWorld = new GameWorld();
     }
 
-    public main() : void {
+    public main(): void {
         const tick = (time: number) => {
-            if (this.prevTime != 0) {
-                this.delta = time - this.prevTime;
+            if (this.prevTime !== 0) {
+                //this.delta = time - this.prevTime;
                 this.update();
-                this.render();        
+                this.render();
             }
-            this.prevTime = time;        
+            this.prevTime = time;
             requestAnimationFrame(tick);
         };
 
         requestAnimationFrame(tick);
     }
 
-    private update() : void {
-        
-    }
+    private update(): void {}
 
-    private render() : void {
-        this.mainRender.render(this.gameWorld);
+    private render(): void {
+        this.mainRender.render();
     }
 }

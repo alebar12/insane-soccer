@@ -1,7 +1,18 @@
+import { AssetLoader } from "./assets/AssetLoader";
+import { GameLoop } from "./core/GameLoop";
+import { DomHandler } from "./utils/DomHandler";
+import { GameConfigs } from "./utils/GameConfigs";
+
 class Main {
 
-    public init(): void {
+    public async init() {
+        await AssetLoader.getInstance().init();
         this.closeLoadingWindow();
+
+        const domHandler = new DomHandler();
+        const gameConfigs = new GameConfigs(domHandler.mainVanvas.width, domHandler.mainVanvas.height);
+        const gameLoop = new GameLoop(gameConfigs, domHandler);
+        gameLoop.main();
     }
 
     private closeLoadingWindow(): void {

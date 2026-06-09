@@ -7,10 +7,16 @@ export class GameConfigs {
     public readonly goalHeight: number;
     public readonly goalYOffset: number;
     public readonly shadowBlur: number;
+    public readonly shadowOffset: number;
     public readonly substitutionOffsetX: number;
     public readonly goalPostRadius: number;
     public readonly athleticTrackHeight: number;
     public readonly athleticTrackYOffset: number;
+    public readonly playerSizeWithoutBorder: number;
+    public readonly playerBorder: number = 2;
+    public readonly playerSizeWithBorder: number;
+    public readonly playerSubstitutionX: number;
+    public readonly cpuSubstitutionX: number;
 
     public constructor(canvasWidth: number, canvasHeight: number) {
         this.width = canvasWidth;
@@ -23,8 +29,6 @@ export class GameConfigs {
         this.goalHeight = Math.round(this.fieldHeight / 5);
         this.goalYOffset = Math.round((this.fieldHeight - this.goalHeight) / 2);
 
-        this.shadowBlur = 10; // TODO DA RIVEDERE
-
         this.substitutionOffsetX = Math.round(this.fieldWidth / 3);
 
         this.goalPostRadius = Math.round(this.goalHeight / 20);
@@ -33,5 +37,14 @@ export class GameConfigs {
         this.athleticTrackYOffset = Math.round(
             (this.height - this.fieldHeight - this.athleticTrackHeight) / 2,
         );
+
+        this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 16);
+        this.playerSizeWithBorder = this.playerSizeWithoutBorder + this.playerBorder;
+        const substitutionOffsetX = Math.round(this.fieldWidth / 4);
+        this.playerSubstitutionX = this.fieldXOffset + substitutionOffsetX;
+        this.cpuSubstitutionX = this.fieldXOffset + (this.fieldWidth - substitutionOffsetX);
+
+        this.shadowBlur = this.playerSizeWithoutBorder;
+        this.shadowOffset = this.playerSizeWithoutBorder * 0.3;
     }
 }

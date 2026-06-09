@@ -245,22 +245,47 @@ export class FieldRender {
     }
 
     private renderWindows(): void {
-        this.backgroundContext.fillStyle = '#FF0000';	
-		this.backgroundContext.lineWidth = 1;
+        this.backgroundContext.fillStyle = "#FF0000";
+        this.backgroundContext.lineWidth = 1;
 
         this.backgroundContext.translate(
-            this.gameConfigs.playerSubstitutionX - this.gameConfigs.playerSizeWithBorder, 
-            this.gameConfigs.fieldHeight);
+            this.gameConfigs.playerSubstitutionX - this.gameConfigs.playerSizeWithBorder,
+            this.gameConfigs.fieldHeight,
+        );
         const angle = 0; // TODO da rivedere
-		this.backgroundContext.rotate(angle);
-		this.backgroundContext.fillRect(0, 0, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
-		this.backgroundContext.strokeRect(0, 0, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
-		this.backgroundContext.rotate(angle);
+        this.backgroundContext.rotate(angle);
+        this.backgroundContext.fillRect(
+            0,
+            0,
+            this.gameConfigs.playerSizeWithBorder * 2,
+            this.borderSize,
+        );
+        this.backgroundContext.strokeRect(
+            0,
+            0,
+            this.gameConfigs.playerSizeWithBorder * 2,
+            this.borderSize,
+        );
+        this.backgroundContext.rotate(angle);
 
-        this.backgroundContext.translate(this.gameConfigs.cpuSubstitutionX - this.gameConfigs.playerSubstitutionX + this.gameConfigs.playerSizeWithBorder * 2, 
-            - this.borderSize);
-		this.backgroundContext.rotate(Math.PI - angle);
-		this.backgroundContext.fillRect(0, -this.borderSize*2, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
-		this.backgroundContext.strokeRect(0, -this.borderSize*2, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
+        this.backgroundContext.translate(
+            this.gameConfigs.cpuSubstitutionX -
+                this.gameConfigs.playerSubstitutionX +
+                this.gameConfigs.playerSizeWithBorder * 2,
+            -this.borderSize,
+        );
+        this.backgroundContext.rotate(Math.PI - angle);
+        this.backgroundContext.fillRect(
+            0,
+            -this.borderSize * 2,
+            this.gameConfigs.playerSizeWithBorder * 2,
+            this.borderSize,
+        );
+        this.backgroundContext.strokeRect(
+            0,
+            -this.borderSize * 2,
+            this.gameConfigs.playerSizeWithBorder * 2,
+            this.borderSize,
+        );
     }
 }

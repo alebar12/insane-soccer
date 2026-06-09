@@ -12,7 +12,7 @@ export class GameLoop {
     }
 
     public main(): void {
-        const tick = (time: number) => {
+        const tick = (time: number): void => {
             if (this.prevTime !== 0) {
                 //this.delta = time - this.prevTime;
                 this.update();

@@ -19,7 +19,7 @@ export class FieldRender {
         this.borderSize = Math.round(gameConfigs.getFieldHeight() / 100);
     }
 
-    public render() {
+    public render(): void {
         this.backgroundContext.clearRect(
             0,
             0,

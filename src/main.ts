@@ -4,7 +4,7 @@ import { DomHandler } from "./utils/DomHandler";
 import { GameConfigs } from "./utils/GameConfigs";
 
 class Main {
-    public async init() {
+    public async init(): Promise<void> {
         await AssetLoader.getInstance().init();
         this.closeLoadingWindow();
 
@@ -19,13 +19,16 @@ class Main {
 
     private closeLoadingWindow(): void {
         const element = document.getElementById("loadingDiv");
+        if (!element) {
+            return;
+        }
 
-        element!.style.opacity = "0";
-        element!.addEventListener(
+        element.style.opacity = "0";
+        element.addEventListener(
             "transitionend",
             function onTransitionEnd() {
-                element!.style.display = "none";
-                element!.removeEventListener("transitionend", onTransitionEnd);
+                element.style.display = "none";
+                element.removeEventListener("transitionend", onTransitionEnd);
             },
             { once: true },
         );
@@ -34,7 +37,11 @@ class Main {
     }
 
     private showMainMenu(): void {
-        document.getElementById("menuCanvas")!.style.display = "block";
+        const element = document.getElementById("menuCanvas");
+        if (!element) {
+            return;
+        }
+        element.style.display = "block";
     }
 }
 

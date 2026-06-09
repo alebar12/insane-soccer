@@ -40,12 +40,12 @@ export class AssetLoader {
         return new Promise((resolve, reject) => {
             const img = new Image();
 
-            img.onload = () => {
+            img.onload = (): void => {
                 this.images.set(name, img);
                 resolve();
             };
 
-            img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+            img.onerror = (): void => reject(new Error(`Failed to load image: ${src}`));
 
             img.src = src;
         });

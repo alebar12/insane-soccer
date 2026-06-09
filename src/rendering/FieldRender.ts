@@ -36,12 +36,13 @@ export class FieldRender {
         this.renderBackground();
 
         this.backgroundContext.shadowColor = "#000000";
-        this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowBlur * 0.3;
-        this.backgroundContext.shadowOffsetY = this.gameConfigs.shadowBlur * 0.3;
+        this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowOffset;
+        this.backgroundContext.shadowOffsetY = this.gameConfigs.shadowOffset;
         this.backgroundContext.shadowBlur = this.gameConfigs.shadowBlur;
 
         this.renderBorder();
         this.renderGoalPosts();
+        this.renderWindows();
 
         this.backgroundContext.restore();
 
@@ -89,12 +90,28 @@ export class FieldRender {
         this.backgroundContext.fillRect(
             this.gameConfigs.fieldXOffset - this.borderSize,
             this.gameConfigs.fieldHeight,
-            // TODO da rivedere
-            this.gameConfigs.substitutionOffsetX - this.gameConfigs.fieldXOffset + this.borderSize,
+            this.gameConfigs.playerSubstitutionX -
+                this.gameConfigs.fieldXOffset -
+                this.gameConfigs.playerSizeWithBorder +
+                this.borderSize,
             this.borderSize,
         );
-        //this.backgroundContext.fillRect(rounded(playerVar.sub_x + playerVar.player_size*1.5), commonVariables.height, cpuVar.sub_x - playerVar.sub_x - playerVar.player_size*3, this.borderSize);
-        //this.backgroundContext.fillRect(cpuVar.sub_x + playerVar.player_size*1.5, commonVariables.height, rounded(playerVar.sub_x - this.gameConfigs.fieldXOffset - playerVar.player_size*1.5), this.borderSize);
+        this.backgroundContext.fillRect(
+            this.gameConfigs.playerSubstitutionX + this.gameConfigs.playerSizeWithBorder,
+            this.gameConfigs.fieldHeight,
+            this.gameConfigs.cpuSubstitutionX -
+                this.gameConfigs.playerSubstitutionX -
+                this.gameConfigs.playerSizeWithBorder * 2,
+            this.borderSize,
+        );
+        this.backgroundContext.fillRect(
+            this.gameConfigs.cpuSubstitutionX + this.gameConfigs.playerSizeWithBorder,
+            this.gameConfigs.fieldHeight,
+            this.gameConfigs.playerSubstitutionX -
+                this.gameConfigs.fieldXOffset -
+                this.gameConfigs.playerSizeWithBorder,
+            this.borderSize,
+        );
 
         this.backgroundContext.fillRect(
             this.gameConfigs.fieldXOffset - this.borderSize,
@@ -225,5 +242,25 @@ export class FieldRender {
             this.gameConfigs.fieldWidth,
             this.gameConfigs.athleticTrackHeight,
         );
+    }
+
+    private renderWindows(): void {
+        this.backgroundContext.fillStyle = '#FF0000';	
+		this.backgroundContext.lineWidth = 1;
+
+        this.backgroundContext.translate(
+            this.gameConfigs.playerSubstitutionX - this.gameConfigs.playerSizeWithBorder, 
+            this.gameConfigs.fieldHeight);
+        const angle = 0; // TODO da rivedere
+		this.backgroundContext.rotate(angle);
+		this.backgroundContext.fillRect(0, 0, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
+		this.backgroundContext.strokeRect(0, 0, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
+		this.backgroundContext.rotate(angle);
+
+        this.backgroundContext.translate(this.gameConfigs.cpuSubstitutionX - this.gameConfigs.playerSubstitutionX + this.gameConfigs.playerSizeWithBorder * 2, 
+            - this.borderSize);
+		this.backgroundContext.rotate(Math.PI - angle);
+		this.backgroundContext.fillRect(0, -this.borderSize*2, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
+		this.backgroundContext.strokeRect(0, -this.borderSize*2, this.gameConfigs.playerSizeWithBorder * 2, this.borderSize);
     }
 }

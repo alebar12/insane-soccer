@@ -16,7 +16,7 @@ export class FieldRender {
 
         this.backgroundContext = backgroundContext;
         this.gameConfigs = gameConfigs;
-        this.borderSize = Math.round(gameConfigs.getFieldHeight() / 100);
+        this.borderSize = Math.round(gameConfigs.fieldHeight / 100);
     }
 
     public render(): void {
@@ -29,19 +29,12 @@ export class FieldRender {
 
         this.backgroundContext.save();
 
-        this.backgroundContext.fillRect(
-            this.gameConfigs.width / 2,
-            this.gameConfigs.width / 2,
-            this.gameConfigs.width * 2,
-            this.gameConfigs.width * 2,
-        );
-
         this.renderBackground();
 
         this.backgroundContext.shadowColor = "#000000";
-        this.backgroundContext.shadowOffsetX = this.gameConfigs.getShadowBlur() * 0.3;
-        this.backgroundContext.shadowOffsetY = this.gameConfigs.getShadowBlur() * 0.3;
-        this.backgroundContext.shadowBlur = this.gameConfigs.getShadowBlur();
+        this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowBlur* 0.3;
+        this.backgroundContext.shadowOffsetY = this.gameConfigs.shadowBlur * 0.3;
+        this.backgroundContext.shadowBlur = this.gameConfigs.shadowBlur;
 
         this.renderBorder();
         this.renderGoalPosts();
@@ -55,26 +48,26 @@ export class FieldRender {
         this.backgroundContext.fillStyle = "#BBBBFF";
         this.backgroundContext.drawImage(
             this.fieldImage,
-            this.gameConfigs.getFieldXOffset(),
+            this.gameConfigs.fieldXOffset,
             0,
-            this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getFieldHeight(),
+            this.gameConfigs.fieldWidth,
+            this.gameConfigs.fieldHeight,
         );
 
         this.backgroundContext.drawImage(
             this.goalImage,
             0,
-            this.gameConfigs.getGoalYOffset(),
-            this.gameConfigs.getFieldXOffset(),
-            this.gameConfigs.getGoalHeight(),
+            this.gameConfigs.goalYOffset,
+            this.gameConfigs.fieldXOffset,
+            this.gameConfigs.goalHeight,
         );
 
         this.backgroundContext.drawImage(
             this.goalImage,
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset(),
-            this.gameConfigs.getFieldXOffset(),
-            this.gameConfigs.getGoalHeight(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset,
+            this.gameConfigs.fieldXOffset,
+            this.gameConfigs.goalHeight,
         );
     }
 
@@ -84,85 +77,85 @@ export class FieldRender {
         this.backgroundContext.strokeStyle = "#000000";
 
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() - this.borderSize,
+            this.gameConfigs.fieldXOffset - this.borderSize,
             0,
-            this.gameConfigs.getFieldWidth() + this.borderSize,
+            this.gameConfigs.fieldWidth + this.borderSize,
             this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() - this.borderSize,
-            this.gameConfigs.getFieldHeight(),
+            this.gameConfigs.fieldXOffset - this.borderSize,
+            this.gameConfigs.fieldHeight,
             // TODO da rivedere
-            this.gameConfigs.getSubstitutionOffsetX() -
-                this.gameConfigs.getFieldXOffset() +
+            this.gameConfigs.substitutionOffsetX -
+                this.gameConfigs.fieldXOffset +
                 this.borderSize,
             this.borderSize,
         );
         //this.backgroundContext.fillRect(rounded(playerVar.sub_x + playerVar.player_size*1.5), commonVariables.height, cpuVar.sub_x - playerVar.sub_x - playerVar.player_size*3, this.borderSize);
-        //this.backgroundContext.fillRect(cpuVar.sub_x + playerVar.player_size*1.5, commonVariables.height, rounded(playerVar.sub_x - this.gameConfigs.getFieldXOffset() - playerVar.player_size*1.5), this.borderSize);
+        //this.backgroundContext.fillRect(cpuVar.sub_x + playerVar.player_size*1.5, commonVariables.height, rounded(playerVar.sub_x - this.gameConfigs.fieldXOffset - playerVar.player_size*1.5), this.borderSize);
 
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() - this.borderSize,
+            this.gameConfigs.fieldXOffset - this.borderSize,
             -this.borderSize,
             this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.borderSize,
+            this.gameConfigs.goalYOffset + this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() - this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
+            this.gameConfigs.fieldXOffset - this.borderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.borderSize,
-        );
-        this.backgroundContext.fillRect(
-            -this.borderSize,
-            this.gameConfigs.getGoalYOffset() - this.borderSize,
-            this.gameConfigs.getFieldXOffset() + this.borderSize,
-            this.borderSize,
+            this.gameConfigs.goalYOffset + this.borderSize,
         );
         this.backgroundContext.fillRect(
             -this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
-            this.gameConfigs.getFieldXOffset() + this.borderSize,
+            this.gameConfigs.goalYOffset - this.borderSize,
+            this.gameConfigs.fieldXOffset + this.borderSize,
+            this.borderSize,
+        );
+        this.backgroundContext.fillRect(
+            -this.borderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
+            this.gameConfigs.fieldXOffset + this.borderSize,
             this.borderSize,
         );
         this.backgroundContext.fillRect(
             0,
-            this.gameConfigs.getGoalYOffset() - this.borderSize,
+            this.gameConfigs.goalYOffset - this.borderSize,
             this.borderSize,
-            this.gameConfigs.getGoalHeight() + this.borderSize * 2,
+            this.gameConfigs.goalHeight + this.borderSize * 2,
         );
 
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             -this.borderSize,
             this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.borderSize,
+            this.gameConfigs.goalYOffset + this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.borderSize,
-            this.gameConfigs.getGoalYOffset() + this.borderSize,
+            this.gameConfigs.goalYOffset + this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset() - this.borderSize,
-            this.gameConfigs.getFieldXOffset(),
-            this.borderSize,
-        );
-        this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
-            this.gameConfigs.getFieldXOffset(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset - this.borderSize,
+            this.gameConfigs.fieldXOffset,
             this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.getFieldXOffset() * 2 +
-                this.gameConfigs.getFieldWidth() -
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
+            this.gameConfigs.fieldXOffset,
+            this.borderSize,
+        );
+        this.backgroundContext.fillRect(
+            this.gameConfigs.fieldXOffset * 2 +
+                this.gameConfigs.fieldWidth -
                 this.borderSize,
-            this.gameConfigs.getGoalYOffset() - this.borderSize,
+            this.gameConfigs.goalYOffset - this.borderSize,
             this.borderSize,
-            this.gameConfigs.getGoalHeight() + this.borderSize * 2,
+            this.gameConfigs.goalHeight + this.borderSize * 2,
         );
     }
 
@@ -173,9 +166,9 @@ export class FieldRender {
 
         this.backgroundContext.beginPath();
         this.backgroundContext.arc(
-            this.gameConfigs.getFieldXOffset(),
-            this.gameConfigs.getGoalYOffset(),
-            this.gameConfigs.getGoalPostRadius(),
+            this.gameConfigs.fieldXOffset,
+            this.gameConfigs.goalYOffset,
+            this.gameConfigs.goalPostRadius,
             0,
             2 * Math.PI,
             false,
@@ -186,9 +179,9 @@ export class FieldRender {
 
         this.backgroundContext.beginPath();
         this.backgroundContext.arc(
-            this.gameConfigs.getFieldXOffset(),
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
-            this.gameConfigs.getGoalPostRadius(),
+            this.gameConfigs.fieldXOffset,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
+            this.gameConfigs.goalPostRadius,
             0,
             2 * Math.PI,
             false,
@@ -199,9 +192,9 @@ export class FieldRender {
 
         this.backgroundContext.beginPath();
         this.backgroundContext.arc(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset(),
-            this.gameConfigs.getGoalPostRadius(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset,
+            this.gameConfigs.goalPostRadius,
             0,
             2 * Math.PI,
             false,
@@ -212,9 +205,9 @@ export class FieldRender {
 
         this.backgroundContext.beginPath();
         this.backgroundContext.arc(
-            this.gameConfigs.getFieldXOffset() + this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getGoalYOffset() + this.gameConfigs.getGoalHeight(),
-            this.gameConfigs.getGoalPostRadius(),
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
+            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
+            this.gameConfigs.goalPostRadius,
             0,
             2 * Math.PI,
             false,
@@ -227,10 +220,10 @@ export class FieldRender {
     private renderAthleticTrack(): void {
         this.backgroundContext.drawImage(
             this.trackFieldImage,
-            this.gameConfigs.getFieldXOffset(),
-            this.gameConfigs.getFieldHeight() + this.gameConfigs.getAthleticTrackYOffset(),
-            this.gameConfigs.getFieldWidth(),
-            this.gameConfigs.getAthleticTrackHeight(),
+            this.gameConfigs.fieldXOffset,
+            this.gameConfigs.fieldHeight + this.gameConfigs.athleticTrackYOffset,
+            this.gameConfigs.fieldWidth,
+            this.gameConfigs.athleticTrackHeight,
         );
     }
 }

@@ -1,3 +1,4 @@
+import { AssetLoader } from "../assets/AssetLoader";
 import { MainRender } from "../rendering/MainRender";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
@@ -7,8 +8,8 @@ export class GameLoop {
     private prevTime: number = 0;
     private mainRender: MainRender;
 
-    public constructor(gameConfigs: GameConfigs, domHandler: DomHandler) {
-        this.mainRender = new MainRender(gameConfigs, domHandler.backgroundContext);
+    public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
+        this.mainRender = new MainRender(gameConfigs, domHandler.backgroundContext, assetLoader);
     }
 
     public main(): void {

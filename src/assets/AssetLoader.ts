@@ -13,7 +13,6 @@ export class AssetLoader {
         "single.png",
     ];
 
-    private static _instance: AssetLoader;
     private images = new Map<string, HTMLImageElement>();
 
     async init(): Promise<void> {
@@ -22,10 +21,6 @@ export class AssetLoader {
                 this.loadImage(fileName, `${this.IMAGE_FOLDER}${fileName}`),
             ),
         );
-    }
-
-    public static getInstance(): AssetLoader {
-        return this._instance || (this._instance = new this());
     }
 
     public getImage(imageName: string): HTMLImageElement {

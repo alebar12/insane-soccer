@@ -9,10 +9,14 @@ export class FieldRender {
     private readonly gameConfigs: GameConfigs;
     private readonly borderSize: number;
 
-    public constructor(backgroundContext: CanvasRenderingContext2D, gameConfigs: GameConfigs) {
-        this.fieldImage = AssetLoader.getInstance().getImage("field.png");
-        this.goalImage = AssetLoader.getInstance().getImage("goal_field.png");
-        this.trackFieldImage = AssetLoader.getInstance().getImage("track.jpg");
+    public constructor(
+        backgroundContext: CanvasRenderingContext2D,
+        gameConfigs: GameConfigs,
+        assetLoader: AssetLoader,
+    ) {
+        this.fieldImage = assetLoader.getImage("field.png");
+        this.goalImage = assetLoader.getImage("goal_field.png");
+        this.trackFieldImage = assetLoader.getImage("track.jpg");
 
         this.backgroundContext = backgroundContext;
         this.gameConfigs = gameConfigs;
@@ -32,7 +36,7 @@ export class FieldRender {
         this.renderBackground();
 
         this.backgroundContext.shadowColor = "#000000";
-        this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowBlur* 0.3;
+        this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowBlur * 0.3;
         this.backgroundContext.shadowOffsetY = this.gameConfigs.shadowBlur * 0.3;
         this.backgroundContext.shadowBlur = this.gameConfigs.shadowBlur;
 
@@ -86,9 +90,7 @@ export class FieldRender {
             this.gameConfigs.fieldXOffset - this.borderSize,
             this.gameConfigs.fieldHeight,
             // TODO da rivedere
-            this.gameConfigs.substitutionOffsetX -
-                this.gameConfigs.fieldXOffset +
-                this.borderSize,
+            this.gameConfigs.substitutionOffsetX - this.gameConfigs.fieldXOffset + this.borderSize,
             this.borderSize,
         );
         //this.backgroundContext.fillRect(rounded(playerVar.sub_x + playerVar.player_size*1.5), commonVariables.height, cpuVar.sub_x - playerVar.sub_x - playerVar.player_size*3, this.borderSize);
@@ -150,9 +152,7 @@ export class FieldRender {
             this.borderSize,
         );
         this.backgroundContext.fillRect(
-            this.gameConfigs.fieldXOffset * 2 +
-                this.gameConfigs.fieldWidth -
-                this.borderSize,
+            this.gameConfigs.fieldXOffset * 2 + this.gameConfigs.fieldWidth - this.borderSize,
             this.gameConfigs.goalYOffset - this.borderSize,
             this.borderSize,
             this.gameConfigs.goalHeight + this.borderSize * 2,

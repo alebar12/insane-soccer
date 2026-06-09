@@ -5,7 +5,8 @@ import { GameConfigs } from "./utils/GameConfigs";
 
 class Main {
     public async init(): Promise<void> {
-        await AssetLoader.getInstance().init();
+        const assetLoader = new AssetLoader();
+        await assetLoader.init();
         this.closeLoadingWindow();
 
         const domHandler = new DomHandler();
@@ -13,7 +14,7 @@ class Main {
             domHandler.mainCanvas.width,
             domHandler.mainCanvas.height,
         );
-        const gameLoop = new GameLoop(gameConfigs, domHandler);
+        const gameLoop = new GameLoop(gameConfigs, domHandler, assetLoader);
         gameLoop.main();
     }
 

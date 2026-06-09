@@ -8,7 +8,7 @@ export class MainRender {
         this.fieldRender = new FieldRender(backgroundContext, gameConfigs);
     }
 
-    public render() {
+    public render(): void {
         this.fieldRender.render();
     }
 }

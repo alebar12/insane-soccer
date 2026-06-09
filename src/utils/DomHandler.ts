@@ -4,6 +4,13 @@ export class DomHandler {
 
     public constructor() {
         this.mainCanvas = document.getElementById("backgroundCanvas") as HTMLCanvasElement;
-        this.backgroundContext = this.mainCanvas.getContext("2d")!;
+        if (!this.mainCanvas) {
+            throw new Error("backgroundCanvas not found");
+        }
+        const backgroundContext = this.mainCanvas.getContext("2d");
+        if (!backgroundContext) {
+            throw new Error("backgroundContext not found");
+        }
+        this.backgroundContext = backgroundContext;
     }
 }

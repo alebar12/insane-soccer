@@ -11,8 +11,8 @@ class Main {
 
         const domHandler = new DomHandler();
         const gameConfigs = new GameConfigs(
-            domHandler.mainCanvas.width,
-            domHandler.mainCanvas.height,
+            domHandler.backgroundCanvas.width,
+            domHandler.backgroundCanvas.height,
         );
         const gameLoop = new GameLoop(gameConfigs, domHandler, assetLoader);
         gameLoop.main();

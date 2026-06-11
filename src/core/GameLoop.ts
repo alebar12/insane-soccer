@@ -9,7 +9,7 @@ export class GameLoop {
     private mainRender: MainRender;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
-        this.mainRender = new MainRender(gameConfigs, domHandler.backgroundContext, assetLoader);
+        this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
     }
 
     public main(): void {

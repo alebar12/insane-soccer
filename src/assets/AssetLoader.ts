@@ -8,7 +8,7 @@ export class AssetLoader {
         "digits.png",
         "goal_field.png",
         "star.png",
-        "play.png"
+        "play.png",
     ];
 
     private images = new Map<string, HTMLImageElement>();

@@ -34,6 +34,7 @@ export class FieldRender {
         this.backgroundContext.save();
 
         this.renderBackground();
+        this.renderAthleticTrack();
 
         this.backgroundContext.shadowColor = "#000000";
         this.backgroundContext.shadowOffsetX = this.gameConfigs.shadowOffset;
@@ -45,8 +46,6 @@ export class FieldRender {
         this.renderWindows();
 
         this.backgroundContext.restore();
-
-        this.renderAthleticTrack();
     }
 
     private renderBackground(): void {

@@ -11,6 +11,8 @@ export class ScoreRendering {
     private readonly scoreHeight: number;
     private readonly xPositionsArray: Array<number>;
     private readonly yPosition: number;
+    //private readonly frameForNumber: number = 6;
+    //private readonly totalNumbers: number = 9;
 
     public constructor(
         scoreContext: CanvasRenderingContext2D,
@@ -37,6 +39,7 @@ export class ScoreRendering {
     public render(): void {
         this.scoreContext.clearRect(0, 0, this.gameConfigs.width, this.gameConfigs.height);
 
+        // TODO gestire aggiornamento punteggio
         this.xPositionsArray.forEach(x => {
             this.scoreContext.drawImage(
                 this.digitsImages,

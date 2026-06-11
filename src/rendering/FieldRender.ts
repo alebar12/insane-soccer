@@ -81,13 +81,15 @@ export class FieldRender {
         this.backgroundContext.lineWidth = 1;
         this.backgroundContext.strokeStyle = "#000000";
 
-        this.backgroundContext.fillRect(
+        this.backgroundContext.beginPath();
+
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset - this.borderSize,
             0,
             this.gameConfigs.fieldWidth + this.borderSize,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset - this.borderSize,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.playerSubstitutionX -
@@ -96,7 +98,7 @@ export class FieldRender {
                 this.borderSize,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.playerSubstitutionX + this.gameConfigs.playerSizeWithBorder,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.cpuSubstitutionX -
@@ -104,7 +106,7 @@ export class FieldRender {
                 this.gameConfigs.playerSizeWithBorder * 2,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.cpuSubstitutionX + this.gameConfigs.playerSizeWithBorder,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.playerSubstitutionX -
@@ -113,67 +115,69 @@ export class FieldRender {
             this.borderSize,
         );
 
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset - this.borderSize,
             -this.borderSize,
             this.borderSize,
             this.gameConfigs.goalYOffset + this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset - this.borderSize,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.borderSize,
             this.gameConfigs.goalYOffset + this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             -this.borderSize,
             this.gameConfigs.goalYOffset - this.borderSize,
             this.gameConfigs.fieldXOffset + this.borderSize,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             -this.borderSize,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.gameConfigs.fieldXOffset + this.borderSize,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             0,
             this.gameConfigs.goalYOffset - this.borderSize,
             this.borderSize,
             this.gameConfigs.goalHeight + this.borderSize * 2,
         );
 
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             -this.borderSize,
             this.borderSize,
             this.gameConfigs.goalYOffset + this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.borderSize,
             this.gameConfigs.goalYOffset + this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             this.gameConfigs.goalYOffset - this.borderSize,
             this.gameConfigs.fieldXOffset,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.gameConfigs.fieldXOffset,
             this.borderSize,
         );
-        this.backgroundContext.fillRect(
+        this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset * 2 + this.gameConfigs.fieldWidth - this.borderSize,
             this.gameConfigs.goalYOffset - this.borderSize,
             this.borderSize,
             this.gameConfigs.goalHeight + this.borderSize * 2,
         );
+
+        this.backgroundContext.fill();
     }
 
     private renderGoalPosts(): void {
@@ -244,6 +248,7 @@ export class FieldRender {
         );
     }
 
+    // TODO to move to player canvas
     private renderWindows(): void {
         this.backgroundContext.fillStyle = "#FF0000";
         this.backgroundContext.lineWidth = 1;

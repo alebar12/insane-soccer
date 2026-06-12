@@ -1,4 +1,5 @@
 import { AssetLoader } from "../assets/AssetLoader";
+import { GameWorld } from "../game/world/GameWorld";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { FieldRender } from "./FieldRender";
@@ -18,9 +19,9 @@ export class MainRender {
         this.gatesRender = new GatesRender(domHandler.gameContext, gameConfigs);
     }
 
-    public render(): void {
+    public render(gameWorld: GameWorld): void {
         this.clear();
-        this.fieldRender.render();
+        this.fieldRender.render(gameWorld);
         this.scoreRendering.render();
         this.gatesRender.render();
     }

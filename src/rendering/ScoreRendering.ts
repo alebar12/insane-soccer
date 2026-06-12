@@ -1,28 +1,23 @@
 import { AssetLoader } from "../assets/AssetLoader";
-import { GameConfigs } from "../utils/GameConfigs";
 
 export class ScoreRendering {
     private readonly digitsImages: HTMLImageElement;
     private readonly scoreContext: CanvasRenderingContext2D;
-    private readonly gameConfigs: GameConfigs;
     private readonly innerImageWidth: number;
-    private readonly innerImageHeight: number = 90;
+    private readonly innerImageHeight: number;
     private readonly scoreWidth: number;
     private readonly scoreHeight: number;
     private readonly xPositionsArray: Array<number>;
     private readonly yPosition: number;
-    //private readonly frameForNumber: number = 6;
-    //private readonly totalNumbers: number = 9;
+    private readonly frameForNumber: number = 6;
+    private readonly totalNumbers: number = 9;
 
-    public constructor(
-        scoreContext: CanvasRenderingContext2D,
-        gameConfigs: GameConfigs,
-        assetLoader: AssetLoader,
-    ) {
+    public constructor(scoreContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.scoreContext = scoreContext;
-        this.gameConfigs = gameConfigs;
         this.digitsImages = assetLoader.getImage("digits.png");
 
+        this.innerImageHeight =
+            this.digitsImages.height / (this.totalNumbers * this.frameForNumber);
         this.innerImageWidth = this.digitsImages.width;
         this.scoreHeight = (scoreContext.canvas.height * 9) / 10;
         this.scoreWidth = (this.scoreHeight * this.innerImageWidth) / this.innerImageHeight;
@@ -37,7 +32,12 @@ export class ScoreRendering {
     }
 
     public render(): void {
-        this.scoreContext.clearRect(0, 0, this.gameConfigs.width, this.gameConfigs.height);
+        this.scoreContext.clearRect(
+            0,
+            0,
+            this.scoreContext.canvas.width,
+            this.scoreContext.canvas.height,
+        );
 
         // TODO gestire aggiornamento punteggio
         this.xPositionsArray.forEach(x => {

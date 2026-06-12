@@ -30,8 +30,6 @@ export class GameConfigs {
         this.goalHeight = Math.round(this.fieldHeight / 5);
         this.goalYOffset = Math.round((this.fieldHeight - this.goalHeight) / 2);
 
-        this.substitutionOffsetX = Math.round(this.fieldWidth / 3);
-
         this.goalPostRadius = Math.round(this.goalHeight / 20);
 
         this.athleticTrackHeight = Math.round(((this.height - this.fieldHeight) * 5) / 7);
@@ -41,9 +39,9 @@ export class GameConfigs {
 
         this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 16);
         this.playerSizeWithBorder = this.playerSizeWithoutBorder + this.playerBorder;
-        const substitutionOffsetX = Math.round(this.fieldWidth / 4);
-        this.playerSubstitutionX = this.fieldXOffset + substitutionOffsetX;
-        this.cpuSubstitutionX = this.fieldXOffset + (this.fieldWidth - substitutionOffsetX);
+        this.substitutionOffsetX = Math.round(this.fieldWidth / 4);
+        this.playerSubstitutionX = this.fieldXOffset + this.substitutionOffsetX;
+        this.cpuSubstitutionX = this.fieldXOffset + (this.fieldWidth - this.substitutionOffsetX);
 
         this.shadowBlur = this.playerSizeWithoutBorder;
         this.shadowOffset = this.playerSizeWithoutBorder * 0.3;

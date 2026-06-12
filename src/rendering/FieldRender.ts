@@ -7,7 +7,6 @@ export class FieldRender {
     private readonly trackFieldImage: HTMLImageElement;
     private readonly backgroundContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
-    private readonly borderSize: number;
 
     public constructor(
         backgroundContext: CanvasRenderingContext2D,
@@ -20,7 +19,6 @@ export class FieldRender {
 
         this.backgroundContext = backgroundContext;
         this.gameConfigs = gameConfigs;
-        this.borderSize = Math.round(gameConfigs.fieldHeight / 100);
     }
 
     public render(): void {
@@ -43,7 +41,6 @@ export class FieldRender {
 
         this.renderBorder();
         this.renderGoalPosts();
-        this.renderWindows();
 
         this.backgroundContext.restore();
     }
@@ -83,19 +80,19 @@ export class FieldRender {
         this.backgroundContext.beginPath();
 
         this.backgroundContext.rect(
-            this.gameConfigs.fieldXOffset - this.borderSize,
+            this.gameConfigs.fieldXOffset - this.gameConfigs.fieldBorderSize,
             0,
-            this.gameConfigs.fieldWidth + this.borderSize,
-            this.borderSize,
+            this.gameConfigs.fieldWidth + this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            this.gameConfigs.fieldXOffset - this.borderSize,
+            this.gameConfigs.fieldXOffset - this.gameConfigs.fieldBorderSize,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.playerSubstitutionX -
                 this.gameConfigs.fieldXOffset -
                 this.gameConfigs.playerSizeWithBorder +
-                this.borderSize,
-            this.borderSize,
+                this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             this.gameConfigs.playerSubstitutionX + this.gameConfigs.playerSizeWithBorder,
@@ -103,7 +100,7 @@ export class FieldRender {
             this.gameConfigs.cpuSubstitutionX -
                 this.gameConfigs.playerSubstitutionX -
                 this.gameConfigs.playerSizeWithBorder * 2,
-            this.borderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             this.gameConfigs.cpuSubstitutionX + this.gameConfigs.playerSizeWithBorder,
@@ -111,69 +108,71 @@ export class FieldRender {
             this.gameConfigs.playerSubstitutionX -
                 this.gameConfigs.fieldXOffset -
                 this.gameConfigs.playerSizeWithBorder,
-            this.borderSize,
+            this.gameConfigs.fieldBorderSize,
         );
 
         this.backgroundContext.rect(
-            this.gameConfigs.fieldXOffset - this.borderSize,
-            -this.borderSize,
-            this.borderSize,
-            this.gameConfigs.goalYOffset + this.borderSize,
+            this.gameConfigs.fieldXOffset - this.gameConfigs.fieldBorderSize,
+            -this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            this.gameConfigs.fieldXOffset - this.borderSize,
+            this.gameConfigs.fieldXOffset - this.gameConfigs.fieldBorderSize,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
-            this.borderSize,
-            this.gameConfigs.goalYOffset + this.borderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            -this.borderSize,
-            this.gameConfigs.goalYOffset - this.borderSize,
-            this.gameConfigs.fieldXOffset + this.borderSize,
-            this.borderSize,
+            -this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset - this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            -this.borderSize,
+            -this.gameConfigs.fieldBorderSize,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
-            this.gameConfigs.fieldXOffset + this.borderSize,
-            this.borderSize,
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             0,
-            this.gameConfigs.goalYOffset - this.borderSize,
-            this.borderSize,
-            this.gameConfigs.goalHeight + this.borderSize * 2,
+            this.gameConfigs.goalYOffset - this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalHeight + this.gameConfigs.fieldBorderSize * 2,
         );
 
         this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
-            -this.borderSize,
-            this.borderSize,
-            this.gameConfigs.goalYOffset + this.borderSize,
+            -this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
-            this.borderSize,
-            this.gameConfigs.goalYOffset + this.borderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset + this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
-            this.gameConfigs.goalYOffset - this.borderSize,
+            this.gameConfigs.goalYOffset - this.gameConfigs.fieldBorderSize,
             this.gameConfigs.fieldXOffset,
-            this.borderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
             this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
             this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
             this.gameConfigs.fieldXOffset,
-            this.borderSize,
+            this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            this.gameConfigs.fieldXOffset * 2 + this.gameConfigs.fieldWidth - this.borderSize,
-            this.gameConfigs.goalYOffset - this.borderSize,
-            this.borderSize,
-            this.gameConfigs.goalHeight + this.borderSize * 2,
+            this.gameConfigs.fieldXOffset * 2 +
+                this.gameConfigs.fieldWidth -
+                this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalYOffset - this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.fieldBorderSize,
+            this.gameConfigs.goalHeight + this.gameConfigs.fieldBorderSize * 2,
         );
 
         this.backgroundContext.fill();
@@ -244,52 +243,6 @@ export class FieldRender {
             this.gameConfigs.fieldHeight + this.gameConfigs.athleticTrackYOffset,
             this.gameConfigs.fieldWidth,
             this.gameConfigs.athleticTrackHeight,
-        );
-    }
-
-    // TODO to move to player canvas
-    private renderWindows(): void {
-        this.backgroundContext.fillStyle = "#FF0000";
-        this.backgroundContext.lineWidth = 1;
-
-        this.backgroundContext.translate(
-            this.gameConfigs.playerSubstitutionX - this.gameConfigs.playerSizeWithBorder,
-            this.gameConfigs.fieldHeight,
-        );
-        const angle = 0; // TODO da rivedere
-        this.backgroundContext.rotate(angle);
-        this.backgroundContext.fillRect(
-            0,
-            0,
-            this.gameConfigs.playerSizeWithBorder * 2,
-            this.borderSize,
-        );
-        this.backgroundContext.strokeRect(
-            0,
-            0,
-            this.gameConfigs.playerSizeWithBorder * 2,
-            this.borderSize,
-        );
-        this.backgroundContext.rotate(angle);
-
-        this.backgroundContext.translate(
-            this.gameConfigs.cpuSubstitutionX -
-                this.gameConfigs.playerSubstitutionX +
-                this.gameConfigs.playerSizeWithBorder * 2,
-            -this.borderSize,
-        );
-        this.backgroundContext.rotate(Math.PI - angle);
-        this.backgroundContext.fillRect(
-            0,
-            -this.borderSize * 2,
-            this.gameConfigs.playerSizeWithBorder * 2,
-            this.borderSize,
-        );
-        this.backgroundContext.strokeRect(
-            0,
-            -this.borderSize * 2,
-            this.gameConfigs.playerSizeWithBorder * 2,
-            this.borderSize,
         );
     }
 }

@@ -17,6 +17,7 @@ export class GameConfigs {
     public readonly playerSizeWithBorder: number;
     public readonly playerSubstitutionX: number;
     public readonly cpuSubstitutionX: number;
+    public readonly fieldBorderSize: number;
 
     public constructor(canvasWidth: number, canvasHeight: number) {
         this.width = canvasWidth;
@@ -46,5 +47,7 @@ export class GameConfigs {
 
         this.shadowBlur = this.playerSizeWithoutBorder;
         this.shadowOffset = this.playerSizeWithoutBorder * 0.3;
+
+        this.fieldBorderSize = Math.round(this.fieldHeight / 100);
     }
 }

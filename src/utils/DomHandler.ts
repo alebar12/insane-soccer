@@ -3,26 +3,24 @@ export class DomHandler {
     public readonly backgroundContext: CanvasRenderingContext2D;
     public readonly scoreCanvas: HTMLCanvasElement;
     public readonly scoreContext: CanvasRenderingContext2D;
+    public readonly gameCanvas: HTMLCanvasElement;
+    public readonly gameContext: CanvasRenderingContext2D;
 
     public constructor() {
-        this.backgroundCanvas = document.getElementById("backgroundCanvas") as HTMLCanvasElement;
-        if (!this.backgroundCanvas) {
-            throw new Error("backgroundCanvas not found");
-        }
-        const backgroundContext = this.backgroundCanvas.getContext("2d");
-        if (!backgroundContext) {
-            throw new Error("backgroundContext not found");
-        }
-        this.backgroundContext = backgroundContext;
+        [this.backgroundCanvas, this.backgroundContext] = DomHandler.getCanvas("backgroundCanvas");
+        [this.scoreCanvas, this.scoreContext] = DomHandler.getCanvas("scoreCanvas");
+        [this.gameCanvas, this.gameContext] = DomHandler.getCanvas("gameCanvas");
+    }
 
-        this.scoreCanvas = document.getElementById("scoreCanvas") as HTMLCanvasElement;
-        if (!this.scoreCanvas) {
-            throw new Error("backgroundCanvas not found");
+    private static getCanvas(id: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
+        const canvas = document.getElementById(id) as HTMLCanvasElement;
+        if (!canvas) {
+            throw new Error(`${id} not found`);
         }
-        const scoreContext = this.scoreCanvas.getContext("2d");
-        if (!scoreContext) {
-            throw new Error("backgroundContext not found");
+        const context = canvas.getContext("2d");
+        if (!context) {
+            throw new Error(`${id} context not found`);
         }
-        this.scoreContext = scoreContext;
+        return [canvas, context];
     }
 }

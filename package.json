@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
     "minify-css": "npx minify public/css/style.css > public/css/style.min.css",
-    "start-local": "npm-run-all --parallel watch:build watch:server watch:typecheck watch:lint --print-label",
+    "start-local": "npm-run-all --parallel watch:build watch:server --print-label",
     "watch:server": "npx http-server -d false -o -s -c-1",
     "watch:build": "webpack -w",
     "watch:typecheck": "tsc --noEmit --watch --pretty",

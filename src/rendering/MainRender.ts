@@ -14,14 +14,13 @@ export class MainRender {
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.domHandler = domHandler;
         this.fieldRender = new FieldRender(domHandler.backgroundContext, gameConfigs, assetLoader);
-        this.scoreRendering = new ScoreRendering(domHandler.scoreContext, gameConfigs, assetLoader);
+        this.scoreRendering = new ScoreRendering(domHandler.scoreContext, assetLoader);
         this.gatesRender = new GatesRender(domHandler.gameContext, gameConfigs);
-
-        this.fieldRender.render();
     }
 
     public render(): void {
         this.clear();
+        this.fieldRender.render();
         this.scoreRendering.render();
         this.gatesRender.render();
     }

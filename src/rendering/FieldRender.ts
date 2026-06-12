@@ -7,6 +7,7 @@ export class FieldRender {
     private readonly trackFieldImage: HTMLImageElement;
     private readonly backgroundContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
+    private alreadyRendered: boolean = false;
 
     public constructor(
         backgroundContext: CanvasRenderingContext2D,
@@ -22,6 +23,10 @@ export class FieldRender {
     }
 
     public render(): void {
+        if (this.alreadyRendered) {
+            return;
+        }
+
         this.backgroundContext.clearRect(
             0,
             0,
@@ -43,10 +48,10 @@ export class FieldRender {
         this.renderGoalPosts();
 
         this.backgroundContext.restore();
+        this.alreadyRendered = true;
     }
 
     private renderBackground(): void {
-        this.backgroundContext.fillStyle = "#BBBBFF";
         this.backgroundContext.drawImage(
             this.fieldImage,
             this.gameConfigs.fieldXOffset,

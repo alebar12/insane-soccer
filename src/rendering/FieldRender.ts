@@ -1,4 +1,5 @@
 import { AssetLoader } from "../assets/AssetLoader";
+import { GameWorld } from "../game/world/GameWorld";
 import { GameConfigs } from "../utils/GameConfigs";
 
 export class FieldRender {
@@ -22,7 +23,7 @@ export class FieldRender {
         this.gameConfigs = gameConfigs;
     }
 
-    public render(): void {
+    public render(gameWorld: GameWorld): void {
         if (this.alreadyRendered) {
             return;
         }
@@ -45,7 +46,7 @@ export class FieldRender {
         this.backgroundContext.shadowBlur = this.gameConfigs.shadowBlur;
 
         this.renderBorder();
-        this.renderGoalPosts();
+        this.renderGoalPosts(gameWorld);
 
         this.backgroundContext.restore();
         this.alreadyRendered = true;
@@ -183,62 +184,25 @@ export class FieldRender {
         this.backgroundContext.fill();
     }
 
-    private renderGoalPosts(): void {
+    private renderGoalPosts(gameWorld: GameWorld): void {
         this.backgroundContext.fillStyle = "#AAAAAA";
         this.backgroundContext.lineWidth = 1;
         this.backgroundContext.strokeStyle = "#000000";
 
-        this.backgroundContext.beginPath();
-        this.backgroundContext.arc(
-            this.gameConfigs.fieldXOffset,
-            this.gameConfigs.goalYOffset,
-            this.gameConfigs.goalPostRadius,
-            0,
-            2 * Math.PI,
-            false,
-        );
-        this.backgroundContext.closePath();
-        this.backgroundContext.fill();
-        this.backgroundContext.stroke();
-
-        this.backgroundContext.beginPath();
-        this.backgroundContext.arc(
-            this.gameConfigs.fieldXOffset,
-            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
-            this.gameConfigs.goalPostRadius,
-            0,
-            2 * Math.PI,
-            false,
-        );
-        this.backgroundContext.closePath();
-        this.backgroundContext.fill();
-        this.backgroundContext.stroke();
-
-        this.backgroundContext.beginPath();
-        this.backgroundContext.arc(
-            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
-            this.gameConfigs.goalYOffset,
-            this.gameConfigs.goalPostRadius,
-            0,
-            2 * Math.PI,
-            false,
-        );
-        this.backgroundContext.closePath();
-        this.backgroundContext.fill();
-        this.backgroundContext.stroke();
-
-        this.backgroundContext.beginPath();
-        this.backgroundContext.arc(
-            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth,
-            this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight,
-            this.gameConfigs.goalPostRadius,
-            0,
-            2 * Math.PI,
-            false,
-        );
-        this.backgroundContext.closePath();
-        this.backgroundContext.fill();
-        this.backgroundContext.stroke();
+        gameWorld.goalPosts.positions.forEach(position => {
+            this.backgroundContext.beginPath();
+            this.backgroundContext.arc(
+                position.x,
+                position.y,
+                this.gameConfigs.goalPostRadius,
+                0,
+                2 * Math.PI,
+                false,
+            );
+            this.backgroundContext.closePath();
+            this.backgroundContext.fill();
+            this.backgroundContext.stroke();
+        });
     }
 
     private renderAthleticTrack(): void {

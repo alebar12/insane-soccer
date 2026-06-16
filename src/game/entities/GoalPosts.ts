@@ -1,7 +1,8 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { Point } from "../../utils/Point";
 
 export class GoalPosts {
-    public readonly positions: Array<{ x: number; y: number }>;
+    public readonly positions: Array<Point>;
 
     public constructor(gameConfigs: GameConfigs) {
         this.positions = [];

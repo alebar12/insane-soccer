@@ -1,8 +1,8 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { Point } from "../../utils/Point";
 
 export class Player {
-    private _x: number;
-    private _y: number;
+    private _position: Point;
     private _isCpu: boolean;
     private _isSubstitute: boolean;
     private _isStunned: boolean;
@@ -13,24 +13,39 @@ export class Player {
         this._isStunned = false;
 
         if (!this.isSubstitute) {
-            this._x =
+            this._position = new Point(
                 gameConfigs.fieldXOffset +
-                (this.isCpu
-                    ? gameConfigs.fieldWidth - gameConfigs.playerStartPositionXOffset
-                    : gameConfigs.playerStartPositionXOffset);
-            this._y = gameConfigs.playerStartPositionYOffset;
+                    (this.isCpu
+                        ? gameConfigs.fieldWidth - gameConfigs.playerStartPositionXOffset
+                        : gameConfigs.playerStartPositionXOffset),
+                gameConfigs.playerStartPositionYOffset,
+            );
         } else {
-            this._x = this.isCpu ? gameConfigs.cpuSubstitutionX : gameConfigs.playerSubstitutionX;
-            this._y = gameConfigs.substituteStartPositionYOffset;
+            this._position = new Point(
+                this.isCpu ? gameConfigs.cpuSubstitutionX : gameConfigs.playerSubstitutionX,
+                gameConfigs.substituteStartPositionYOffset,
+            );
         }
     }
 
-    public get x(): number {
-        return this._x;
+    public static initHuman(gameConfigs: GameConfigs): Player {
+        return new Player(gameConfigs, false, false);
     }
 
-    public get y(): number {
-        return this._y;
+    public static initCpu(gameConfigs: GameConfigs): Player {
+        return new Player(gameConfigs, true, false);
+    }
+
+    public static initSubstitue1(gameConfigs: GameConfigs): Player {
+        return new Player(gameConfigs, false, true);
+    }
+
+    public static initSubstitue2(gameConfigs: GameConfigs): Player {
+        return new Player(gameConfigs, true, true);
+    }
+
+    public get position(): Point {
+        return this._position;
     }
 
     public get isCpu(): boolean {

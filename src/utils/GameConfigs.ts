@@ -18,6 +18,9 @@ export class GameConfigs {
     public readonly playerSubstitutionX: number;
     public readonly cpuSubstitutionX: number;
     public readonly fieldBorderSize: number;
+    public readonly playerStartPositionXOffset: number;
+    public readonly playerStartPositionYOffset: number;
+    public readonly substituteStartPositionYOffset: number;
 
     public constructor(canvasWidth: number, canvasHeight: number) {
         this.width = canvasWidth;
@@ -37,7 +40,7 @@ export class GameConfigs {
             (this.height - this.fieldHeight - this.athleticTrackHeight) / 2,
         );
 
-        this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 16);
+        this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 26);
         this.playerSizeWithBorder = this.playerSizeWithoutBorder + this.playerBorder;
         this.substitutionOffsetX = Math.round(this.fieldWidth / 4);
         this.playerSubstitutionX = this.fieldXOffset + this.substitutionOffsetX;
@@ -47,5 +50,9 @@ export class GameConfigs {
         this.shadowOffset = this.playerSizeWithoutBorder * 0.3;
 
         this.fieldBorderSize = Math.round(this.fieldHeight / 100);
+
+        this.playerStartPositionXOffset = this.fieldWidth / 8;
+        this.playerStartPositionYOffset = this.fieldHeight / 2;
+        this.substituteStartPositionYOffset = this.fieldHeight + this.athleticTrackHeight / 2;
     }
 }

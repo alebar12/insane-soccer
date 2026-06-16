@@ -23,7 +23,7 @@ export class PlayerRender {
             this.gameContext.save();
 
             const colorKey = `${player.isCpu}-${player.isSubstitute}`;
-            let color = (player.isStunned ? this.stunnedColor : this.colorMap.get(colorKey));
+            let color = player.isStunned ? this.stunnedColor : this.colorMap.get(colorKey);
             if (color === undefined) {
                 color = "#FF0000";
             }
@@ -36,7 +36,10 @@ export class PlayerRender {
             this.gameContext.shadowOffsetY = this.gameConfigs.shadowOffset;
             this.gameContext.shadowBlur = this.gameConfigs.shadowBlur;
 
-            this.gameContext.translate(Math.round(player.position.x), Math.round(player.position.y));
+            this.gameContext.translate(
+                Math.round(player.position.x),
+                Math.round(player.position.y),
+            );
             this.gameContext.beginPath();
             this.gameContext.arc(
                 0,

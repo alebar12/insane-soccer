@@ -1,6 +1,10 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { CpuPlayer } from "../entities/CpuPlayer";
 import { GoalPosts } from "../entities/GoalPosts";
+import { HumanPlayer } from "../entities/HumanPlayer";
 import { Player } from "../entities/Player";
+import { Substitute1Player } from "../entities/Substitute1Player";
+import { Substitute2Player } from "../entities/Substitute2Player";
 
 export class GameWorld {
     public readonly goalPosts: GoalPosts;
@@ -8,9 +12,9 @@ export class GameWorld {
 
     public constructor(gameConfigs: GameConfigs) {
         this.goalPosts = new GoalPosts(gameConfigs);
-        this.players.push(Player.initHuman(gameConfigs));
-        this.players.push(Player.initCpu(gameConfigs));
-        this.players.push(Player.initSubstitue1(gameConfigs));
-        this.players.push(Player.initSubstitue2(gameConfigs));
+        this.players.push(new HumanPlayer(gameConfigs));
+        this.players.push(new CpuPlayer(gameConfigs));
+        this.players.push(new Substitute1Player(gameConfigs));
+        this.players.push(new Substitute2Player(gameConfigs));
     }
 }

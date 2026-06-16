@@ -16,7 +16,7 @@ export class GatesRender {
         this.gameContext.lineWidth = 1;
 
         this.gameContext.translate(
-            this.gameConfigs.playerSubstitutionX - this.gameConfigs.playerSizeWithBorder,
+            this.gameConfigs.playerSubstitutionX - this.gameConfigs.gatesLenght / 2,
             this.gameConfigs.fieldHeight,
         );
         const angle = 0; // TODO da rivedere
@@ -24,13 +24,13 @@ export class GatesRender {
         this.gameContext.fillRect(
             0,
             0,
-            this.gameConfigs.playerSizeWithBorder * 2,
+            this.gameConfigs.gatesLenght,
             this.gameConfigs.fieldBorderSize,
         );
         this.gameContext.strokeRect(
             0,
             0,
-            this.gameConfigs.playerSizeWithBorder * 2,
+            this.gameConfigs.gatesLenght,
             this.gameConfigs.fieldBorderSize,
         );
         this.gameContext.rotate(angle);
@@ -38,20 +38,20 @@ export class GatesRender {
         this.gameContext.translate(
             this.gameConfigs.cpuSubstitutionX -
                 this.gameConfigs.playerSubstitutionX +
-                this.gameConfigs.playerSizeWithBorder * 2,
+                this.gameConfigs.gatesLenght,
             -this.gameConfigs.fieldBorderSize,
         );
         this.gameContext.rotate(Math.PI - angle);
         this.gameContext.fillRect(
             0,
             -this.gameConfigs.fieldBorderSize * 2,
-            this.gameConfigs.playerSizeWithBorder * 2,
+            this.gameConfigs.gatesLenght,
             this.gameConfigs.fieldBorderSize,
         );
         this.gameContext.strokeRect(
             0,
             -this.gameConfigs.fieldBorderSize * 2,
-            this.gameConfigs.playerSizeWithBorder * 2,
+            this.gameConfigs.gatesLenght,
             this.gameConfigs.fieldBorderSize,
         );
 

@@ -22,7 +22,7 @@ export class PlayerRender {
         gameWorld.players.forEach(player => {
             this.gameContext.save();
 
-            const colorKey = `${player.isCpu}-${player.isSubstitute}`;
+            const colorKey = `${player.isCpu()}-${player.isSubstitute()}`;
             let color = player.isStunned ? this.stunnedColor : this.colorMap.get(colorKey);
             if (color === undefined) {
                 color = "#FF0000";

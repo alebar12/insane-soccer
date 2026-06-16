@@ -7,13 +7,14 @@ class Main {
     public async init(): Promise<void> {
         const assetLoader = new AssetLoader();
         await assetLoader.init();
-        this.closeLoadingWindow();
 
         const domHandler = new DomHandler();
         const gameConfigs = new GameConfigs(
             domHandler.backgroundCanvas.width,
             domHandler.backgroundCanvas.height,
         );
+
+        this.closeLoadingWindow();
         const gameLoop = new GameLoop(gameConfigs, domHandler, assetLoader);
         gameLoop.main();
     }
@@ -30,19 +31,10 @@ class Main {
             function onTransitionEnd() {
                 element.style.display = "none";
                 element.removeEventListener("transitionend", onTransitionEnd);
+                //domHandler.menuCanvas.style.display = "block";
             },
             { once: true },
-        );
-
-        this.showMainMenu();
-    }
-
-    private showMainMenu(): void {
-        const element = document.getElementById("menuCanvas");
-        if (!element) {
-            return;
-        }
-        element.style.display = "block";
+        );   
     }
 }
 

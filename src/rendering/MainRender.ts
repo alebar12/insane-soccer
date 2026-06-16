@@ -4,6 +4,7 @@ import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { FieldRender } from "./FieldRender";
 import { GatesRender } from "./GatesRender";
+import { MenuRender } from "./MenuRender";
 import { PlayerRender } from "./PlayerRender";
 import { ScoreRender } from "./ScoreRender";
 
@@ -13,6 +14,7 @@ export class MainRender {
     private scoreRender: ScoreRender;
     private gatesRender: GatesRender;
     private playerRender: PlayerRender;
+    private menuRender: MenuRender;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.domHandler = domHandler;
@@ -20,6 +22,7 @@ export class MainRender {
         this.scoreRender = new ScoreRender(domHandler.scoreContext, assetLoader);
         this.gatesRender = new GatesRender(domHandler.gameContext, gameConfigs);
         this.playerRender = new PlayerRender(domHandler.gameContext, gameConfigs);
+        this.menuRender = new MenuRender(domHandler.menuContext, assetLoader, gameConfigs);
     }
 
     public render(gameWorld: GameWorld): void {
@@ -28,6 +31,7 @@ export class MainRender {
         this.scoreRender.render();
         this.playerRender.render(gameWorld);
         this.gatesRender.render();
+        this.menuRender.render(gameWorld);
     }
 
     private clear(): void {

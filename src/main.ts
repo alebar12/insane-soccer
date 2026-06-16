@@ -34,7 +34,7 @@ class Main {
                 //domHandler.menuCanvas.style.display = "block";
             },
             { once: true },
-        );   
+        );
     }
 }
 

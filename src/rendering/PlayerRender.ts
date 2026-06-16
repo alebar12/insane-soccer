@@ -36,7 +36,7 @@ export class PlayerRender {
             this.gameContext.shadowOffsetY = this.gameConfigs.shadowOffset;
             this.gameContext.shadowBlur = this.gameConfigs.shadowBlur;
 
-            this.gameContext.translate(Math.round(player.x), Math.round(player.y));
+            this.gameContext.translate(Math.round(player.position.x), Math.round(player.position.y));
             this.gameContext.beginPath();
             this.gameContext.arc(
                 0,

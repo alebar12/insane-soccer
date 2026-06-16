@@ -8,9 +8,9 @@ export class GameWorld {
 
     public constructor(gameConfigs: GameConfigs) {
         this.goalPosts = new GoalPosts(gameConfigs);
-        this.players.push(new Player(gameConfigs, true, false));
-        this.players.push(new Player(gameConfigs, false, false));
-        this.players.push(new Player(gameConfigs, true, true));
-        this.players.push(new Player(gameConfigs, false, true));
+        this.players.push(Player.initHuman(gameConfigs));
+        this.players.push(Player.initCpu(gameConfigs));
+        this.players.push(Player.initSubstitue1(gameConfigs));
+        this.players.push(Player.initSubstitue2(gameConfigs));
     }
 }

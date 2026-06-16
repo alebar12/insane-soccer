@@ -5,11 +5,14 @@ export class DomHandler {
     public readonly scoreContext: CanvasRenderingContext2D;
     public readonly gameCanvas: HTMLCanvasElement;
     public readonly gameContext: CanvasRenderingContext2D;
+    public readonly menuCanvas: HTMLCanvasElement;
+    public readonly menuContext: CanvasRenderingContext2D;
 
     public constructor() {
         [this.backgroundCanvas, this.backgroundContext] = DomHandler.getCanvas("backgroundCanvas");
         [this.scoreCanvas, this.scoreContext] = DomHandler.getCanvas("scoreCanvas");
         [this.gameCanvas, this.gameContext] = DomHandler.getCanvas("gameCanvas");
+        [this.menuCanvas, this.menuContext] = DomHandler.getCanvas("menuCanvas");
     }
 
     private static getCanvas(id: string): [HTMLCanvasElement, CanvasRenderingContext2D] {

@@ -1,59 +1,24 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Point } from "../../utils/Point";
 
-export class Player {
+export abstract class Player {
     private _position: Point;
-    private _isCpu: boolean;
-    private _isSubstitute: boolean;
-    private _isStunned: boolean;
+    private _isStunned: boolean = false;
+    protected gameConfigs: GameConfigs;
 
-    public constructor(gameConfigs: GameConfigs, isCpu: boolean, isSubstitute: boolean) {
-        this._isCpu = isCpu;
-        this._isSubstitute = isSubstitute;
-        this._isStunned = false;
+    abstract getInitialPosition(): Point;
 
-        if (!this.isSubstitute) {
-            this._position = new Point(
-                gameConfigs.fieldXOffset +
-                    (this.isCpu
-                        ? gameConfigs.fieldWidth - gameConfigs.playerStartPositionXOffset
-                        : gameConfigs.playerStartPositionXOffset),
-                gameConfigs.playerStartPositionYOffset,
-            );
-        } else {
-            this._position = new Point(
-                this.isCpu ? gameConfigs.cpuSubstitutionX : gameConfigs.playerSubstitutionX,
-                gameConfigs.substituteStartPositionYOffset,
-            );
-        }
-    }
+    abstract isCpu(): boolean;
 
-    public static initHuman(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, false);
-    }
+    abstract isSubstitute(): boolean;
 
-    public static initCpu(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, true, false);
-    }
-
-    public static initSubstitue1(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, true);
-    }
-
-    public static initSubstitue2(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, true, true);
+    public constructor(gameConfigs: GameConfigs) {
+        this.gameConfigs = gameConfigs;
+        this._position = this.getInitialPosition();
     }
 
     public get position(): Point {
         return this._position;
-    }
-
-    public get isCpu(): boolean {
-        return this._isCpu;
-    }
-
-    public get isSubstitute(): boolean {
-        return this._isSubstitute;
     }
 
     public get isStunned(): boolean {

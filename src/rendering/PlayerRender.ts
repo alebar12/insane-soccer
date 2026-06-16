@@ -1,7 +1,7 @@
 import { GameWorld } from "../game/world/GameWorld";
 import { GameConfigs } from "../utils/GameConfigs";
 
-export class PlayerRendering {
+export class PlayerRender {
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
     private readonly colorMap: Map<string, string> = new Map([
@@ -28,7 +28,6 @@ export class PlayerRendering {
                 color = "#FF0000";
             }
             this.gameContext.fillStyle = color;
-            this.gameContext.lineWidth = 1;
             this.gameContext.strokeStyle = this.borderColor;
             this.gameContext.lineWidth = this.gameConfigs.playerBorder;
 

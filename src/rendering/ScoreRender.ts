@@ -1,6 +1,6 @@
 import { AssetLoader } from "../assets/AssetLoader";
 
-export class ScoreRendering {
+export class ScoreRender {
     private readonly digitsImages: HTMLImageElement;
     private readonly scoreContext: CanvasRenderingContext2D;
     private readonly innerImageWidth: number;
@@ -10,7 +10,7 @@ export class ScoreRendering {
     private readonly xPositionsArray: Array<number>;
     private readonly yPosition: number;
     private readonly frameForNumber: number = 6;
-    private readonly totalNumbers: number = 9;
+    private readonly totalNumbers: number = 10;
 
     public constructor(scoreContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.scoreContext = scoreContext;

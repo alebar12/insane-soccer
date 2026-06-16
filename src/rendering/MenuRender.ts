@@ -11,7 +11,11 @@ export class MenuRender {
     private readonly buttonHeight: number;
     private readonly buttonWidth: number;
 
-    public constructor(menuContext: CanvasRenderingContext2D, assetLoader: AssetLoader, gameConfigs: GameConfigs) {
+    public constructor(
+        menuContext: CanvasRenderingContext2D,
+        assetLoader: AssetLoader,
+        gameConfigs: GameConfigs,
+    ) {
         this.menuContext = menuContext;
         this.playImage = assetLoader.getImage("play.png");
         this.buttonHeight = gameConfigs.fieldHeight / 5;
@@ -30,9 +34,14 @@ export class MenuRender {
             this.menuContext.canvas.height,
         );
 
-        if (gameWorld.gameStatus == GameStatus.MENU) {
-            this.menuContext.drawImage(this.playImage, 
-            this.buttonPosition.x, this.buttonPosition.y, this.buttonWidth, this.buttonHeight);
-        }        
+        if (gameWorld.gameStatus === GameStatus.MENU) {
+            this.menuContext.drawImage(
+                this.playImage,
+                this.buttonPosition.x,
+                this.buttonPosition.y,
+                this.buttonWidth,
+                this.buttonHeight,
+            );
+        }
     }
 }

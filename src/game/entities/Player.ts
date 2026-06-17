@@ -1,5 +1,6 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Point } from "../../utils/Point";
+import { PlayerSide } from "../status/PlayerSide";
 
 export abstract class Player {
     public position: Point;
@@ -12,6 +13,8 @@ export abstract class Player {
     abstract isCpu(): boolean;
 
     abstract isSubstitute(): boolean;
+    
+    abstract getSide(): PlayerSide;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;

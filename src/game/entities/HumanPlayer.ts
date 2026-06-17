@@ -1,4 +1,5 @@
 import { Point } from "../../utils/Point";
+import { PlayerSide } from "../status/PlayerSide";
 import { Player } from "./Player";
 
 export class HumanPlayer extends Player {
@@ -15,5 +16,9 @@ export class HumanPlayer extends Player {
 
     isSubstitute(): boolean {
         return false;
+    }
+
+    getSide(): PlayerSide {
+        return PlayerSide.LEFT;
     }
 }

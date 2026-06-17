@@ -1,4 +1,4 @@
 export enum GameStatus {
-    MENU,
-    WAITING_BALL,
+    MENU = "MENU",
+    WAITING_BALL = "WAITING_BALL",
 }

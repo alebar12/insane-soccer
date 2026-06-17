@@ -96,24 +96,24 @@ export class FieldRender {
             this.gameConfigs.fieldHeight,
             this.gameConfigs.playerSubstitutionX -
                 this.gameConfigs.fieldXOffset -
-                this.gameConfigs.gatesLenght / 2 +
+                this.gameConfigs.gatesLength / 2 +
                 this.gameConfigs.fieldBorderSize,
             this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            this.gameConfigs.playerSubstitutionX + this.gameConfigs.gatesLenght / 2,
+            this.gameConfigs.playerSubstitutionX + this.gameConfigs.gatesLength / 2,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.cpuSubstitutionX -
                 this.gameConfigs.playerSubstitutionX -
-                this.gameConfigs.gatesLenght,
+                this.gameConfigs.gatesLength,
             this.gameConfigs.fieldBorderSize,
         );
         this.backgroundContext.rect(
-            this.gameConfigs.cpuSubstitutionX + this.gameConfigs.gatesLenght / 2,
+            this.gameConfigs.cpuSubstitutionX + this.gameConfigs.gatesLength / 2,
             this.gameConfigs.fieldHeight,
             this.gameConfigs.playerSubstitutionX -
                 this.gameConfigs.fieldXOffset -
-                this.gameConfigs.gatesLenght / 2,
+                this.gameConfigs.gatesLength / 2,
             this.gameConfigs.fieldBorderSize,
         );
 

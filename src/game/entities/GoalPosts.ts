@@ -7,22 +7,20 @@ export class GoalPosts {
 
     public constructor(gameConfigs: GameConfigs) {
         this.positions = [];
-        this.positions.push({
-            x: gameConfigs.fieldXOffset,
-            y: gameConfigs.goalYOffset,
-        });
-        this.positions.push({
-            x: gameConfigs.fieldXOffset,
-            y: gameConfigs.goalYOffset + gameConfigs.goalHeight,
-        });
-        this.positions.push({
-            x: gameConfigs.fieldXOffset + gameConfigs.fieldWidth,
-            y: gameConfigs.goalYOffset,
-        });
-        this.positions.push({
-            x: gameConfigs.fieldXOffset + gameConfigs.fieldWidth,
-            y: gameConfigs.goalYOffset + gameConfigs.goalHeight,
-        });
+
+        this.positions.push(new Point(gameConfigs.fieldXOffset, gameConfigs.goalYOffset));
+        this.positions.push(
+            new Point(gameConfigs.fieldXOffset, gameConfigs.goalYOffset + gameConfigs.goalHeight),
+        );
+        this.positions.push(
+            new Point(gameConfigs.fieldXOffset + gameConfigs.fieldWidth, gameConfigs.goalYOffset),
+        );
+        this.positions.push(
+            new Point(
+                gameConfigs.fieldXOffset + gameConfigs.fieldWidth,
+                gameConfigs.goalYOffset + gameConfigs.goalHeight,
+            ),
+        );
         this.radius = gameConfigs.goalPostRadius;
     }
 }

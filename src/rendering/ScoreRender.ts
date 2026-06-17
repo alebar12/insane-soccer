@@ -19,10 +19,10 @@ export class ScoreRender {
             this.digitsImages.width,
             this.digitsImages.height / (this.totalNumbers * this.frameForNumber),
         );
-        const scoreHeight = (scoreContext.canvas.height * 9) / 10
+        const scoreHeight = (scoreContext.canvas.height * 9) / 10;
         this.scoreDimensions = new Dimensions(
             (scoreHeight * this.innerImageDimensions.width) / this.innerImageDimensions.height,
-            scoreHeight            
+            scoreHeight,
         );
 
         const yPosition = (scoreContext.canvas.height - this.scoreDimensions.height) / 2;

@@ -1,14 +1,13 @@
 import { AssetLoader } from "../assets/AssetLoader";
+import { Dimensions } from "../utils/Dimensions";
+import { Point } from "../utils/Point";
 
 export class ScoreRender {
     private readonly digitsImages: HTMLImageElement;
     private readonly scoreContext: CanvasRenderingContext2D;
-    private readonly innerImageWidth: number;
-    private readonly innerImageHeight: number;
-    private readonly scoreWidth: number;
-    private readonly scoreHeight: number;
-    private readonly xPositionsArray: Array<number>;
-    private readonly yPosition: number;
+    private readonly innerImageDimensions: Dimensions;
+    private readonly scoreDimensions: Dimensions;
+    private readonly positionArray: Array<Point>;
     private readonly frameForNumber: number = 6;
     private readonly totalNumbers: number = 10;
 
@@ -16,19 +15,23 @@ export class ScoreRender {
         this.scoreContext = scoreContext;
         this.digitsImages = assetLoader.getImage("digits.png");
 
-        this.innerImageHeight =
-            this.digitsImages.height / (this.totalNumbers * this.frameForNumber);
-        this.innerImageWidth = this.digitsImages.width;
-        this.scoreHeight = (scoreContext.canvas.height * 9) / 10;
-        this.scoreWidth = (this.scoreHeight * this.innerImageWidth) / this.innerImageHeight;
+        this.innerImageDimensions = new Dimensions(
+            this.digitsImages.width,
+            this.digitsImages.height / (this.totalNumbers * this.frameForNumber),
+        );
+        const scoreHeight = (scoreContext.canvas.height * 9) / 10
+        this.scoreDimensions = new Dimensions(
+            (scoreHeight * this.innerImageDimensions.width) / this.innerImageDimensions.height,
+            scoreHeight            
+        );
 
-        this.xPositionsArray = [
-            0,
-            this.scoreWidth,
-            scoreContext.canvas.width - this.scoreWidth * 2,
-            scoreContext.canvas.width - this.scoreWidth,
+        const yPosition = (scoreContext.canvas.height - this.scoreDimensions.height) / 2;
+        this.positionArray = [
+            new Point(0, yPosition),
+            new Point(this.scoreDimensions.width, yPosition),
+            new Point(scoreContext.canvas.width - this.scoreDimensions.width * 2, yPosition),
+            new Point(scoreContext.canvas.width - this.scoreDimensions.width, yPosition),
         ];
-        this.yPosition = (scoreContext.canvas.height - this.scoreHeight) / 2;
     }
 
     public render(): void {
@@ -40,17 +43,17 @@ export class ScoreRender {
         );
 
         // TODO gestire aggiornamento punteggio
-        this.xPositionsArray.forEach(x => {
+        this.positionArray.forEach(position => {
             this.scoreContext.drawImage(
                 this.digitsImages,
                 0,
-                this.scoreHeight * 0,
-                this.innerImageWidth,
-                this.innerImageHeight,
-                x,
-                this.yPosition,
-                this.scoreWidth,
-                this.scoreHeight,
+                this.innerImageDimensions.height * 0,
+                this.innerImageDimensions.width,
+                this.innerImageDimensions.height,
+                position.x,
+                position.y,
+                this.scoreDimensions.width,
+                this.scoreDimensions.height,
             );
         });
     }

@@ -44,7 +44,7 @@ export class PlayerRender {
             this.gameContext.arc(
                 0,
                 0,
-                this.gameConfigs.playerSizeWithBorder,
+                player.radius,
                 0,
                 2 * Math.PI,
                 false,

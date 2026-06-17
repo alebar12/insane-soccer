@@ -54,7 +54,7 @@ export class GameConfigs {
 
         this.playerStartPositionXOffset = this.fieldWidth / 8;
         this.playerStartPositionYOffset = this.fieldHeight / 2;
-        this.substituteStartPositionYOffset = this.fieldHeight + this.athleticTrackHeight / 2;
+        this.substituteStartPositionYOffset = this.fieldHeight + this.athleticTrackYOffset + this.athleticTrackHeight / 2;
 
         this.gatesLenght = this.playerSizeWithBorder * 3;
     }

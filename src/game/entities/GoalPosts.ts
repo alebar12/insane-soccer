@@ -3,6 +3,7 @@ import { Point } from "../../utils/Point";
 
 export class GoalPosts {
     public readonly positions: Array<Point>;
+    public readonly radius: number;
 
     public constructor(gameConfigs: GameConfigs) {
         this.positions = [];
@@ -22,5 +23,6 @@ export class GoalPosts {
             x: gameConfigs.fieldXOffset + gameConfigs.fieldWidth,
             y: gameConfigs.goalYOffset + gameConfigs.goalHeight,
         });
+        this.radius = gameConfigs.goalPostRadius;
     }
 }

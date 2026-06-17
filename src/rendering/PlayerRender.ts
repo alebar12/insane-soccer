@@ -41,14 +41,7 @@ export class PlayerRender {
                 Math.round(player.position.y),
             );
             this.gameContext.beginPath();
-            this.gameContext.arc(
-                0,
-                0,
-                player.radius,
-                0,
-                2 * Math.PI,
-                false,
-            );
+            this.gameContext.arc(0, 0, player.radius, 0, 2 * Math.PI, false);
             this.gameContext.closePath();
             this.gameContext.fill();
             this.gameContext.stroke();

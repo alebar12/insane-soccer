@@ -22,7 +22,7 @@ export class MainRender {
         this.scoreRender = new ScoreRender(domHandler.scoreContext, assetLoader);
         this.gatesRender = new GatesRender(domHandler.gameContext, gameConfigs);
         this.playerRender = new PlayerRender(domHandler.gameContext, gameConfigs);
-        this.menuRender = new MenuRender(domHandler.menuContext, assetLoader, gameConfigs);
+        this.menuRender = new MenuRender(domHandler.menuContext, assetLoader);
     }
 
     public render(gameWorld: GameWorld): void {

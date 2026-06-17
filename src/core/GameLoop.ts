@@ -1,6 +1,8 @@
 import { AssetLoader } from "../assets/AssetLoader";
 import { GameWorld } from "../game/world/GameWorld";
+import { MouseInputManager } from "../input/MouseInputManager";
 import { MainRender } from "../rendering/MainRender";
+import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 
@@ -9,16 +11,21 @@ export class GameLoop {
     private prevTime: number = 0;
     private mainRender: MainRender;
     private gameWorld: GameWorld;
+    private uiInteractionSystem: UIInteractionSystem;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
-        this.gameWorld = new GameWorld(gameConfigs);
+        this.gameWorld = new GameWorld(gameConfigs, assetLoader);
+        this.uiInteractionSystem = new UIInteractionSystem(
+            new MouseInputManager(domHandler.menuCanvas),
+        );
     }
 
     public main(): void {
         const tick = (time: number): void => {
             if (this.prevTime !== 0) {
                 //this.delta = time - this.prevTime;
+                this.updateInputs();
                 this.update();
                 this.render();
             }
@@ -30,6 +37,12 @@ export class GameLoop {
     }
 
     private update(): void {}
+
+    private updateInputs(): void {
+        this.uiInteractionSystem.update(this.gameWorld.menuButton, () => {
+            console.log("clicked");
+        });
+    }
 
     private render(): void {
         this.mainRender.render(this.gameWorld);

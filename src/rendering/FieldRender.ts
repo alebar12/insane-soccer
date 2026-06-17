@@ -194,7 +194,7 @@ export class FieldRender {
             this.backgroundContext.arc(
                 position.x,
                 position.y,
-                this.gameConfigs.goalPostRadius,
+                gameWorld.goalPosts.radius,
                 0,
                 2 * Math.PI,
                 false,

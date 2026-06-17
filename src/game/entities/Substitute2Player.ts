@@ -1,4 +1,5 @@
 import { Point } from "../../utils/Point";
+import { PlayerSide } from "../status/PlayerSide";
 import { Player } from "./Player";
 
 export class Substitute2Player extends Player {
@@ -9,9 +10,12 @@ export class Substitute2Player extends Player {
         );
     }
     isCpu(): boolean {
-        return true;
+        return false;
     }
     isSubstitute(): boolean {
         return true;
+    }
+    getSide(): PlayerSide {
+        return PlayerSide.RIGHT;
     }
 }

@@ -21,7 +21,7 @@ export class GameConfigs {
     public readonly playerStartPositionXOffset: number;
     public readonly playerStartPositionYOffset: number;
     public readonly substituteStartPositionYOffset: number;
-    public readonly gatesLenght: number;
+    public readonly gatesLength: number;
 
     public constructor(canvasWidth: number, canvasHeight: number) {
         this.width = canvasWidth;
@@ -57,6 +57,6 @@ export class GameConfigs {
         this.substituteStartPositionYOffset =
             this.fieldHeight + this.athleticTrackYOffset + this.athleticTrackHeight / 2;
 
-        this.gatesLenght = this.playerSizeWithBorder * 3;
+        this.gatesLength = this.playerSizeWithBorder * 3;
     }
 }

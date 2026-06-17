@@ -5,6 +5,7 @@ import { GameWorld } from "../game/world/GameWorld";
 export class MenuRender {
     private readonly menuContext: CanvasRenderingContext2D;
     private readonly playImage: HTMLImageElement;
+    private readonly hoverFactor: number = 1.3;
 
     public constructor(menuContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.menuContext = menuContext;
@@ -20,12 +21,17 @@ export class MenuRender {
         );
 
         if (gameWorld.gameStatus === GameStatus.MENU) {
+            const scale = 1 + (this.hoverFactor - 1) * gameWorld.menuButton.hoverProgress;
+            const width = gameWorld.menuButton.dimension.width * scale;
+            const height = gameWorld.menuButton.dimension.height * scale;
             this.menuContext.drawImage(
                 this.playImage,
-                gameWorld.menuButton.position.x,
-                gameWorld.menuButton.position.y,
-                gameWorld.menuButton.dimension.width,
-                gameWorld.menuButton.dimension.height,
+                gameWorld.menuButton.position.x -
+                    (width - gameWorld.menuButton.dimension.width) / 2,
+                gameWorld.menuButton.position.y -
+                    (height - gameWorld.menuButton.dimension.height) / 2,
+                width,
+                height,
             );
         }
     }

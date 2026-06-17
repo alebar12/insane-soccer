@@ -14,11 +14,11 @@ export class MouseInputManager {
     private onMouseMove = (event: MouseEvent): void => {
         const rect = this.element.getBoundingClientRect();
         this.mousePosition = new Point(event.clientX - rect.left, event.clientY - rect.top);
-    }
+    };
 
     private onClick = (): void => {
         this.isMousePressed = true;
-    }
+    };
 
     public reset(): void {
         this.isMousePressed = false;

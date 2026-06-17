@@ -1,4 +1,5 @@
 import { AssetLoader } from "../assets/AssetLoader";
+import { GameStatus } from "../game/status/GameStatus";
 import { GameWorld } from "../game/world/GameWorld";
 import { MouseInputManager } from "../input/MouseInputManager";
 import { MainRender } from "../rendering/MainRender";
@@ -7,7 +8,7 @@ import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 
 export class GameLoop {
-    //private delta : number = 0;
+    private delta: number = 0;
     private prevTime: number = 0;
     private mainRender: MainRender;
     private gameWorld: GameWorld;
@@ -24,8 +25,8 @@ export class GameLoop {
     public main(): void {
         const tick = (time: number): void => {
             if (this.prevTime !== 0) {
-                //this.delta = time - this.prevTime;
-                this.updateInputs();
+                this.delta = time - this.prevTime;
+                this.updateInputs(this.delta);
                 this.update();
                 this.render();
             }
@@ -38,10 +39,14 @@ export class GameLoop {
 
     private update(): void {}
 
-    private updateInputs(): void {
-        this.uiInteractionSystem.update(this.gameWorld.menuButton, () => {
-            console.log("clicked");
-        });
+    private updateInputs(deltaMs: number): void {
+        this.uiInteractionSystem.update(
+            this.gameWorld.menuButton,
+            () => {
+                this.gameWorld.gameStatus = GameStatus.WAITING_BALL;
+            },
+            deltaMs,
+        );
     }
 
     private render(): void {

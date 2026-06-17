@@ -25,4 +25,8 @@ export class MenuButton extends HoverableEntity {
             point.y <= this.position.y + this.dimension.height
         );
     }
+
+    public getTransitionTime(): number {
+        return 100;
+    }
 }

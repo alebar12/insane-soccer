@@ -33,7 +33,7 @@ export class Player {
         this.radius = gameConfigs.playerSizeWithBorder;
         this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
         this.maxSpeedWithBall = gameConfigs.fieldHeight / 666;
-        this.reachedDistanceTollerance = gameConfigs.fieldWidth / 80;
+        this.reachedDistanceTollerance = gameConfigs.fieldWidth / 100;
         this.acceleration = gameConfigs.fieldHeight / 150000;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
 
@@ -115,9 +115,15 @@ export class Player {
 
         if (this.reachedDestinationPosition()) {
             this.speed = new Point(0, 0);
+            this.position = new Point(this.destinationPosition.x, this.destinationPosition.y);
         }
 
         this.adjustSpeedToMaxSpeed();
+    }
+
+    public resetToStartGame(): void {
+        this.currentMaxSpeed = this.normalMaxSpeed;
+        this.destinationPosition = new Point(this.initialPosition.x, this.initialPosition.y);
     }
 
     private calculateDestinationPosition(position: number, speed: number): number {

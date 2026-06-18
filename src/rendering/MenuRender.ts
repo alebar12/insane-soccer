@@ -20,7 +20,7 @@ export class MenuRender {
             this.menuContext.canvas.height,
         );
 
-        if (gameWorld.gameStatus === GameStatus.MENU) {
+        if (gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
             const scale = 1 + (this.hoverFactor - 1) * gameWorld.menuButton.hoverProgress;
             const width = gameWorld.menuButton.dimension.width * scale;
             const height = gameWorld.menuButton.dimension.height * scale;
@@ -35,4 +35,5 @@ export class MenuRender {
             );
         }
     }
+    
 }

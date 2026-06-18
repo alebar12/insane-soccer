@@ -13,12 +13,15 @@ export class BeforeGameMovementStrategy extends AbstractMovementStrategy {
         this.gameConfigs = gameConfigs;
     }
 
-    canBeApplied(player: Player, gameWorld: GameWorld): boolean {
-        return !player.isSubstitute && (gameWorld.gameStatusManager.gameStatus === GameStatus.MENU || 
-            gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL);
+    public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
+        return (
+            !player.isSubstitute &&
+            (gameWorld.gameStatusManager.gameStatus === GameStatus.MENU ||
+                gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL)
+        );
     }
 
-    apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
+    public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
         if (gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
             if (player.reachedDestinationPosition()) {
                 player.destinationPosition.y =
@@ -29,12 +32,13 @@ export class BeforeGameMovementStrategy extends AbstractMovementStrategy {
                 if (player.side === PlayerSide.RIGHT) {
                     player.destinationPosition.x += this.gameConfigs.fieldWidth / 2;
                 }
-                player.currentMaxSpeed = (player.normalMaxSpeed / 5) * Math.random() + player.normalMaxSpeed / 7;
+                player.currentMaxSpeed =
+                    (player.normalMaxSpeed / 5) * Math.random() + player.normalMaxSpeed / 7;
             }
         } else if (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL) {
             if (gameWorld.gameStatusManager.isStatusChangedRecently()) {
                 player.resetToStartGame();
-            }   
+            }
         }
         player.adjustSpeedToDestinationPoint(deltaMs);
     }

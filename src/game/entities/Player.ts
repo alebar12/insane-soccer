@@ -8,7 +8,7 @@ export class Player {
     public readonly side: PlayerSide;
     public readonly normalMaxSpeed: number;
     public readonly maxSpeedWithBall: number;
-    public readonly reachedDistanceTollerance: number;
+    public readonly reachedDistanceTolerance: number;
     public readonly acceleration: number;
     public readonly closeToPointDistance: number;
 
@@ -33,7 +33,7 @@ export class Player {
         this.radius = gameConfigs.playerSizeWithBorder;
         this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
         this.maxSpeedWithBall = gameConfigs.fieldHeight / 666;
-        this.reachedDistanceTollerance = gameConfigs.fieldWidth / 100;
+        this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
         this.acceleration = gameConfigs.fieldHeight / 150000;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
 
@@ -63,7 +63,7 @@ export class Player {
     public reachedDestinationPosition(): boolean {
         return (
             Point.getDistance(this.position, this.destinationPosition) <
-            this.reachedDistanceTollerance
+            this.reachedDistanceTolerance
         );
     }
 
@@ -85,10 +85,10 @@ export class Player {
 
         if (
             Point.getDistance(projectedPosition, this.destinationPosition) <
-            this.reachedDistanceTollerance
+            this.reachedDistanceTolerance
         ) {
             const currentSpeed = this.getSpeed();
-            if (this.getSpeed() > 0) {
+            if (currentSpeed > 0) {
                 const newSpeed = Math.max(currentSpeed - this.acceleration * deltaMs, 0);
                 const ratio = newSpeed / currentSpeed;
                 this.speed.x *= ratio;
@@ -138,8 +138,8 @@ export class Player {
     }
 
     private adjustSpeedToMaxSpeed(): void {
-        let speed = Math.min(this.getSpeed(), this.currentMaxSpeed);
-        var angle = Math.atan2(this.speed.y, this.speed.x);
+        const speed = Math.min(this.getSpeed(), this.currentMaxSpeed);
+        const angle = Math.atan2(this.speed.y, this.speed.x);
         this.speed.x = Math.cos(angle) * speed;
         this.speed.y = Math.sin(angle) * speed;
     }

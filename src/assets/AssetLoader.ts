@@ -13,7 +13,7 @@ export class AssetLoader {
 
     private images = new Map<string, HTMLImageElement>();
 
-    async init(): Promise<void> {
+    public async init(): Promise<void> {
         await Promise.all(
             this.IMAGE_NAMES.map(fileName =>
                 this.loadImage(fileName, `${this.IMAGE_FOLDER}${fileName}`),
@@ -22,7 +22,7 @@ export class AssetLoader {
     }
 
     public getImage(imageName: string): HTMLImageElement {
-        let image = this.images.get(imageName);
+        const image = this.images.get(imageName);
 
         if (image === undefined) {
             throw new Error(`${imageName} image not found`);

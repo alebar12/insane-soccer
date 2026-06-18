@@ -1,5 +1,6 @@
 import { AssetLoader } from "../assets/AssetLoader";
 import { GameStatus } from "../game/status/GameStatus";
+import { MovementSystem } from "../game/systems/MovementSystem";
 import { GameWorld } from "../game/world/GameWorld";
 import { MouseInputManager } from "../input/MouseInputManager";
 import { MainRender } from "../rendering/MainRender";
@@ -13,6 +14,7 @@ export class GameLoop {
     private mainRender: MainRender;
     private gameWorld: GameWorld;
     private uiInteractionSystem: UIInteractionSystem;
+    private movementSystem: MovementSystem;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
@@ -20,6 +22,7 @@ export class GameLoop {
         this.uiInteractionSystem = new UIInteractionSystem(
             new MouseInputManager(domHandler.menuCanvas),
         );
+        this.movementSystem = new MovementSystem(gameConfigs);
     }
 
     public main(): void {
@@ -37,7 +40,9 @@ export class GameLoop {
         requestAnimationFrame(tick);
     }
 
-    private update(): void {}
+    private update(): void {
+        this.movementSystem.update(this.gameWorld, this.delta);
+    }
 
     private updateInputs(deltaMs: number): void {
         this.uiInteractionSystem.update(

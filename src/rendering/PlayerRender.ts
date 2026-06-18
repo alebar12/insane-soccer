@@ -5,10 +5,10 @@ export class PlayerRender {
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
     private readonly colorMap: Map<string, string> = new Map([
-        ["LEFT-false", "#008000"],
-        ["LEFT-true", "#338088"],
-        ["RIGHT-false", "#FFA500"],
-        ["RIGHT-true", "#FFFF00"],
+        ["LEFT-0", "#008000"],
+        ["LEFT-1", "#338088"],
+        ["RIGHT-0", "#FFA500"],
+        ["RIGHT-1", "#FFFF00"],
     ]);
     private readonly stunnedColor: string = "#FFFFFF";
     private readonly borderColor: string = "#003300";
@@ -22,7 +22,7 @@ export class PlayerRender {
         gameWorld.players.forEach(player => {
             this.gameContext.save();
 
-            const colorKey = `${player.getSide()}-${player.isSubstitute()}`;
+            const colorKey = `${player.side}-${player.colorIndex}`;
             let color = player.isStunned ? this.stunnedColor : this.colorMap.get(colorKey);
             if (color === undefined) {
                 color = "#FF0000";

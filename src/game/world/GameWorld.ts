@@ -1,12 +1,8 @@
 import { AssetLoader } from "../../assets/AssetLoader";
 import { GameConfigs } from "../../utils/GameConfigs";
-import { CpuPlayer } from "../entities/CpuPlayer";
 import { GoalPosts } from "../entities/GoalPosts";
-import { HumanPlayer } from "../entities/HumanPlayer";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
-import { Substitute1Player } from "../entities/Substitute1Player";
-import { Substitute2Player } from "../entities/Substitute2Player";
 import { GameStatus } from "../status/GameStatus";
 
 export class GameWorld {
@@ -17,10 +13,10 @@ export class GameWorld {
 
     public constructor(gameConfigs: GameConfigs, assetLoader: AssetLoader) {
         this.goalPosts = new GoalPosts(gameConfigs);
-        this.players.push(new HumanPlayer(gameConfigs));
-        this.players.push(new CpuPlayer(gameConfigs));
-        this.players.push(new Substitute1Player(gameConfigs));
-        this.players.push(new Substitute2Player(gameConfigs));
+        this.players.push(Player.createHumanPlayer(gameConfigs));
+        this.players.push(Player.createCpuPlayer(gameConfigs));
+        this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
+        this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         const playImg = assetLoader.getImage("play.png");
         this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
         this.gameStatus = GameStatus.MENU;

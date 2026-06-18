@@ -3,13 +3,13 @@ import { GameConfigs } from "../../utils/GameConfigs";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
-import { GameStatus } from "../status/GameStatus";
+import { GameStatusManager } from "../status/GameStatusManager";
 
 export class GameWorld {
     public readonly goalPosts: GoalPosts;
     public readonly players: Array<Player> = [];
     public readonly menuButton: MenuButton;
-    public gameStatus: GameStatus;
+    public readonly gameStatusManager: GameStatusManager;
 
     public constructor(gameConfigs: GameConfigs, assetLoader: AssetLoader) {
         this.goalPosts = new GoalPosts(gameConfigs);
@@ -19,6 +19,6 @@ export class GameWorld {
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         const playImg = assetLoader.getImage("play.png");
         this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
-        this.gameStatus = GameStatus.MENU;
+        this.gameStatusManager = new GameStatusManager();
     }
 }

@@ -48,7 +48,7 @@ export class GameLoop {
         this.uiInteractionSystem.update(
             this.gameWorld.menuButton,
             () => {
-                this.gameWorld.gameStatus = GameStatus.WAITING_BALL;
+                this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
             },
             deltaMs,
         );

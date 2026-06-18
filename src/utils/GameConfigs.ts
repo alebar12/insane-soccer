@@ -1,4 +1,6 @@
 export class GameConfigs {
+    public static readonly IS_DEBUG: boolean = true;
+
     public readonly width: number;
     public readonly height: number;
     public readonly fieldHeight: number;

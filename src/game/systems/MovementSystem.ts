@@ -1,13 +1,15 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { GameWorld } from "../world/GameWorld";
 import { AbstractMovementStrategy } from "./movementStrategies/AbstractMovementStrategy";
-import { BeforeGameMovementStrategy } from "./movementStrategies/BeforeGameMovementStrategy";
+import { MenuMovementStrategy } from "./movementStrategies/MenuMovementStrategy";
+import { WaitingBallMovementStrategy } from "./movementStrategies/WaitingBallMovementStrategy";
 
 export class MovementSystem {
     private strategies: Array<AbstractMovementStrategy> = [];
 
     public constructor(gameConfigs: GameConfigs) {
-        this.strategies.push(new BeforeGameMovementStrategy(gameConfigs));
+        this.strategies.push(new MenuMovementStrategy(gameConfigs));
+        this.strategies.push(new WaitingBallMovementStrategy());
     }
 
     public update(gameWorld: GameWorld, deltaMs: number): void {

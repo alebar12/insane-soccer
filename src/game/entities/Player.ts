@@ -14,7 +14,11 @@ export class Player {
 
     public movementPosition: MovementPoint = new MovementPoint(new Point(0, 0), new Point(0, 0), 0);
     public initialPosition: Point = new Point(0, 0);
-    public destinationPosition: MovementPoint = new MovementPoint(new Point(0, 0), new Point(0, 0), 0);
+    public destinationPosition: MovementPoint = new MovementPoint(
+        new Point(0, 0),
+        new Point(0, 0),
+        0,
+    );
     public currentMaxSpeed: number = 0;
 
     public isStunned: boolean = false;
@@ -73,8 +77,14 @@ export class Player {
 
     public adjustSpeedToDestinationPoint(deltaMs: number): void {
         const projectedPosition = new Point(
-            this.calculateDestinationPosition(this.movementPosition.position.x, this.movementPosition.speed.x),
-            this.calculateDestinationPosition(this.movementPosition.position.y, this.movementPosition.speed.y),
+            this.calculateDestinationPosition(
+                this.movementPosition.position.x,
+                this.movementPosition.speed.x,
+            ),
+            this.calculateDestinationPosition(
+                this.movementPosition.position.y,
+                this.movementPosition.speed.y,
+            ),
         );
 
         const angle = Math.atan2(
@@ -88,7 +98,10 @@ export class Player {
         ) {
             const currentSpeed = this.getSpeed();
             if (currentSpeed > 0) {
-                const newSpeed = Math.max(currentSpeed - this.movementPosition.acceleration * deltaMs, 0);
+                const newSpeed = Math.max(
+                    currentSpeed - this.movementPosition.acceleration * deltaMs,
+                    0,
+                );
                 const ratio = newSpeed / currentSpeed;
                 this.movementPosition.speed.x *= ratio;
                 this.movementPosition.speed.y *= ratio;
@@ -114,7 +127,10 @@ export class Player {
 
         if (this.reachedDestinationPosition()) {
             this.movementPosition.speed = new Point(0, 0);
-            this.movementPosition.position = new Point(this.destinationPosition.position.x, this.destinationPosition.position.y);
+            this.movementPosition.position = new Point(
+                this.destinationPosition.position.x,
+                this.destinationPosition.position.y,
+            );
         }
 
         this.adjustSpeedToMaxSpeed();
@@ -122,14 +138,19 @@ export class Player {
 
     public resetToStartGame(): void {
         this.currentMaxSpeed = this.normalMaxSpeed;
-        this.destinationPosition = new MovementPoint(new Point(this.initialPosition.x, this.initialPosition.y), new Point(0, 0), 0);
-        
+        this.destinationPosition = new MovementPoint(
+            new Point(this.initialPosition.x, this.initialPosition.y),
+            new Point(0, 0),
+            0,
+        );
     }
 
     private calculateDestinationPosition(position: number, speed: number): number {
         while (Math.abs(speed) > 0) {
             position += speed;
-            speed = Math.sign(speed) * Math.max(Math.abs(speed) - this.movementPosition.acceleration, 0);
+            speed =
+                Math.sign(speed) *
+                Math.max(Math.abs(speed) - this.movementPosition.acceleration, 0);
             if (Math.abs(speed) <= this.movementPosition.acceleration) {
                 speed = 0;
             }
@@ -145,7 +166,9 @@ export class Player {
     }
 
     private getSpeed(): number {
-        return Math.sqrt(Math.pow(this.movementPosition.speed.x, 2) + Math.pow(this.movementPosition.speed.y, 2));
+        return Math.sqrt(
+            Math.pow(this.movementPosition.speed.x, 2) + Math.pow(this.movementPosition.speed.y, 2),
+        );
     }
 
     private initPositions(gameConfigs: GameConfigs): void {
@@ -167,6 +190,9 @@ export class Player {
         this.initialPosition.x = gameConfigs.fieldXOffset + offsetX;
 
         this.movementPosition.position = new Point(this.initialPosition.x, this.initialPosition.y);
-        this.destinationPosition.position = new Point(this.initialPosition.x, this.initialPosition.y);
+        this.destinationPosition.position = new Point(
+            this.initialPosition.x,
+            this.initialPosition.y,
+        );
     }
 }

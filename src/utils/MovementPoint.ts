@@ -5,6 +5,7 @@ export class MovementPoint {
         public position: Point,
         public speed: Point,
         public acceleration: number,
+        public size: number,
     ) {}
 
     public updatePosition(deltaMs: number): void {

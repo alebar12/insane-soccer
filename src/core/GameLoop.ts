@@ -1,5 +1,4 @@
 import { AssetLoader } from "../assets/AssetLoader";
-import { GameStatus } from "../game/status/GameStatus";
 import { MovementSystem } from "../game/systems/MovementSystem";
 import { GameWorld } from "../game/world/GameWorld";
 import { MouseInputManager } from "../input/MouseInputManager";
@@ -7,6 +6,7 @@ import { MainRender } from "../rendering/MainRender";
 import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
+import { GameStatus } from "../game/status/GameStatus";
 
 export class GameLoop {
     private delta: number = 0;

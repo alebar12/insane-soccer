@@ -1,7 +1,5 @@
-declare const process: any;
-
 export class GameConfigs {
-    public static readonly IS_DEBUG: boolean = (process.env.NODE_ENV === "development");
+    public static readonly IS_DEBUG: boolean = true;
 
     public readonly width: number;
     public readonly height: number;

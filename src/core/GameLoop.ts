@@ -7,6 +7,7 @@ import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { DomHandler } from "../utils/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { GameStatus } from "../game/status/GameStatus";
+import { CollisionSystem } from "../game/systems/CollisionSystem";
 
 export class GameLoop {
     private delta: number = 0;
@@ -14,7 +15,9 @@ export class GameLoop {
     private mainRender: MainRender;
     private gameWorld: GameWorld;
     private uiInteractionSystem: UIInteractionSystem;
+
     private movementSystem: MovementSystem;
+    private collisionSystem: CollisionSystem;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
@@ -22,7 +25,9 @@ export class GameLoop {
         this.uiInteractionSystem = new UIInteractionSystem(
             new MouseInputManager(domHandler.menuCanvas),
         );
+
         this.movementSystem = new MovementSystem(gameConfigs);
+        this.collisionSystem = new CollisionSystem(gameConfigs);
     }
 
     public main(): void {
@@ -36,13 +41,13 @@ export class GameLoop {
             this.prevTime = time;
             requestAnimationFrame(tick);
         };
-
         requestAnimationFrame(tick);
     }
 
     private update(): void {
         this.gameWorld.gameStatusManager.update(this.delta);
         this.movementSystem.update(this.gameWorld, this.delta);
+        this.collisionSystem.update(this.gameWorld);
     }
 
     private updateInputs(deltaMs: number): void {

@@ -4,7 +4,7 @@ import { Player } from "../../entities/Player";
 import { GameStatus } from "../../status/GameStatus";
 import { PlayerSide } from "../../status/PlayerSide";
 import { GameWorld } from "../../world/GameWorld";
-import { AbstractMovementStrategy } from "./AbstractMovementStrategy";
+import { AbstractMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
 export class MenuMovementStrategy extends AbstractMovementStrategy {
     private readonly gameConfigs: GameConfigs;

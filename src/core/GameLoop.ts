@@ -41,6 +41,7 @@ export class GameLoop {
     }
 
     private update(): void {
+        this.gameWorld.gameStatusManager.update(this.delta);
         this.movementSystem.update(this.gameWorld, this.delta);
     }
 

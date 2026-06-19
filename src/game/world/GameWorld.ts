@@ -3,7 +3,7 @@ import { GameConfigs } from "../../utils/GameConfigs";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
-import { GameStatusManager } from "../status/GameStatusManager";
+import { GameStatusManager } from "../managers/GameStatusManager";
 
 export class GameWorld {
     public readonly goalPosts: GoalPosts;

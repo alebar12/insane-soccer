@@ -1,4 +1,5 @@
 import { GameConfigs } from "../../../utils/GameConfigs";
+import { Point } from "../../../utils/Point";
 import { Player } from "../../entities/Player";
 import { GameStatus } from "../../status/GameStatus";
 import { PlayerSide } from "../../status/PlayerSide";
@@ -24,14 +25,16 @@ export class BeforeGameMovementStrategy extends AbstractMovementStrategy {
     public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
         if (gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
             if (player.reachedDestinationPosition()) {
-                player.destinationPosition.y =
+                player.destinationPosition.position.y =
                     (Math.random() * 0.8 + 0.1) * this.gameConfigs.fieldHeight;
-                player.destinationPosition.x =
+                player.destinationPosition.position.x =
                     this.gameConfigs.fieldXOffset +
                     ((Math.random() * 0.8 + 0.1) * this.gameConfigs.fieldWidth) / 2;
                 if (player.side === PlayerSide.RIGHT) {
-                    player.destinationPosition.x += this.gameConfigs.fieldWidth / 2;
+                    player.destinationPosition.position.x += this.gameConfigs.fieldWidth / 2;
                 }
+                player.destinationPosition.speed = new Point(0, 0);
+                player.destinationPosition.acceleration = 0;
                 player.currentMaxSpeed =
                     (player.normalMaxSpeed / 5) * Math.random() + player.normalMaxSpeed / 7;
             }

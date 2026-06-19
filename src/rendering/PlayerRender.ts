@@ -37,8 +37,8 @@ export class PlayerRender {
             this.gameContext.shadowBlur = this.gameConfigs.shadowBlur;
 
             this.gameContext.translate(
-                Math.round(player.position.x),
-                Math.round(player.position.y),
+                Math.round(player.movementPosition.position.x),
+                Math.round(player.movementPosition.position.y),
             );
             this.gameContext.beginPath();
             this.gameContext.arc(0, 0, player.radius, 0, 2 * Math.PI, false);
@@ -53,8 +53,8 @@ export class PlayerRender {
                 this.gameContext.fillStyle = "red";
                 this.gameContext.strokeStyle = "red";
                 this.gameContext.translate(
-                    Math.round(player.destinationPosition.x),
-                    Math.round(player.destinationPosition.y),
+                    Math.round(player.destinationPosition.position.x),
+                    Math.round(player.destinationPosition.position.y),
                 );
                 this.gameContext.beginPath();
                 this.gameContext.arc(0, 0, player.radius / 5, 0, 2 * Math.PI, false);

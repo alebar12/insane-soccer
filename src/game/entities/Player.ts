@@ -1,4 +1,5 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { MovementPoint } from "../../utils/MovementPoint";
 import { Point } from "../../utils/Point";
 import { PlayerSide } from "../status/PlayerSide";
 
@@ -9,13 +10,11 @@ export class Player {
     public readonly normalMaxSpeed: number;
     public readonly maxSpeedWithBall: number;
     public readonly reachedDistanceTolerance: number;
-    public readonly acceleration: number;
     public readonly closeToPointDistance: number;
 
-    public position: Point = new Point(0, 0);
-    public speed: Point = new Point(0, 0);
+    public movementPosition: MovementPoint = new MovementPoint(new Point(0, 0), new Point(0, 0), 0);
     public initialPosition: Point = new Point(0, 0);
-    public destinationPosition: Point = new Point(0, 0);
+    public destinationPosition: MovementPoint = new MovementPoint(new Point(0, 0), new Point(0, 0), 0);
     public currentMaxSpeed: number = 0;
 
     public isStunned: boolean = false;
@@ -34,7 +33,7 @@ export class Player {
         this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
         this.maxSpeedWithBall = gameConfigs.fieldHeight / 666;
         this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
-        this.acceleration = gameConfigs.fieldHeight / 150000;
+        this.movementPosition.acceleration = gameConfigs.fieldHeight / 150000;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
 
         this.isCpu = isCpu;
@@ -62,60 +61,60 @@ export class Player {
 
     public reachedDestinationPosition(): boolean {
         return (
-            Point.getDistance(this.position, this.destinationPosition) <
+            Point.getDistance(this.movementPosition.position, this.destinationPosition.position) <
             this.reachedDistanceTolerance
         );
     }
 
     public move(deltaMs: number): void {
-        this.position.x += this.speed.x * deltaMs;
-        this.position.y += this.speed.y * deltaMs;
+        this.movementPosition.position.x += this.movementPosition.speed.x * deltaMs;
+        this.movementPosition.position.y += this.movementPosition.speed.y * deltaMs;
     }
 
     public adjustSpeedToDestinationPoint(deltaMs: number): void {
         const projectedPosition = new Point(
-            this.calculateDestinationPosition(this.position.x, this.speed.x),
-            this.calculateDestinationPosition(this.position.y, this.speed.y),
+            this.calculateDestinationPosition(this.movementPosition.position.x, this.movementPosition.speed.x),
+            this.calculateDestinationPosition(this.movementPosition.position.y, this.movementPosition.speed.y),
         );
 
         const angle = Math.atan2(
-            this.destinationPosition.y - this.position.y,
-            this.destinationPosition.x - this.position.x,
+            this.destinationPosition.position.y - this.movementPosition.position.y,
+            this.destinationPosition.position.x - this.movementPosition.position.x,
         );
 
         if (
-            Point.getDistance(projectedPosition, this.destinationPosition) <
+            Point.getDistance(projectedPosition, this.destinationPosition.position) <
             this.reachedDistanceTolerance
         ) {
             const currentSpeed = this.getSpeed();
             if (currentSpeed > 0) {
-                const newSpeed = Math.max(currentSpeed - this.acceleration * deltaMs, 0);
+                const newSpeed = Math.max(currentSpeed - this.movementPosition.acceleration * deltaMs, 0);
                 const ratio = newSpeed / currentSpeed;
-                this.speed.x *= ratio;
-                this.speed.y *= ratio;
+                this.movementPosition.speed.x *= ratio;
+                this.movementPosition.speed.y *= ratio;
             }
         } else {
             const desiredSpeedX = Math.cos(angle) * this.currentMaxSpeed;
             const desiredSpeedY = Math.sin(angle) * this.currentMaxSpeed;
 
-            let steerX = desiredSpeedX - this.speed.x;
-            let steerY = desiredSpeedY - this.speed.y;
+            let steerX = desiredSpeedX - this.movementPosition.speed.x;
+            let steerY = desiredSpeedY - this.movementPosition.speed.y;
 
             const steerMagnitude = Math.sqrt(steerX * steerX + steerY * steerY);
-            const maxSteer = this.acceleration * deltaMs;
+            const maxSteer = this.movementPosition.acceleration * deltaMs;
             if (steerMagnitude > maxSteer) {
                 const ratio = maxSteer / steerMagnitude;
                 steerX *= ratio;
                 steerY *= ratio;
             }
 
-            this.speed.x += steerX;
-            this.speed.y += steerY;
+            this.movementPosition.speed.x += steerX;
+            this.movementPosition.speed.y += steerY;
         }
 
         if (this.reachedDestinationPosition()) {
-            this.speed = new Point(0, 0);
-            this.position = new Point(this.destinationPosition.x, this.destinationPosition.y);
+            this.movementPosition.speed = new Point(0, 0);
+            this.movementPosition.position = new Point(this.destinationPosition.position.x, this.destinationPosition.position.y);
         }
 
         this.adjustSpeedToMaxSpeed();
@@ -123,14 +122,15 @@ export class Player {
 
     public resetToStartGame(): void {
         this.currentMaxSpeed = this.normalMaxSpeed;
-        this.destinationPosition = new Point(this.initialPosition.x, this.initialPosition.y);
+        this.destinationPosition = new MovementPoint(new Point(this.initialPosition.x, this.initialPosition.y), new Point(0, 0), 0);
+        
     }
 
     private calculateDestinationPosition(position: number, speed: number): number {
         while (Math.abs(speed) > 0) {
             position += speed;
-            speed = Math.sign(speed) * Math.max(Math.abs(speed) - this.acceleration, 0);
-            if (Math.abs(speed) <= this.acceleration) {
+            speed = Math.sign(speed) * Math.max(Math.abs(speed) - this.movementPosition.acceleration, 0);
+            if (Math.abs(speed) <= this.movementPosition.acceleration) {
                 speed = 0;
             }
         }
@@ -139,13 +139,13 @@ export class Player {
 
     private adjustSpeedToMaxSpeed(): void {
         const speed = Math.min(this.getSpeed(), this.currentMaxSpeed);
-        const angle = Math.atan2(this.speed.y, this.speed.x);
-        this.speed.x = Math.cos(angle) * speed;
-        this.speed.y = Math.sin(angle) * speed;
+        const angle = Math.atan2(this.movementPosition.speed.y, this.movementPosition.speed.x);
+        this.movementPosition.speed.x = Math.cos(angle) * speed;
+        this.movementPosition.speed.y = Math.sin(angle) * speed;
     }
 
     private getSpeed(): number {
-        return Math.sqrt(Math.pow(this.speed.x, 2) + Math.pow(this.speed.y, 2));
+        return Math.sqrt(Math.pow(this.movementPosition.speed.x, 2) + Math.pow(this.movementPosition.speed.y, 2));
     }
 
     private initPositions(gameConfigs: GameConfigs): void {
@@ -166,7 +166,7 @@ export class Player {
 
         this.initialPosition.x = gameConfigs.fieldXOffset + offsetX;
 
-        this.position = new Point(this.initialPosition.x, this.initialPosition.y);
-        this.destinationPosition = new Point(this.initialPosition.x, this.initialPosition.y);
+        this.movementPosition.position = new Point(this.initialPosition.x, this.initialPosition.y);
+        this.destinationPosition.position = new Point(this.initialPosition.x, this.initialPosition.y);
     }
 }

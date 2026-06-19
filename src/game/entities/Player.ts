@@ -12,19 +12,23 @@ export class Player {
     public readonly reachedDistanceTolerance: number;
     public readonly closeToPointDistance: number;
 
-    public movementPosition: MovementPoint = new MovementPoint(new Point(0, 0), new Point(0, 0), 0);
+    public movementPosition: MovementPoint = new MovementPoint(
+        new Point(0, 0),
+        new Point(0, 0),
+        0,
+        0,
+    );
     public initialPosition: Point = new Point(0, 0);
     public destinationPosition: MovementPoint = new MovementPoint(
         new Point(0, 0),
         new Point(0, 0),
+        0,
         0,
     );
     public currentMaxSpeed: number = 0;
 
     public isStunned: boolean = false;
     public colorIndex: number = 0;
-
-    public radius: number;
 
     private constructor(
         gameConfigs: GameConfigs,
@@ -33,12 +37,12 @@ export class Player {
         side: PlayerSide,
         colorIndex: number,
     ) {
-        this.radius = gameConfigs.playerSizeWithBorder;
         this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
         this.maxSpeedWithBall = gameConfigs.fieldHeight / 666;
         this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
         this.movementPosition.acceleration = gameConfigs.fieldHeight / 150000;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
+        this.movementPosition.size = gameConfigs.playerSizeWithBorder;
 
         this.isCpu = isCpu;
         this.isSubstitute = isSubstitute;
@@ -131,6 +135,7 @@ export class Player {
         this.destinationPosition = new MovementPoint(
             new Point(this.initialPosition.x, this.initialPosition.y),
             new Point(0, 0),
+            0,
             0,
         );
     }

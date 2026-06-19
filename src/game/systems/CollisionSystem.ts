@@ -16,7 +16,7 @@ export class CollisionSystem {
 
         this.handleBorderCollision(
             gameWorld.ball.movementPosition,
-            this.getFieldBorderLimits(),
+            this.getFieldBorderLimits(gameWorld.ball.movementPosition.size),
             true,
         );
     }
@@ -25,14 +25,13 @@ export class CollisionSystem {
         
     }*/
 
-    private getFieldBorderLimits(): BorderLimits {
+    private getFieldBorderLimits(size: number): BorderLimits {
         const cfg = this.gameConfigs;
-        const r = cfg.ballSizeWithBorder;
         return new BorderLimits(
-            cfg.fieldXOffset + r,
-            cfg.fieldXOffset + cfg.fieldWidth - r,
-            cfg.fieldBorderSize + r,
-            cfg.fieldHeight - cfg.fieldBorderSize - r,
+            cfg.fieldXOffset + size,
+            cfg.fieldXOffset + cfg.fieldWidth - size,
+            cfg.fieldBorderSize + size,
+            cfg.fieldHeight - cfg.fieldBorderSize - size,
         );
     }
 

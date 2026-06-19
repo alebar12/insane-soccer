@@ -41,7 +41,7 @@ export class PlayerRender {
                 Math.round(player.movementPosition.position.y),
             );
             this.gameContext.beginPath();
-            this.gameContext.arc(0, 0, player.radius, 0, 2 * Math.PI, false);
+            this.gameContext.arc(0, 0, player.movementPosition.size, 0, 2 * Math.PI, false);
             this.gameContext.closePath();
             this.gameContext.fill();
             this.gameContext.stroke();
@@ -57,7 +57,7 @@ export class PlayerRender {
                     Math.round(player.destinationPosition.position.y),
                 );
                 this.gameContext.beginPath();
-                this.gameContext.arc(0, 0, player.radius / 5, 0, 2 * Math.PI, false);
+                this.gameContext.arc(0, 0, player.movementPosition.size / 5, 0, 2 * Math.PI, false);
                 this.gameContext.closePath();
                 this.gameContext.fill();
                 this.gameContext.stroke();

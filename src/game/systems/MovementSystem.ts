@@ -1,26 +1,33 @@
 import { KeyboardInputManager } from "../../input/KeyboardInputManager";
 import { GameConfigs } from "../../utils/GameConfigs";
-import { Ball } from "../entities/Ball";
-import { Player } from "../entities/Player";
-import { BallStatus } from "../enums/BallStatus";
-import { GameStatus } from "../enums/GameStatus";
-import { Keys } from "../enums/Keys";
 import { GameWorld } from "../world/GameWorld";
+import { AbstractBallMovementStrategy } from "./ballMovementStrategies/AbstractBallMovementStrategy";
+import { AttachedWithKeyPressedBallMovementStrategy } from "./ballMovementStrategies/AttachedWithKeyPressedBallMovementStrategy";
+import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballMovementStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
+import { PlayingFreeBallMovementStrategy } from "./ballMovementStrategies/PlayingFreeBallMovementStrategy";
+import { WaitingBallBallMovementStrategy } from "./ballMovementStrategies/WaitingBallBallMovementStrategy";
 import { AbstractPlayerMovementStrategy } from "./playersMovementStrategies/AbstractPlayerMovementStrategy";
 import { InputPlayerMovementStrategy } from "./playersMovementStrategies/InputPlayerMovementStrategy";
 import { MenuMovementStrategy } from "./playersMovementStrategies/MenuMovementStrategy";
 import { WaitingBallMovementStrategy } from "./playersMovementStrategies/WaitingBallMovementStrategy";
 
 export class MovementSystem {
-    private readonly angleTollerance: number = Math.PI / 30;
-    private readonly keyboardInputManager: KeyboardInputManager;
-    private strategies: Array<AbstractPlayerMovementStrategy> = [];
+    private playerStrategies: Array<AbstractPlayerMovementStrategy> = [];
+    private ballStrategies: Array<AbstractBallMovementStrategy> = [];
 
     public constructor(gameConfigs: GameConfigs, keyboardInputManager: KeyboardInputManager) {
-        this.keyboardInputManager = keyboardInputManager;
-        this.strategies.push(new MenuMovementStrategy(gameConfigs));
-        this.strategies.push(new WaitingBallMovementStrategy());
-        this.strategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
+        this.playerStrategies.push(new MenuMovementStrategy(gameConfigs));
+        this.playerStrategies.push(new WaitingBallMovementStrategy());
+        this.playerStrategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
+
+        this.ballStrategies.push(new WaitingBallBallMovementStrategy());
+        this.ballStrategies.push(new PlayingFreeBallMovementStrategy());
+        this.ballStrategies.push(
+            new AttachedWithoutKeyPressedBallMovementStrategy(keyboardInputManager),
+        );
+        this.ballStrategies.push(
+            new AttachedWithKeyPressedBallMovementStrategy(keyboardInputManager),
+        );
     }
 
     public update(gameWorld: GameWorld, deltaMs: number): void {
@@ -30,7 +37,7 @@ export class MovementSystem {
 
     private updatePlayers(gameWorld: GameWorld, deltaMs: number): void {
         gameWorld.players.forEach(player => {
-            this.strategies
+            this.playerStrategies
                 .filter(strategy => strategy.canBeApplied(player, gameWorld))
                 .forEach(strategy => strategy.apply(player, gameWorld, deltaMs));
             player.move(deltaMs);
@@ -38,66 +45,8 @@ export class MovementSystem {
     }
 
     private updateBall(gameWorld: GameWorld, deltaMs: number): void {
-        switch (gameWorld.gameStatusManager.gameStatus) {
-            case GameStatus.WAITING_BALL:
-                gameWorld.ball.setForStartGame();
-                break;
-
-            case GameStatus.PLAYING:
-                this.updateBallDuringPlaying(gameWorld, deltaMs);
-                break;
-        }
-    }
-
-    private updateBallDuringPlaying(gameWorld: GameWorld, deltaMs: number): void {
-        switch (gameWorld.ball.ballStatus) {
-            case BallStatus.FREE:
-                gameWorld.ball.move(deltaMs);
-                break;
-
-            case BallStatus.ATTACHED:
-                const ball = gameWorld.ball;
-                const player = ball.attachedPlayer;
-                if (!player) {
-                    break;
-                }
-
-                if (!player.isCpu && this.keyboardInputManager.isKeyPressed(Keys.SPACE)) {
-                    ball.detachFromPlayer();
-                } else {
-                    this.adjustBallPositionAroundPlayer(ball, player, deltaMs);
-                }
-                break;
-        }
-    }
-
-    private adjustBallPositionAroundPlayer(ball: Ball, player: Player, deltaMs: number): void {
-        const combinedSize = player.movementPosition.size + ball.movementPosition.size;
-
-        ball.movementPosition.position.x =
-            player.movementPosition.position.x + Math.cos(ball.angleWithPlayer) * combinedSize;
-        ball.movementPosition.position.y =
-            player.movementPosition.position.y + Math.sin(ball.angleWithPlayer) * combinedSize;
-
-        const speed = player.movementPosition.getSpeed();
-        if (speed > 0) {
-            const targetAngle = player.movementPosition.getSpeedAngle() + Math.PI;
-            const angleDifference = this.normalizeAngle(targetAngle - ball.angleWithPlayer);
-            if (Math.abs(angleDifference) > this.angleTollerance) {
-                const step = (speed / player.maxSpeedWithBall) * 0.01 * deltaMs;
-                ball.angleWithPlayer += angleDifference > 0 ? step : -step;
-            }
-            ball.angleWithPlayer = this.normalizeAngle(ball.angleWithPlayer);
-        }
-    }
-
-    private normalizeAngle(angle: number): number {
-        while (angle > Math.PI) {
-            angle -= 2 * Math.PI;
-        }
-        while (angle < -Math.PI) {
-            angle += 2 * Math.PI;
-        }
-        return angle;
+        this.ballStrategies
+            .filter(strategy => strategy.canBeApplied(gameWorld.ball, gameWorld))
+            .forEach(strategy => strategy.apply(gameWorld.ball, gameWorld, deltaMs));
     }
 }

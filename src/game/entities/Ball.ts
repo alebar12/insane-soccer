@@ -53,4 +53,10 @@ export class Ball {
             this.movementPosition.position,
         );
     }
+
+    public detachFromPlayer(): void {
+        this.ballStatus = BallStatus.FREE;
+        this.attachedPlayer = null;
+        this.movementPosition.setSpeed(this.maxSpeed, this.angleWithPlayer);
+    }
 }

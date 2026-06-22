@@ -1,12 +1,8 @@
 import { Point } from "./Point";
 
 export class MovementPoint {
-    public static areTouching (
-        point1: MovementPoint,
-        point2: MovementPoint,
-    ): boolean {
-        return Point.getDistance(point1.position, point2.position) <
-            point1.size + point2.size;
+    public static areTouching(point1: MovementPoint, point2: MovementPoint): boolean {
+        return Point.getDistance(point1.position, point2.position) < point1.size + point2.size;
     }
 
     public constructor(

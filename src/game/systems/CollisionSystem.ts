@@ -6,7 +6,7 @@ import { BallStatus } from "../enums/BallStatus";
 
 export class CollisionSystem {
     public constructor(private gameConfigs: GameConfigs) {}
-    
+
     public update(gameWorld: GameWorld): void {
         this.checkBallBorderCollisions(gameWorld);
         this.checkPlayerBorderCollisions(gameWorld);
@@ -87,16 +87,17 @@ export class CollisionSystem {
     private checkBallPlayerCollision(gameWorld: GameWorld): void {
         if (gameWorld.ball.ballStatus === BallStatus.FREE) {
             gameWorld.players
-            .filter(player => !player.isSubstitute)
-            .forEach(player => {
-                if (MovementPoint.areTouching(
-                    gameWorld.ball.movementPosition,
-                    player.movementPosition,
-                )) {
-                    gameWorld.ball.attachToPlayer(player);
-                }
-            });
+                .filter(player => !player.isSubstitute)
+                .forEach(player => {
+                    if (
+                        MovementPoint.areTouching(
+                            gameWorld.ball.movementPosition,
+                            player.movementPosition,
+                        )
+                    ) {
+                        gameWorld.ball.attachToPlayer(player);
+                    }
+                });
         }
-        
     }
 }

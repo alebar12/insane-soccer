@@ -1,5 +1,5 @@
 import { GameConfigs } from "../../../utils/GameConfigs";
-import { Point } from "../../../utils/Point";
+import { Point } from "../../geometry/Point";
 import { Player } from "../../entities/Player";
 import { GameStatus } from "../../status/GameStatus";
 import { PlayerSide } from "../../status/PlayerSide";

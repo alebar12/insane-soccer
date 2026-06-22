@@ -1,5 +1,5 @@
 import { GameConfigs } from "../../utils/GameConfigs";
-import { Point } from "../../utils/Point";
+import { Point } from "../geometry/Point";
 
 export class GoalPosts {
     public readonly positions: Array<Point>;

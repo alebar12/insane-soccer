@@ -1,6 +1,6 @@
-import { Dimensions } from "../../utils/Dimensions";
+import { Dimensions } from "../geometry/Dimensions";
 import { GameConfigs } from "../../utils/GameConfigs";
-import { Point } from "../../utils/Point";
+import { Point } from "../geometry/Point";
 import { HoverableEntity } from "./HoverableEntity";
 
 export class MenuButton extends HoverableEntity {

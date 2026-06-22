@@ -1,6 +1,6 @@
 import { AssetLoader } from "../assets/AssetLoader";
 import { GameWorld } from "../game/world/GameWorld";
-import { DomHandler } from "../utils/DomHandler";
+import { DomHandler } from "../ui/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { BallRender } from "./BallRender";
 import { FieldRender } from "./FieldRender";

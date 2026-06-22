@@ -4,7 +4,7 @@ import { GameWorld } from "../game/world/GameWorld";
 import { MouseInputManager } from "../input/MouseInputManager";
 import { MainRender } from "../rendering/MainRender";
 import { UIInteractionSystem } from "../ui/UIInteractionSystem";
-import { DomHandler } from "../utils/DomHandler";
+import { DomHandler } from "../ui/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { GameStatus } from "../game/status/GameStatus";
 import { CollisionSystem } from "../game/systems/CollisionSystem";

@@ -12,6 +12,7 @@ export class BallRender {
     }
 
     public render(gameWorld: GameWorld): void {
+        // TODO add enlargement for speed
         this.gameContext.save();
 
         if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {

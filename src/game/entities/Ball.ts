@@ -1,10 +1,15 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { BallStatus } from "../enums/BallStatus";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
+import { Player } from "./Player";
 
 export class Ball {
     public readonly maxSpeed: number;
-
+    private readonly gameConfigs: GameConfigs;
+    public ballStatus: BallStatus = BallStatus.FREE;
+    public attachedPlayer: Player | null = null;
+    public angleWithPlayer: number = 0;
     public movementPosition: MovementPoint = new MovementPoint(
         new Point(0, 0),
         new Point(0, 0),
@@ -12,7 +17,6 @@ export class Ball {
         0,
     );
     private isSetForStart: boolean = false;
-    private readonly gameConfigs: GameConfigs;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -39,5 +43,14 @@ export class Ball {
     public move(deltaMs: number): void {
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
+    }
+
+    public attachToPlayer(player: Player): void {
+        this.attachedPlayer = player;
+        this.ballStatus = BallStatus.ATTACHED;
+        this.angleWithPlayer = Point.getAngleBetweenPoints(
+            player.movementPosition.position,
+            this.movementPosition.position,
+        );
     }
 }

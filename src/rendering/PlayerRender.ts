@@ -47,23 +47,6 @@ export class PlayerRender {
             this.gameContext.stroke();
 
             this.gameContext.restore();
-
-            if (GameConfigs.IS_DEBUG) {
-                this.gameContext.save();
-                this.gameContext.fillStyle = "red";
-                this.gameContext.strokeStyle = "red";
-                this.gameContext.translate(
-                    Math.round(player.destinationPosition.position.x),
-                    Math.round(player.destinationPosition.position.y),
-                );
-                this.gameContext.beginPath();
-                this.gameContext.arc(0, 0, player.movementPosition.size / 5, 0, 2 * Math.PI, false);
-                this.gameContext.closePath();
-                this.gameContext.fill();
-                this.gameContext.stroke();
-
-                this.gameContext.restore();
-            }
         });
     }
 }

@@ -2,16 +2,18 @@ import { BorderLimits } from "../geometry/BorderLimits";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { GameWorld } from "../world/GameWorld";
 import { MovementPoint } from "../geometry/MovementPoint";
+import { BallStatus } from "../enums/BallStatus";
 
 export class CollisionSystem {
     public constructor(private gameConfigs: GameConfigs) {}
-
+    
     public update(gameWorld: GameWorld): void {
-        this.checkBallCollisions(gameWorld);
-        this.checkPlayerCollisions(gameWorld);
+        this.checkBallBorderCollisions(gameWorld);
+        this.checkPlayerBorderCollisions(gameWorld);
+        this.checkBallPlayerCollision(gameWorld);
     }
 
-    private checkBallCollisions(gameWorld: GameWorld): void {
+    private checkBallBorderCollisions(gameWorld: GameWorld): void {
         // TODO to add handleGoalPostsCollision
 
         this.handleBorderCollision(
@@ -21,7 +23,7 @@ export class CollisionSystem {
         );
     }
 
-    private checkPlayerCollisions(gameWorld: GameWorld): void {
+    private checkPlayerBorderCollisions(gameWorld: GameWorld): void {
         gameWorld.players
             .filter(player => !player.isSubstitute)
             .forEach(player => {
@@ -52,25 +54,49 @@ export class CollisionSystem {
             movementPoint.position.x = borderLimits.left;
             if (invertSpeed) {
                 movementPoint.velocity.x = Math.abs(movementPoint.velocity.x);
+            } else {
+                movementPoint.velocity.x = Math.max(0, movementPoint.velocity.x);
             }
         }
         if (movementPoint.position.x > borderLimits.right) {
             movementPoint.position.x = borderLimits.right;
             if (invertSpeed) {
                 movementPoint.velocity.x = -Math.abs(movementPoint.velocity.x);
+            } else {
+                movementPoint.velocity.x = Math.min(0, movementPoint.velocity.x);
             }
         }
         if (movementPoint.position.y < borderLimits.top) {
             movementPoint.position.y = borderLimits.top;
             if (invertSpeed) {
                 movementPoint.velocity.y = Math.abs(movementPoint.velocity.y);
+            } else {
+                movementPoint.velocity.y = Math.max(0, movementPoint.velocity.y);
             }
         }
         if (movementPoint.position.y > borderLimits.bottom) {
             movementPoint.position.y = borderLimits.bottom;
             if (invertSpeed) {
                 movementPoint.velocity.y = -Math.abs(movementPoint.velocity.y);
+            } else {
+                movementPoint.velocity.y = Math.min(0, movementPoint.velocity.y);
             }
         }
+    }
+
+    private checkBallPlayerCollision(gameWorld: GameWorld): void {
+        if (gameWorld.ball.ballStatus === BallStatus.FREE) {
+            gameWorld.players
+            .filter(player => !player.isSubstitute)
+            .forEach(player => {
+                if (MovementPoint.areTouching(
+                    gameWorld.ball.movementPosition,
+                    player.movementPosition,
+                )) {
+                    gameWorld.ball.attachToPlayer(player);
+                }
+            });
+        }
+        
     }
 }

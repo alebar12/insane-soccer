@@ -32,8 +32,8 @@ export class MainRender {
         this.clear();
         this.fieldRender.render(gameWorld);
         this.scoreRender.render();
-        this.playerRender.render(gameWorld);
         this.ballRender.render(gameWorld);
+        this.playerRender.render(gameWorld);
         this.gatesRender.render();
         this.menuRender.render(gameWorld);
     }

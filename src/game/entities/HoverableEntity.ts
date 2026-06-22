@@ -1,4 +1,4 @@
-import { Point } from "../../utils/Point";
+import { Point } from "../geometry/Point";
 
 export abstract class HoverableEntity {
     public hovered: boolean = false;

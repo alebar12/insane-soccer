@@ -1,4 +1,4 @@
-import { Point } from "../utils/Point";
+import { Point } from "../game/geometry/Point";
 
 export class MouseInputManager {
     private element: HTMLElement;

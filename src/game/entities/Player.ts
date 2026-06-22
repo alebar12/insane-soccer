@@ -1,6 +1,6 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { MovementPoint } from "../../utils/MovementPoint";
-import { Point } from "../../utils/Point";
+import { Point } from "../geometry/Point";
 import { PlayerSide } from "../status/PlayerSide";
 
 export class Player {

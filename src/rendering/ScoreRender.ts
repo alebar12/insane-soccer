@@ -1,6 +1,6 @@
 import { AssetLoader } from "../assets/AssetLoader";
-import { Dimensions } from "../utils/Dimensions";
-import { Point } from "../utils/Point";
+import { Dimensions } from "../game/geometry/Dimensions";
+import { Point } from "../game/geometry/Point";
 
 export class ScoreRender {
     private readonly digitsImages: HTMLImageElement;

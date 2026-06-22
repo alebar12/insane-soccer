@@ -1,7 +1,7 @@
-import { BorderLimits } from "../../utils/BorderLimits";
+import { BorderLimits } from "../geometry/BorderLimits";
 import { GameConfigs } from "../../utils/GameConfigs";
-import { MovementPoint } from "../../utils/MovementPoint";
 import { GameWorld } from "../world/GameWorld";
+import { MovementPoint } from "../geometry/MovementPoint";
 
 export class CollisionSystem {
     public constructor(private gameConfigs: GameConfigs) {}

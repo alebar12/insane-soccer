@@ -1,4 +1,4 @@
-import { GameStatus } from "../game/status/GameStatus";
+import { GameStatus } from "../game/enums/GameStatus";
 import { GameWorld } from "../game/world/GameWorld";
 import { GameConfigs } from "../utils/GameConfigs";
 

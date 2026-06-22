@@ -1,7 +1,7 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
-import { PlayerSide } from "../status/PlayerSide";
+import { PlayerSide } from "../enums/PlayerSide";
 
 export class Player {
     public readonly isCpu: boolean;

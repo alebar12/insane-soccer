@@ -1,5 +1,5 @@
 import { AssetLoader } from "../assets/AssetLoader";
-import { GameStatus } from "../game/status/GameStatus";
+import { GameStatus } from "../game/enums/GameStatus";
 import { GameWorld } from "../game/world/GameWorld";
 
 export class MenuRender {

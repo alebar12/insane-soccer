@@ -3,41 +3,41 @@ import { Point } from "./Point";
 export class MovementPoint {
     public constructor(
         public position: Point,
-        public speed: Point,
+        public velocity: Point,
         public acceleration: number,
         public size: number,
     ) {}
 
     public updatePosition(deltaMs: number): void {
-        this.position.x += this.speed.x * deltaMs;
-        this.position.y += this.speed.y * deltaMs;
+        this.position.x += this.velocity.x * deltaMs;
+        this.position.y += this.velocity.y * deltaMs;
     }
 
     public projectToFinalPosition(): Point {
         return new Point(
-            this.calculateDestinationPosition(this.position.x, this.speed.x),
-            this.calculateDestinationPosition(this.position.y, this.speed.y),
+            this.calculateDestinationPosition(this.position.x, this.velocity.x),
+            this.calculateDestinationPosition(this.position.y, this.velocity.y),
         );
     }
 
     public getSpeed(): number {
-        return Math.sqrt(Math.pow(this.speed.x, 2) + Math.pow(this.speed.y, 2));
+        return Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y, 2));
     }
 
     public getSpeedAngle(): number {
-        return Math.atan2(this.speed.y, this.speed.x);
+        return Math.atan2(this.velocity.y, this.velocity.x);
     }
 
     public adjustToMaxSpeed(maxSpeed: number): void {
         const speed = Math.min(this.getSpeed(), maxSpeed);
         const angle = this.getSpeedAngle();
-        this.speed.x = Math.cos(angle) * speed;
-        this.speed.y = Math.sin(angle) * speed;
+        this.velocity.x = Math.cos(angle) * speed;
+        this.velocity.y = Math.sin(angle) * speed;
     }
 
     public setSpeed(speed: number, angle: number): void {
-        this.speed.x = Math.cos(angle) * speed;
-        this.speed.y = Math.sin(angle) * speed;
+        this.velocity.x = Math.cos(angle) * speed;
+        this.velocity.y = Math.sin(angle) * speed;
     }
 
     public decrementSpeed(deltaMs: number): void {
@@ -45,8 +45,8 @@ export class MovementPoint {
         if (currentSpeed > 0) {
             const newSpeed = Math.max(currentSpeed - this.acceleration * deltaMs, 0);
             const ratio = newSpeed / currentSpeed;
-            this.speed.x *= ratio;
-            this.speed.y *= ratio;
+            this.velocity.x *= ratio;
+            this.velocity.y *= ratio;
         }
     }
 

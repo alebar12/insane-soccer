@@ -1,9 +1,9 @@
 import { Player } from "../../entities/Player";
 import { GameStatus } from "../../enums/GameStatus";
 import { GameWorld } from "../../world/GameWorld";
-import { AbstractMovementStrategy } from "./AbstractPlayerMovementStrategy";
+import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
-export class WaitingBallMovementStrategy extends AbstractMovementStrategy {
+export class WaitingBallMovementStrategy extends AbstractPlayerMovementStrategy {
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
         return (
             !player.isSubstitute &&

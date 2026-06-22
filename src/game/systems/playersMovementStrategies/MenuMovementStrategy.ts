@@ -4,9 +4,9 @@ import { Player } from "../../entities/Player";
 import { GameStatus } from "../../enums/GameStatus";
 import { PlayerSide } from "../../enums/PlayerSide";
 import { GameWorld } from "../../world/GameWorld";
-import { AbstractMovementStrategy } from "./AbstractPlayerMovementStrategy";
+import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
-export class MenuMovementStrategy extends AbstractMovementStrategy {
+export class MenuMovementStrategy extends AbstractPlayerMovementStrategy {
     private readonly gameConfigs: GameConfigs;
 
     public constructor(gameConfigs: GameConfigs) {
@@ -28,7 +28,7 @@ export class MenuMovementStrategy extends AbstractMovementStrategy {
             if (player.side === PlayerSide.RIGHT) {
                 player.destinationPosition.position.x += this.gameConfigs.fieldWidth / 2;
             }
-            player.destinationPosition.speed = new Point(0, 0);
+            player.destinationPosition.velocity = new Point(0, 0);
             player.destinationPosition.acceleration = 0;
             player.currentMaxSpeed =
                 (player.normalMaxSpeed / 5) * Math.random() + player.normalMaxSpeed / 7;

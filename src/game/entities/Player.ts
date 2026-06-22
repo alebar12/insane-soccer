@@ -28,7 +28,7 @@ export class Player {
     public currentMaxSpeed: number = 0;
 
     public isStunned: boolean = false;
-    public colorIndex: number = 0;
+    public colorIndex: number;
 
     private constructor(
         gameConfigs: GameConfigs,
@@ -97,15 +97,15 @@ export class Player {
                     0,
                 );
                 const ratio = newSpeed / currentSpeed;
-                this.movementPosition.speed.x *= ratio;
-                this.movementPosition.speed.y *= ratio;
+                this.movementPosition.velocity.x *= ratio;
+                this.movementPosition.velocity.y *= ratio;
             }
         } else {
             const desiredSpeedX = Math.cos(angle) * this.currentMaxSpeed;
             const desiredSpeedY = Math.sin(angle) * this.currentMaxSpeed;
 
-            let steerX = desiredSpeedX - this.movementPosition.speed.x;
-            let steerY = desiredSpeedY - this.movementPosition.speed.y;
+            let steerX = desiredSpeedX - this.movementPosition.velocity.x;
+            let steerY = desiredSpeedY - this.movementPosition.velocity.y;
 
             const steerMagnitude = Math.sqrt(steerX * steerX + steerY * steerY);
             const maxSteer = this.movementPosition.acceleration * deltaMs;
@@ -115,12 +115,12 @@ export class Player {
                 steerY *= ratio;
             }
 
-            this.movementPosition.speed.x += steerX;
-            this.movementPosition.speed.y += steerY;
+            this.movementPosition.velocity.x += steerX;
+            this.movementPosition.velocity.y += steerY;
         }
 
         if (this.reachedDestinationPosition()) {
-            this.movementPosition.speed = new Point(0, 0);
+            this.movementPosition.velocity = new Point(0, 0);
             this.movementPosition.position = new Point(
                 this.destinationPosition.position.x,
                 this.destinationPosition.position.y,

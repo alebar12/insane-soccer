@@ -8,7 +8,7 @@ export class GameStatusManager {
 
     public changeStatus(gameStatus: GameStatus): void {
         this._gameStatus = gameStatus;
-        this.statusStartTime = Date.now();
+        this.statusStartTime = this.time;
     }
 
     public get gameStatus(): GameStatus {

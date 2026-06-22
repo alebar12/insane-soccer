@@ -22,13 +22,15 @@ export class CollisionSystem {
     }
 
     private checkPlayerCollisions(gameWorld: GameWorld): void {
-        gameWorld.players.filter(player => !player.isSubstitute).forEach(player => {
-            this.handleBorderCollision(
-                player.movementPosition,
-                this.getFieldBorderLimits(player.movementPosition.size),
-                false,
-            );
-        });
+        gameWorld.players
+            .filter(player => !player.isSubstitute)
+            .forEach(player => {
+                this.handleBorderCollision(
+                    player.movementPosition,
+                    this.getFieldBorderLimits(player.movementPosition.size),
+                    false,
+                );
+            });
     }
 
     private getFieldBorderLimits(size: number): BorderLimits {
@@ -49,25 +51,25 @@ export class CollisionSystem {
         if (movementPoint.position.x < borderLimits.left) {
             movementPoint.position.x = borderLimits.left;
             if (invertSpeed) {
-                movementPoint.speed.x = Math.abs(movementPoint.speed.x);
+                movementPoint.velocity.x = Math.abs(movementPoint.velocity.x);
             }
         }
         if (movementPoint.position.x > borderLimits.right) {
             movementPoint.position.x = borderLimits.right;
             if (invertSpeed) {
-                movementPoint.speed.x = -Math.abs(movementPoint.speed.x);
+                movementPoint.velocity.x = -Math.abs(movementPoint.velocity.x);
             }
         }
         if (movementPoint.position.y < borderLimits.top) {
             movementPoint.position.y = borderLimits.top;
             if (invertSpeed) {
-                movementPoint.speed.y = Math.abs(movementPoint.speed.y);
+                movementPoint.velocity.y = Math.abs(movementPoint.velocity.y);
             }
         }
         if (movementPoint.position.y > borderLimits.bottom) {
             movementPoint.position.y = borderLimits.bottom;
             if (invertSpeed) {
-                movementPoint.speed.y = -Math.abs(movementPoint.speed.y);
+                movementPoint.velocity.y = -Math.abs(movementPoint.velocity.y);
             }
         }
     }

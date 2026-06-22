@@ -1,5 +1,5 @@
 import { Player } from "../../entities/Player";
-import { GameStatus } from "../../status/GameStatus";
+import { GameStatus } from "../../enums/GameStatus";
 import { GameWorld } from "../../world/GameWorld";
 import { AbstractMovementStrategy } from "./AbstractPlayerMovementStrategy";
 

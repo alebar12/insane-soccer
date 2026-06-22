@@ -1,16 +1,20 @@
+import { KeyboardInputManager } from "../../input/KeyboardInputManager";
 import { GameConfigs } from "../../utils/GameConfigs";
-import { GameStatus } from "../status/GameStatus";
+import { GameStatus } from "../enums/GameStatus";
 import { GameWorld } from "../world/GameWorld";
 import { AbstractMovementStrategy } from "./playersMovementStrategies/AbstractPlayerMovementStrategy";
+import { InputPlayerMovementStrategy } from "./playersMovementStrategies/InputPlayerMovementStrategy";
 import { MenuMovementStrategy } from "./playersMovementStrategies/MenuMovementStrategy";
 import { WaitingBallMovementStrategy } from "./playersMovementStrategies/WaitingBallMovementStrategy";
 
 export class MovementSystem {
     private strategies: Array<AbstractMovementStrategy> = [];
 
-    public constructor(gameConfigs: GameConfigs) {
+
+    public constructor(gameConfigs: GameConfigs, keyboardInputManager: KeyboardInputManager) {
         this.strategies.push(new MenuMovementStrategy(gameConfigs));
         this.strategies.push(new WaitingBallMovementStrategy());
+        this.strategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
     }
 
     public update(gameWorld: GameWorld, deltaMs: number): void {

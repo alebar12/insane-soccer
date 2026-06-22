@@ -1,4 +1,4 @@
-import { GameStatus } from "../status/GameStatus";
+import { GameStatus } from "../enums/GameStatus";
 
 export class GameStatusManager {
     private _gameStatus: GameStatus = GameStatus.MENU;

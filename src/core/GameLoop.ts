@@ -6,8 +6,9 @@ import { MainRender } from "../rendering/MainRender";
 import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { DomHandler } from "../ui/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
-import { GameStatus } from "../game/status/GameStatus";
+import { GameStatus } from "../game/enums/GameStatus";
 import { CollisionSystem } from "../game/systems/CollisionSystem";
+import { KeyboardInputManager } from "../input/KeyboardInputManager";
 
 export class GameLoop {
     private delta: number = 0;
@@ -26,7 +27,7 @@ export class GameLoop {
             new MouseInputManager(domHandler.menuCanvas),
         );
 
-        this.movementSystem = new MovementSystem(gameConfigs);
+        this.movementSystem = new MovementSystem(gameConfigs, new KeyboardInputManager());
         this.collisionSystem = new CollisionSystem(gameConfigs);
     }
 

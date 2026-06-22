@@ -8,7 +8,7 @@ export class CollisionSystem {
 
     public update(gameWorld: GameWorld): void {
         this.checkBallCollisions(gameWorld);
-        //this.checkPlayerCollisions(gameWorld);
+        this.checkPlayerCollisions(gameWorld);
     }
 
     private checkBallCollisions(gameWorld: GameWorld): void {
@@ -21,9 +21,15 @@ export class CollisionSystem {
         );
     }
 
-    /*private checkPlayerCollisions(gameWorld: GameWorld): void {
-        
-    }*/
+    private checkPlayerCollisions(gameWorld: GameWorld): void {
+        gameWorld.players.filter(player => !player.isSubstitute).forEach(player => {
+            this.handleBorderCollision(
+                player.movementPosition,
+                this.getFieldBorderLimits(player.movementPosition.size),
+                false,
+            );
+        });
+    }
 
     private getFieldBorderLimits(size: number): BorderLimits {
         const cfg = this.gameConfigs;

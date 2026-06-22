@@ -12,7 +12,7 @@ export class Ball {
         0,
     );
     private isSetForStart: boolean = false;
-    private gameConfigs: GameConfigs;
+    private readonly gameConfigs: GameConfigs;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;

@@ -21,8 +21,7 @@ export class Ball {
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
         this.movementPosition.size = gameConfigs.ballSizeWithBorder;
-        //this.maxSpeed = gameConfigs.fieldHeight / 400;
-        this.maxSpeed = gameConfigs.fieldHeight / 600;
+        this.maxSpeed = gameConfigs.fieldHeight / 400;
         this.movementPosition.acceleration = this.maxSpeed / 2000;
     }
 

@@ -1,6 +1,7 @@
 import { AssetLoader } from "../assets/AssetLoader";
 import { Dimensions } from "../game/geometry/Dimensions";
 import { Point } from "../game/geometry/Point";
+import { GameWorld } from "../game/world/GameWorld";
 
 export class ScoreRender {
     private readonly digitsImages: HTMLImageElement;
@@ -9,7 +10,8 @@ export class ScoreRender {
     private readonly scoreDimensions: Dimensions;
     private readonly positionArray: Array<Point>;
     private readonly frameForNumber: number = 6;
-    private readonly totalNumbers: number = 10;
+    private readonly totalNumbers: number = 9;
+    private readonly frameTime: number = 30;
 
     public constructor(scoreContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.scoreContext = scoreContext;
@@ -17,7 +19,7 @@ export class ScoreRender {
 
         this.innerImageDimensions = new Dimensions(
             this.digitsImages.width,
-            this.digitsImages.height / (this.totalNumbers * this.frameForNumber),
+            this.digitsImages.height / (this.totalNumbers * this.frameForNumber + 1),
         );
         const scoreHeight = (scoreContext.canvas.height * 9) / 10;
         this.scoreDimensions = new Dimensions(
@@ -34,7 +36,7 @@ export class ScoreRender {
         ];
     }
 
-    public render(): void {
+    public render(gameWorld: GameWorld): void {
         this.scoreContext.clearRect(
             0,
             0,
@@ -42,19 +44,27 @@ export class ScoreRender {
             this.scoreContext.canvas.height,
         );
 
-        // TODO gestire aggiornamento punteggio
-        this.positionArray.forEach(position => {
+        const scoreArray = gameWorld.score.getScoreAsArray();
+        scoreArray.forEach((number, index) => {
+            let maxFrame = number * this.frameForNumber;
+            let frame = maxFrame;
+            if (frame > 0 && gameWorld.score.shouldAnimateIndex(index)) {
+                const minFrame = (number - 1) * this.frameForNumber;
+                frame = minFrame + Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime); 
+                frame = Math.min(frame, maxFrame);
+            }
+
             this.scoreContext.drawImage(
                 this.digitsImages,
                 0,
-                this.innerImageDimensions.height * 0,
+                this.innerImageDimensions.height * frame,
                 this.innerImageDimensions.width,
                 this.innerImageDimensions.height,
-                position.x,
-                position.y,
+                this.positionArray[index].x,
+                this.positionArray[index].y,
                 this.scoreDimensions.width,
                 this.scoreDimensions.height,
             );
-        });
+        }
     }
 }

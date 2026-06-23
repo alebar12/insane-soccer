@@ -7,7 +7,6 @@ import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballMovementStr
 import { PlayingFreeBallMovementStrategy } from "./ballMovementStrategies/PlayingFreeBallMovementStrategy";
 import { WaitingBallBallMovementStrategy } from "./ballMovementStrategies/WaitingBallBallMovementStrategy";
 import { AbstractPlayerMovementStrategy } from "./playersMovementStrategies/AbstractPlayerMovementStrategy";
-import { CpuMovementStrategy } from "./playersMovementStrategies/CpuMovementStrategy";
 import { InputPlayerMovementStrategy } from "./playersMovementStrategies/InputPlayerMovementStrategy";
 import { MenuMovementStrategy } from "./playersMovementStrategies/MenuMovementStrategy";
 import { WaitingBallMovementStrategy } from "./playersMovementStrategies/WaitingBallMovementStrategy";
@@ -20,7 +19,7 @@ export class MovementSystem {
         this.playerStrategies.push(new MenuMovementStrategy(gameConfigs));
         this.playerStrategies.push(new WaitingBallMovementStrategy());
         this.playerStrategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
-        this.playerStrategies.push(new CpuMovementStrategy());
+        //this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
 
         this.ballStrategies.push(new WaitingBallBallMovementStrategy());
         this.ballStrategies.push(new PlayingFreeBallMovementStrategy());

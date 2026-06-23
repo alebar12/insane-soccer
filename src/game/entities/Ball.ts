@@ -20,9 +20,9 @@ export class Ball {
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
-        this.movementPosition.acceleration = gameConfigs.fieldHeight / 800000;
         this.movementPosition.size = gameConfigs.ballSizeWithBorder;
         this.maxSpeed = gameConfigs.fieldHeight / 400;
+        this.movementPosition.acceleration = this.maxSpeed / 2000;
     }
 
     public setForStartGame(): void {
@@ -38,6 +38,13 @@ export class Ball {
             this.movementPosition.setSpeed(speed, angle);
             this.isSetForStart = true;
         }
+    }
+
+    public resetToStartGame(): void {
+        this.isSetForStart = false;
+        this.movementPosition.setSpeed(0, 0);
+        this.ballStatus = BallStatus.FREE;
+        this.attachedPlayer = null;
     }
 
     public move(deltaMs: number): void {

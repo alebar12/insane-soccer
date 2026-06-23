@@ -15,7 +15,11 @@ export class BallRender {
         // TODO add enlargement for speed
         this.gameContext.save();
 
-        if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {
+        if (
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING ||
+            (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL &&
+                gameWorld.ball.movementPosition.getSpeed() > 0)
+        ) {
             this.gameContext.translate(
                 gameWorld.ball.movementPosition.position.x,
                 gameWorld.ball.movementPosition.position.y,

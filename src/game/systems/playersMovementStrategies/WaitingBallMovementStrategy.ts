@@ -16,7 +16,10 @@ export class WaitingBallMovementStrategy extends AbstractPlayerMovementStrategy 
             player.resetToStartGame();
         }
         player.adjustSpeedToDestinationPoint(deltaMs);
-        if (player.reachedDestinationPosition()) {
+        if (
+            player.reachedDestinationPosition() &&
+            gameWorld.ball.movementPosition.getSpeed() === 0
+        ) {
             gameWorld.gameStatusManager.scheduleStatusChange(2000, GameStatus.PLAYING);
         }
     }

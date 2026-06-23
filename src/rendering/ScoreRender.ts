@@ -65,6 +65,6 @@ export class ScoreRender {
                 this.scoreDimensions.width,
                 this.scoreDimensions.height,
             );
-        }
+        });
     }
 }

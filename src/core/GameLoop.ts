@@ -1,14 +1,14 @@
 import { AssetLoader } from "../assets/AssetLoader";
-import { MovementSystem } from "../game/systems/MovementSystem";
+import { GameStatus } from "../game/enums/GameStatus";
+import { CollisionSystem } from "../game/systems/collision/CollisionSystem";
+import { MovementSystem } from "../game/systems/movement/MovementSystem";
 import { GameWorld } from "../game/world/GameWorld";
+import { KeyboardInputManager } from "../input/KeyboardInputManager";
 import { MouseInputManager } from "../input/MouseInputManager";
 import { MainRender } from "../rendering/MainRender";
-import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { DomHandler } from "../ui/DomHandler";
+import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { GameConfigs } from "../utils/GameConfigs";
-import { GameStatus } from "../game/enums/GameStatus";
-import { CollisionSystem } from "../game/systems/CollisionSystem";
-import { KeyboardInputManager } from "../input/KeyboardInputManager";
 
 export class GameLoop {
     private delta: number = 0;

@@ -1,6 +1,6 @@
-import { Player } from "../../entities/Player";
-import { GameStatus } from "../../enums/GameStatus";
-import { GameWorld } from "../../world/GameWorld";
+import { Player } from "../../../entities/Player";
+import { GameStatus } from "../../../enums/GameStatus";
+import { GameWorld } from "../../../world/GameWorld";
 import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
 export class WaitingBallMovementStrategy extends AbstractPlayerMovementStrategy {

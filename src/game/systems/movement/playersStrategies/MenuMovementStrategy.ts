@@ -1,9 +1,9 @@
-import { GameConfigs } from "../../../utils/GameConfigs";
-import { Point } from "../../geometry/Point";
-import { Player } from "../../entities/Player";
-import { GameStatus } from "../../enums/GameStatus";
-import { PlayerSide } from "../../enums/PlayerSide";
-import { GameWorld } from "../../world/GameWorld";
+import { GameConfigs } from "../../../../utils/GameConfigs";
+import { Player } from "../../../entities/Player";
+import { GameStatus } from "../../../enums/GameStatus";
+import { PlayerSide } from "../../../enums/PlayerSide";
+import { Point } from "../../../geometry/Point";
+import { GameWorld } from "../../../world/GameWorld";
 import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
 export class MenuMovementStrategy extends AbstractPlayerMovementStrategy {

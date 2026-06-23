@@ -1,8 +1,8 @@
-import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
-import { Player } from "../../entities/Player";
-import { GameStatus } from "../../enums/GameStatus";
-import { Keys, KeysDirection } from "../../enums/Keys";
-import { GameWorld } from "../../world/GameWorld";
+import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
+import { Player } from "../../../entities/Player";
+import { GameStatus } from "../../../enums/GameStatus";
+import { KeysDirection, Keys } from "../../../enums/Keys";
+import { GameWorld } from "../../../world/GameWorld";
 import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
 
 export class InputPlayerMovementStrategy extends AbstractPlayerMovementStrategy {

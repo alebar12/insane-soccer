@@ -1,6 +1,6 @@
 import { PlayerSide } from "../enums/PlayerSide";
 
-export class Score {
+export class ScoreManager {
     public leftScore: number = 0;
     public rightScore: number = 0;
 
@@ -12,6 +12,5 @@ export class Score {
         } else {
             this.leftScore++;
         }
-        console.log(this.leftScore, this.rightScore);
     }
 }

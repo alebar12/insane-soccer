@@ -1,5 +1,5 @@
-import { Ball } from "../../entities/Ball";
-import { GameWorld } from "../../world/GameWorld";
+import { Ball } from "../../../entities/Ball";
+import { GameWorld } from "../../../world/GameWorld";
 
 export abstract class AbstractBallMovementStrategy {
     abstract canBeApplied(ball: Ball, gameWorld: GameWorld): boolean;

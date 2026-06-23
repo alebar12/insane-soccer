@@ -1,10 +1,10 @@
-import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
-import { Ball } from "../../entities/Ball";
-import { Player } from "../../entities/Player";
-import { BallStatus } from "../../enums/BallStatus";
-import { GameStatus } from "../../enums/GameStatus";
-import { Keys } from "../../enums/Keys";
-import { GameWorld } from "../../world/GameWorld";
+import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
+import { Ball } from "../../../entities/Ball";
+import { Player } from "../../../entities/Player";
+import { BallStatus } from "../../../enums/BallStatus";
+import { GameStatus } from "../../../enums/GameStatus";
+import { Keys } from "../../../enums/Keys";
+import { GameWorld } from "../../../world/GameWorld";
 import { AbstractBallMovementStrategy } from "./AbstractBallMovementStrategy";
 
 export class AttachedWithoutKeyPressedBallMovementStrategy extends AbstractBallMovementStrategy {

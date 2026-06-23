@@ -1,15 +1,15 @@
-import { KeyboardInputManager } from "../../input/KeyboardInputManager";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { GameWorld } from "../world/GameWorld";
-import { AbstractBallMovementStrategy } from "./ballMovementStrategies/AbstractBallMovementStrategy";
-import { AttachedWithKeyPressedBallMovementStrategy } from "./ballMovementStrategies/AttachedWithKeyPressedBallMovementStrategy";
-import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballMovementStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
-import { PlayingFreeBallMovementStrategy } from "./ballMovementStrategies/PlayingFreeBallMovementStrategy";
-import { WaitingBallBallMovementStrategy } from "./ballMovementStrategies/WaitingBallBallMovementStrategy";
-import { AbstractPlayerMovementStrategy } from "./playersMovementStrategies/AbstractPlayerMovementStrategy";
-import { InputPlayerMovementStrategy } from "./playersMovementStrategies/InputPlayerMovementStrategy";
-import { MenuMovementStrategy } from "./playersMovementStrategies/MenuMovementStrategy";
-import { WaitingBallMovementStrategy } from "./playersMovementStrategies/WaitingBallMovementStrategy";
+import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
+import { GameConfigs } from "../../../utils/GameConfigs";
+import { GameWorld } from "../../world/GameWorld";
+import { AbstractBallMovementStrategy } from "./ballStrategies/AbstractBallMovementStrategy";
+import { AttachedWithKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithKeyPressedBallMovementStrategy";
+import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
+import { PlayingFreeBallMovementStrategy } from "./ballStrategies/PlayingFreeBallMovementStrategy";
+import { WaitingBallBallMovementStrategy } from "./ballStrategies/WaitingBallBallMovementStrategy";
+import { AbstractPlayerMovementStrategy } from "./playersStrategies/AbstractPlayerMovementStrategy";
+import { InputPlayerMovementStrategy } from "./playersStrategies/InputPlayerMovementStrategy";
+import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
+import { WaitingBallMovementStrategy } from "./playersStrategies/WaitingBallMovementStrategy";
 
 export class MovementSystem {
     private playerStrategies: Array<AbstractPlayerMovementStrategy> = [];

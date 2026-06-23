@@ -4,8 +4,8 @@ import { Ball } from "../entities/Ball";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
-import { Score } from "../entities/Score";
 import { GameStatusManager } from "../managers/GameStatusManager";
+import { ScoreManager } from "../managers/ScoreManager";
 
 export class GameWorld {
     public readonly goalPosts: GoalPosts;
@@ -13,7 +13,7 @@ export class GameWorld {
     public readonly ball: Ball;
     public readonly menuButton: MenuButton;
     public readonly gameStatusManager: GameStatusManager;
-    public readonly score: Score;
+    public readonly score: ScoreManager;
 
     public constructor(gameConfigs: GameConfigs, assetLoader: AssetLoader) {
         this.goalPosts = new GoalPosts(gameConfigs);
@@ -22,7 +22,7 @@ export class GameWorld {
         this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
-        this.score = new Score();
+        this.score = new ScoreManager();
         const playImg = assetLoader.getImage("play.png");
         this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
         this.gameStatusManager = new GameStatusManager();

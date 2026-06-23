@@ -1,5 +1,5 @@
-import { Player } from "../../entities/Player";
-import { GameWorld } from "../../world/GameWorld";
+import { Player } from "../../../entities/Player";
+import { GameWorld } from "../../../world/GameWorld";
 
 export abstract class AbstractPlayerMovementStrategy {
     abstract canBeApplied(player: Player, gameWorld: GameWorld): boolean;

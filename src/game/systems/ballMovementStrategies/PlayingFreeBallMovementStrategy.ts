@@ -13,6 +13,7 @@ export class PlayingFreeBallMovementStrategy extends AbstractBallMovementStrateg
     }
 
     public apply(ball: Ball, _gameWorld: GameWorld, deltaMs: number): void {
+        ball.setForStartGame();
         ball.move(deltaMs);
     }
 }

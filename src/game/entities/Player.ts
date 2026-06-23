@@ -1,7 +1,7 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { PlayerSide } from "../enums/PlayerSide";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
-import { PlayerSide } from "../enums/PlayerSide";
 
 export class Player {
     public readonly isCpu: boolean;
@@ -38,9 +38,9 @@ export class Player {
         colorIndex: number,
     ) {
         this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
-        this.maxSpeedWithBall = gameConfigs.fieldHeight / 666;
+        this.maxSpeedWithBall = this.normalMaxSpeed / 1.332;
         this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
-        this.movementPosition.acceleration = gameConfigs.fieldHeight / 150000;
+        this.movementPosition.acceleration = this.normalMaxSpeed / 300;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
         this.movementPosition.size = gameConfigs.playerSizeWithBorder;
 

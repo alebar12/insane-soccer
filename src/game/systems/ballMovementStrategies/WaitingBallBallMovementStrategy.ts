@@ -8,7 +8,11 @@ export class WaitingBallBallMovementStrategy extends AbstractBallMovementStrateg
         return gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL;
     }
 
-    public apply(ball: Ball, _gameWorld: GameWorld, _deltaMs: number): void {
-        ball.setForStartGame();
+    public apply(ball: Ball, _gameWorld: GameWorld, deltaMs: number): void {
+        if (ball.movementPosition.getSpeed() > 0) {
+            ball.move(deltaMs);
+        } else {
+            ball.resetToStartGame();
+        }
     }
 }

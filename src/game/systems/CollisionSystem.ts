@@ -1,6 +1,8 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Player } from "../entities/Player";
 import { BallStatus } from "../enums/BallStatus";
+import { GameStatus } from "../enums/GameStatus";
+import { PlayerSide } from "../enums/PlayerSide";
 import { BorderLimits } from "../geometry/BorderLimits";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
@@ -19,10 +21,19 @@ export class CollisionSystem {
     private checkBallBorderCollisions(gameWorld: GameWorld): void {
         // TODO to add handleGoalPostsCollision
 
+        if (this.handleBallInsideGoalCollision(gameWorld, PlayerSide.LEFT)) {
+            return;
+        }
+
+        if (this.handleBallInsideGoalCollision(gameWorld, PlayerSide.RIGHT)) {
+            return;
+        }
+
         this.handleBorderCollision(
             gameWorld.ball.movementPosition,
             this.getFieldBorderLimits(gameWorld.ball.movementPosition.size),
             true,
+            false,
         );
     }
 
@@ -52,8 +63,15 @@ export class CollisionSystem {
         movementPoint: MovementPoint,
         borderLimits: BorderLimits,
         invertSpeed: boolean,
+        avoidBounceOnGoal: boolean = true,
     ): void {
-        if (movementPoint.position.x < borderLimits.left) {
+        const cfg = this.gameConfigs;
+        const isInGoalYRange =
+            !avoidBounceOnGoal &&
+            movementPoint.position.y >= cfg.goalYOffset &&
+            movementPoint.position.y <= cfg.goalYOffset + cfg.goalHeight;
+
+        if (!isInGoalYRange && movementPoint.position.x < borderLimits.left) {
             movementPoint.position.x = borderLimits.left;
             if (invertSpeed) {
                 movementPoint.velocity.x = Math.abs(movementPoint.velocity.x);
@@ -61,7 +79,7 @@ export class CollisionSystem {
                 movementPoint.velocity.x = Math.max(0, movementPoint.velocity.x);
             }
         }
-        if (movementPoint.position.x > borderLimits.right) {
+        if (!isInGoalYRange && movementPoint.position.x > borderLimits.right) {
             movementPoint.position.x = borderLimits.right;
             if (invertSpeed) {
                 movementPoint.velocity.x = -Math.abs(movementPoint.velocity.x);
@@ -150,5 +168,61 @@ export class CollisionSystem {
             intersectionPoint.x + Math.cos(angle) * player2.movementPosition.size;
         player1.movementPosition.position.y =
             intersectionPoint.y + Math.sin(angle) * player2.movementPosition.size;
+    }
+
+    private handleBallInsideGoalCollision(gameWorld: GameWorld, playerSide: PlayerSide): boolean {
+        const ballMovement = gameWorld.ball.movementPosition;
+
+        if (!this.isBallInsideGoal(ballMovement, playerSide)) {
+            return false;
+        }
+
+        if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {
+            gameWorld.score.increaseScore(playerSide);
+            gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+        }
+
+        this.handleBorderCollision(
+            ballMovement,
+            this.getGoalBorderLimits(ballMovement.size, playerSide),
+            true,
+            true,
+        );
+
+        return true;
+    }
+
+    private isBallInsideGoal(ballMovement: MovementPoint, playerSide: PlayerSide): boolean {
+        const cfg = this.gameConfigs;
+        const position = ballMovement.position;
+
+        const insideGoalYRange =
+            position.y >= cfg.goalYOffset && position.y <= cfg.goalYOffset + cfg.goalHeight;
+        if (!insideGoalYRange) {
+            return false;
+        }
+
+        if (playerSide === PlayerSide.LEFT) {
+            return position.x < cfg.fieldXOffset;
+        }
+
+        return position.x > cfg.fieldXOffset + cfg.fieldWidth;
+    }
+
+    private getGoalBorderLimits(size: number, playerSide: PlayerSide): BorderLimits {
+        const cfg = this.gameConfigs;
+        const top = cfg.goalYOffset + size;
+        const bottom = cfg.goalYOffset + cfg.goalHeight - size;
+
+        if (playerSide === PlayerSide.LEFT) {
+            return new BorderLimits(size, cfg.fieldXOffset - size, top, bottom);
+        }
+
+        return new BorderLimits(
+            cfg.fieldXOffset + cfg.fieldWidth + size,
+            cfg.width - size,
+            top,
+            bottom,
+        );
     }
 }

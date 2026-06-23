@@ -1,5 +1,6 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Player } from "../../../entities/Player";
+import { BallStatus } from "../../../enums/BallStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
@@ -34,6 +35,15 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
                 2;
             this.bouncePlayers(humanPlayer, cpuPlayer, intersectionPoint, collisionSpeed);
             this.bouncePlayers(cpuPlayer, humanPlayer, intersectionPoint, collisionSpeed);
+
+            const ball = gameWorld.ball;
+            if (ball.ballStatus === BallStatus.ATTACHED) {
+                ball.movementPosition.setSpeed(
+                    collisionSpeed,
+                    Point.getAngleBetweenPoints(intersectionPoint, ball.movementPosition.position),
+                );
+                ball.ballStatus = BallStatus.FREE;
+            }
         }
     }
 

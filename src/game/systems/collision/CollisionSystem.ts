@@ -3,6 +3,7 @@ import { GameWorld } from "../../world/GameWorld";
 import { AbstractCollisionStrategy } from "./strategies/AbstractCollisionStrategy";
 import { BallBorderCollisionStrategy } from "./strategies/BallBorderCollisionStrategy";
 import { BallGoalCollisionStrategy } from "./strategies/BallGoalCollisionStrategy";
+import { BallGoalStakesCollisionStrategy } from "./strategies/BallGoalStakesCollisionStrategy";
 import { BallPlayerCollisionStrategy } from "./strategies/BallPlayerCollisionStrategy";
 import { PlayerBorderCollisionStrategy } from "./strategies/PlayerBorderCollisionStrategy";
 import { PlayerCollisionStrategy } from "./strategies/PlayerCollisionStrategy";
@@ -16,6 +17,7 @@ export class CollisionSystem {
         this.strategies.push(new PlayerCollisionStrategy(gameConfigs));
         this.strategies.push(new BallGoalCollisionStrategy(gameConfigs));
         this.strategies.push(new BallBorderCollisionStrategy(gameConfigs));
+        this.strategies.push(new BallGoalStakesCollisionStrategy(gameConfigs));
     }
 
     public update(gameWorld: GameWorld): void {

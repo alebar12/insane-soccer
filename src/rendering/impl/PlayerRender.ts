@@ -41,6 +41,10 @@ export class PlayerRender implements RenderInterface {
                 Math.round(player.movementPosition.position.x),
                 Math.round(player.movementPosition.position.y),
             );
+
+            const scale = player.getBouncingAmplitude();
+            this.gameContext.scale(1 - scale, 1 + scale);
+
             this.gameContext.beginPath();
             this.gameContext.arc(0, 0, player.movementPosition.size, 0, 2 * Math.PI, false);
             this.gameContext.closePath();

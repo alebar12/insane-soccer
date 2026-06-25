@@ -46,6 +46,8 @@ export class AttachedWithoutKeyPressedBallMovementStrategy implements BallMoveme
             if (Math.abs(angleDifference) > this.angleTollerance) {
                 const step = (speed / player.maxSpeedWithBall) * 0.01 * deltaMs;
                 ball.angleWithPlayer += angleDifference > 0 ? step : -step;
+            } else {
+                ball.angleWithPlayer = targetAngle;
             }
             ball.angleWithPlayer = this.normalizeAngle(ball.angleWithPlayer);
         }

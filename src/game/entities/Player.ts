@@ -149,7 +149,7 @@ export class Player {
     public startBouncing(): void {
         if (this.getBouncingProgress() > this.bounceTime / 2) {
             this.bouncingStartTime = Date.now();
-        }        
+        }
     }
 
     public getBouncingAmplitude(): number {
@@ -157,12 +157,15 @@ export class Player {
             return 0;
         }
 
-        return this.bounceMaxAmplitude * Math.pow(Math.E, -this.getBouncingProgress() * this.bounceExponentialFactor) * 
-            Math.sin((this.getBouncingProgress()) / (2 * Math.PI * this.bounceNumber));
+        return (
+            this.bounceMaxAmplitude *
+            Math.pow(Math.E, -this.getBouncingProgress() * this.bounceExponentialFactor) *
+            Math.sin(this.getBouncingProgress() / (2 * Math.PI * this.bounceNumber))
+        );
     }
 
     private getBouncingProgress(): number {
-        return (Date.now() - this.bouncingStartTime);
+        return Date.now() - this.bouncingStartTime;
     }
 
     private isBouncing(): boolean {

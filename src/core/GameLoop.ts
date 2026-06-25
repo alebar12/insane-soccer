@@ -2,6 +2,7 @@ import { AssetLoader } from "../assets/AssetLoader";
 import { GameStatus } from "../game/enums/GameStatus";
 import { CollisionSystem } from "../game/systems/collision/CollisionSystem";
 import { MovementSystem } from "../game/systems/movement/MovementSystem";
+import { SystemInterface } from "../game/systems/SystemInterface";
 import { GameWorld } from "../game/world/GameWorld";
 import { KeyboardInputManager } from "../input/KeyboardInputManager";
 import { MouseInputManager } from "../input/MouseInputManager";
@@ -16,8 +17,7 @@ export class GameLoop {
     private gameWorld: GameWorld;
     private uiInteractionSystem: UIInteractionSystem;
 
-    private movementSystem: MovementSystem;
-    private collisionSystem: CollisionSystem;
+    private systems = new Array<SystemInterface>();
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
@@ -26,8 +26,8 @@ export class GameLoop {
             new MouseInputManager(domHandler.menuCanvas),
         );
 
-        this.movementSystem = new MovementSystem(gameConfigs, new KeyboardInputManager());
-        this.collisionSystem = new CollisionSystem(gameConfigs);
+        this.systems.push(new MovementSystem(gameConfigs, new KeyboardInputManager()));
+        this.systems.push(new CollisionSystem(gameConfigs));
     }
 
     public main(): void {
@@ -46,8 +46,7 @@ export class GameLoop {
 
     private update(delta: number): void {
         this.gameWorld.gameStatusManager.update(delta);
-        this.movementSystem.update(this.gameWorld, delta);
-        this.collisionSystem.update(this.gameWorld);
+        this.systems.forEach(system => system.update(this.gameWorld, delta));
     }
 
     private updateInputs(delta: number): void {

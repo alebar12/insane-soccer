@@ -1,5 +1,6 @@
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
+import { SystemInterface } from "../SystemInterface";
 import { AbstractCollisionStrategy } from "./strategies/AbstractCollisionStrategy";
 import { BallBorderCollisionStrategy } from "./strategies/BallBorderCollisionStrategy";
 import { BallGoalCollisionStrategy } from "./strategies/BallGoalCollisionStrategy";
@@ -8,7 +9,7 @@ import { BallPlayerCollisionStrategy } from "./strategies/BallPlayerCollisionStr
 import { PlayerBorderCollisionStrategy } from "./strategies/PlayerBorderCollisionStrategy";
 import { PlayerCollisionStrategy } from "./strategies/PlayerCollisionStrategy";
 
-export class CollisionSystem {
+export class CollisionSystem implements SystemInterface {
     private strategies: AbstractCollisionStrategy[] = [];
 
     public constructor(gameConfigs: GameConfigs) {

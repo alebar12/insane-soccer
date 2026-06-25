@@ -1,8 +1,9 @@
-import { GameStatus } from "../game/enums/GameStatus";
-import { GameWorld } from "../game/world/GameWorld";
-import { GameConfigs } from "../utils/GameConfigs";
+import { GameStatus } from "../../game/enums/GameStatus";
+import { GameWorld } from "../../game/world/GameWorld";
+import { GameConfigs } from "../../utils/GameConfigs";
+import { RenderInterface } from "../RenderInterface";
 
-export class BallRender {
+export class BallRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
 

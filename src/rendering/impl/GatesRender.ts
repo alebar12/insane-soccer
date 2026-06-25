@@ -1,6 +1,7 @@
-import { GameConfigs } from "../utils/GameConfigs";
+import { GameConfigs } from "../../utils/GameConfigs";
+import { RenderInterface } from "../RenderInterface";
 
-export class GatesRender {
+export class GatesRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
 

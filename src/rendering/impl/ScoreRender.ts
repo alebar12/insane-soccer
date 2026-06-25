@@ -1,9 +1,10 @@
-import { AssetLoader } from "../assets/AssetLoader";
-import { Dimensions } from "../game/geometry/Dimensions";
-import { Point } from "../game/geometry/Point";
-import { GameWorld } from "../game/world/GameWorld";
+import { AssetLoader } from "../../assets/AssetLoader";
+import { Dimensions } from "../../game/geometry/Dimensions";
+import { Point } from "../../game/geometry/Point";
+import { GameWorld } from "../../game/world/GameWorld";
+import { RenderInterface } from "../RenderInterface";
 
-export class ScoreRender {
+export class ScoreRender implements RenderInterface {
     private readonly digitsImages: HTMLImageElement;
     private readonly scoreContext: CanvasRenderingContext2D;
     private readonly innerImageDimensions: Dimensions;

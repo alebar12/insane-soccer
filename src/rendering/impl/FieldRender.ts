@@ -1,8 +1,9 @@
-import { AssetLoader } from "../assets/AssetLoader";
-import { GameWorld } from "../game/world/GameWorld";
-import { GameConfigs } from "../utils/GameConfigs";
+import { AssetLoader } from "../../assets/AssetLoader";
+import { GameWorld } from "../../game/world/GameWorld";
+import { GameConfigs } from "../../utils/GameConfigs";
+import { RenderInterface } from "../RenderInterface";
 
-export class FieldRender {
+export class FieldRender implements RenderInterface {
     private readonly fieldImage: HTMLImageElement;
     private readonly goalImage: HTMLImageElement;
     private readonly trackFieldImage: HTMLImageElement;

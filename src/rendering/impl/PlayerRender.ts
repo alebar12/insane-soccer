@@ -1,7 +1,8 @@
-import { GameWorld } from "../game/world/GameWorld";
-import { GameConfigs } from "../utils/GameConfigs";
+import { GameWorld } from "../../game/world/GameWorld";
+import { GameConfigs } from "../../utils/GameConfigs";
+import { RenderInterface } from "../RenderInterface";
 
-export class PlayerRender {
+export class PlayerRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
     private readonly colorMap: Map<string, string> = new Map([

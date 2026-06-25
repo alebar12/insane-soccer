@@ -2,40 +2,32 @@ import { AssetLoader } from "../assets/AssetLoader";
 import { GameWorld } from "../game/world/GameWorld";
 import { DomHandler } from "../ui/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
-import { BallRender } from "./BallRender";
-import { FieldRender } from "./FieldRender";
-import { GatesRender } from "./GatesRender";
-import { MenuRender } from "./MenuRender";
-import { PlayerRender } from "./PlayerRender";
-import { ScoreRender } from "./ScoreRender";
+import { BallRender } from "./impl/BallRender";
+import { FieldRender } from "./impl/FieldRender";
+import { GatesRender } from "./impl/GatesRender";
+import { MenuRender } from "./impl/MenuRender";
+import { PlayerRender } from "./impl/PlayerRender";
+import { ScoreRender } from "./impl/ScoreRender";
+import { RenderInterface } from "./RenderInterface";
 
 export class MainRender {
     private domHandler: DomHandler;
-    private fieldRender: FieldRender;
-    private scoreRender: ScoreRender;
-    private gatesRender: GatesRender;
-    private playerRender: PlayerRender;
-    private menuRender: MenuRender;
-    private ballRender: BallRender;
+    private renders = new Array<RenderInterface>();
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.domHandler = domHandler;
-        this.fieldRender = new FieldRender(domHandler.backgroundContext, gameConfigs, assetLoader);
-        this.scoreRender = new ScoreRender(domHandler.scoreContext, assetLoader);
-        this.gatesRender = new GatesRender(domHandler.gameContext, gameConfigs);
-        this.playerRender = new PlayerRender(domHandler.gameContext, gameConfigs);
-        this.menuRender = new MenuRender(domHandler.menuContext, assetLoader);
-        this.ballRender = new BallRender(domHandler.gameContext, gameConfigs);
+
+        this.renders.push(new FieldRender(domHandler.backgroundContext, gameConfigs, assetLoader));
+        this.renders.push(new ScoreRender(domHandler.scoreContext, assetLoader));
+        this.renders.push(new GatesRender(domHandler.gameContext, gameConfigs));
+        this.renders.push(new PlayerRender(domHandler.gameContext, gameConfigs));
+        this.renders.push(new MenuRender(domHandler.menuContext, assetLoader));
+        this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
     }
 
     public render(gameWorld: GameWorld): void {
         this.clear();
-        this.fieldRender.render(gameWorld);
-        this.scoreRender.render(gameWorld);
-        this.ballRender.render(gameWorld);
-        this.playerRender.render(gameWorld);
-        this.gatesRender.render();
-        this.menuRender.render(gameWorld);
+        this.renders.forEach(render => render.render(gameWorld));
     }
 
     private clear(): void {

@@ -1,6 +1,7 @@
 import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
+import { SystemInterface } from "../SystemInterface";
 import { AttachedWithKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithKeyPressedBallMovementStrategy";
 import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
 import { BallMovementStrategyInterface } from "./ballStrategies/BallMovementStrategyInterface";
@@ -11,7 +12,7 @@ import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
 import { PlayerMovementStrategyInterface } from "./playersStrategies/PlayerMovementStrategyInterface";
 import { WaitingBallMovementStrategy } from "./playersStrategies/WaitingBallMovementStrategy";
 
-export class MovementSystem {
+export class MovementSystem implements SystemInterface {
     private playerStrategies: Array<PlayerMovementStrategyInterface> = [];
     private ballStrategies: Array<BallMovementStrategyInterface> = [];
 

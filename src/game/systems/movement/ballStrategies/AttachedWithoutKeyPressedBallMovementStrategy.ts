@@ -5,14 +5,13 @@ import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
 import { Keys } from "../../../enums/Keys";
 import { GameWorld } from "../../../world/GameWorld";
-import { AbstractBallMovementStrategy } from "./AbstractBallMovementStrategy";
+import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
 
-export class AttachedWithoutKeyPressedBallMovementStrategy extends AbstractBallMovementStrategy {
+export class AttachedWithoutKeyPressedBallMovementStrategy implements BallMovementStrategyInterface {
     private readonly angleTollerance: number = Math.PI / 30;
     private readonly keyboardInputManager: KeyboardInputManager;
 
     public constructor(keyboardInputManager: KeyboardInputManager) {
-        super();
         this.keyboardInputManager = keyboardInputManager;
     }
 

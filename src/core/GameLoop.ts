@@ -11,7 +11,6 @@ import { UIInteractionSystem } from "../ui/UIInteractionSystem";
 import { GameConfigs } from "../utils/GameConfigs";
 
 export class GameLoop {
-    private delta: number = 0;
     private prevTime: number = 0;
     private mainRender: MainRender;
     private gameWorld: GameWorld;
@@ -34,9 +33,9 @@ export class GameLoop {
     public main(): void {
         const tick = (time: number): void => {
             if (this.prevTime !== 0) {
-                this.delta = time - this.prevTime;
-                this.updateInputs(this.delta);
-                this.update();
+                const delta = time - this.prevTime;
+                this.updateInputs(delta);
+                this.update(delta);
                 this.render();
             }
             this.prevTime = time;
@@ -45,19 +44,19 @@ export class GameLoop {
         requestAnimationFrame(tick);
     }
 
-    private update(): void {
-        this.gameWorld.gameStatusManager.update(this.delta);
-        this.movementSystem.update(this.gameWorld, this.delta);
+    private update(delta: number): void {
+        this.gameWorld.gameStatusManager.update(delta);
+        this.movementSystem.update(this.gameWorld, delta);
         this.collisionSystem.update(this.gameWorld);
     }
 
-    private updateInputs(deltaMs: number): void {
+    private updateInputs(delta: number): void {
         this.uiInteractionSystem.update(
             this.gameWorld.menuButton,
             () => {
                 this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
             },
-            deltaMs,
+            delta,
         );
     }
 

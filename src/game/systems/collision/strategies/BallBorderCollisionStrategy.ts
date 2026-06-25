@@ -11,8 +11,10 @@ export class BallBorderCollisionStrategy extends AbstractCollisionStrategy {
     }
 
     public canBeApplied(gameWorld: GameWorld): boolean {
-        return gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING && 
-            gameWorld.ball.ballStatus === BallStatus.FREE;
+        return (
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
+            gameWorld.ball.ballStatus === BallStatus.FREE
+        );
     }
 
     public apply(gameWorld: GameWorld): void {

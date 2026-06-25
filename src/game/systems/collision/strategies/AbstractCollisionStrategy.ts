@@ -26,15 +26,17 @@ export abstract class AbstractCollisionStrategy {
         borderLimits: BorderLimits,
         invertSpeed: boolean,
         avoidBounceOnGoal: boolean = true,
-    ): void {
+    ): boolean {
         const cfg = this.gameConfigs;
         const isInGoalYRange =
             !avoidBounceOnGoal &&
             movementPoint.position.y >= cfg.goalYOffset &&
             movementPoint.position.y <= cfg.goalYOffset + cfg.goalHeight;
+        let hasCollided = false;
 
         if (!isInGoalYRange && movementPoint.position.x < borderLimits.left) {
             movementPoint.position.x = borderLimits.left;
+            hasCollided = true;
             if (invertSpeed) {
                 movementPoint.velocity.x = Math.abs(movementPoint.velocity.x);
             } else {
@@ -43,6 +45,7 @@ export abstract class AbstractCollisionStrategy {
         }
         if (!isInGoalYRange && movementPoint.position.x > borderLimits.right) {
             movementPoint.position.x = borderLimits.right;
+            hasCollided = true;
             if (invertSpeed) {
                 movementPoint.velocity.x = -Math.abs(movementPoint.velocity.x);
             } else {
@@ -51,6 +54,7 @@ export abstract class AbstractCollisionStrategy {
         }
         if (movementPoint.position.y < borderLimits.top) {
             movementPoint.position.y = borderLimits.top;
+            hasCollided = true;
             if (invertSpeed) {
                 movementPoint.velocity.y = Math.abs(movementPoint.velocity.y);
             } else {
@@ -59,12 +63,14 @@ export abstract class AbstractCollisionStrategy {
         }
         if (movementPoint.position.y > borderLimits.bottom) {
             movementPoint.position.y = borderLimits.bottom;
+            hasCollided = true;
             if (invertSpeed) {
                 movementPoint.velocity.y = -Math.abs(movementPoint.velocity.y);
             } else {
                 movementPoint.velocity.y = Math.min(0, movementPoint.velocity.y);
             }
         }
+        return hasCollided;
     }
 
     protected getGoalBorderLimits(size: number, playerSide: PlayerSide): BorderLimits {

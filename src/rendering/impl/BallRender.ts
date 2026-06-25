@@ -1,9 +1,11 @@
+import { BallStatus } from "../../game/enums/BallStatus";
 import { GameStatus } from "../../game/enums/GameStatus";
 import { GameWorld } from "../../game/world/GameWorld";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { RenderInterface } from "../RenderInterface";
 
 export class BallRender implements RenderInterface {
+    private readonly maxResizeFactor: number = 2;
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly gameConfigs: GameConfigs;
 
@@ -13,18 +15,29 @@ export class BallRender implements RenderInterface {
     }
 
     public render(gameWorld: GameWorld): void {
-        // TODO add enlargement for speed
+        const ball = gameWorld.ball;
         this.gameContext.save();
 
         if (
             gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING ||
             (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL &&
-                gameWorld.ball.movementPosition.getSpeed() > 0)
+                ball.movementPosition.getSpeed() > 0)
         ) {
             this.gameContext.translate(
-                gameWorld.ball.movementPosition.position.x,
-                gameWorld.ball.movementPosition.position.y,
+                ball.movementPosition.position.x,
+                ball.movementPosition.position.y,
             );
+
+            this.gameContext.rotate(ball.movementPosition.getSpeedAngle());
+            let resizeFactor = 1;
+            if (ball.ballStatus !== BallStatus.ATTACHED) {
+                resizeFactor =
+                    (ball.movementPosition.getSpeed() / ball.maxSpeed) *
+                        (this.maxResizeFactor - 1) +
+                    1;
+            }
+            this.gameContext.scale(resizeFactor, 1);
+
             this.gameContext.shadowColor = "#000000";
             this.gameContext.shadowOffsetX = this.gameConfigs.ballSizeWithoutBorder * 0.5;
             this.gameContext.shadowOffsetY = this.gameConfigs.ballSizeWithoutBorder * 0.5;

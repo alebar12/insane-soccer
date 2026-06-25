@@ -15,11 +15,14 @@ export class PlayerBorderCollisionStrategy extends AbstractCollisionStrategy {
         gameWorld.players
             .filter(player => !player.isSubstitute)
             .forEach(player => {
-                this.handleBorderCollision(
+                const hasCollided = this.handleBorderCollision(
                     player.movementPosition,
                     this.getFieldBorderLimits(player.movementPosition.size),
                     false,
                 );
+                if (hasCollided) {
+                    player.startBouncing();
+                }
             });
     }
 }

@@ -24,11 +24,12 @@ export class ScoreManager {
     }
 
     public getScoreAsArray(): Array<number> {
-        const outputString = String(this.leftScore).padStart(2, '0') + String(this.rightScore).padStart(2, '0');
-        return outputString.split('').map(Number);
+        const outputString =
+            String(this.leftScore).padStart(2, "0") + String(this.rightScore).padStart(2, "0");
+        return outputString.split("").map(Number);
     }
 
-    public shouldAnimateIndex (index: number): boolean {
+    public shouldAnimateIndex(index: number): boolean {
         if (this.lastSideUpdated === PlayerSide.RIGHT) {
             return index < 2;
         } else {

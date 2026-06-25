@@ -11,22 +11,23 @@ export class BallGoalStakesCollisionStrategy extends AbstractCollisionStrategy {
     }
 
     public canBeApplied(gameWorld: GameWorld): boolean {
-        return gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING && 
-            gameWorld.ball.ballStatus === BallStatus.FREE;
+        return (
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
+            gameWorld.ball.ballStatus === BallStatus.FREE
+        );
     }
 
     public apply(gameWorld: GameWorld): void {
         gameWorld.goalPosts.positions.forEach(position => {
             if (
-                Point.getDistance(
-                    gameWorld.ball.movementPosition.position,
-                    position,
-                ) < gameWorld.ball.movementPosition.size + gameWorld.goalPosts.radius
+                Point.getDistance(gameWorld.ball.movementPosition.position, position) <
+                gameWorld.ball.movementPosition.size + gameWorld.goalPosts.radius
             ) {
-                const angle = Point.getAngleBetweenPoints(
-                    gameWorld.ball.movementPosition.position,
-                    position,
-                ) - Math.PI;
+                const angle =
+                    Point.getAngleBetweenPoints(
+                        gameWorld.ball.movementPosition.position,
+                        position,
+                    ) - Math.PI;
                 gameWorld.ball.movementPosition.setSpeed(
                     gameWorld.ball.movementPosition.getSpeed(),
                     angle,

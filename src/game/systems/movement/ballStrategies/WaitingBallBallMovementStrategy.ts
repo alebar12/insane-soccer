@@ -1,9 +1,9 @@
 import { Ball } from "../../../entities/Ball";
 import { GameStatus } from "../../../enums/GameStatus";
 import { GameWorld } from "../../../world/GameWorld";
-import { AbstractBallMovementStrategy } from "./AbstractBallMovementStrategy";
+import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
 
-export class WaitingBallBallMovementStrategy extends AbstractBallMovementStrategy {
+export class WaitingBallBallMovementStrategy implements BallMovementStrategyInterface {
     public canBeApplied(_ball: Ball, gameWorld: GameWorld): boolean {
         return gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL;
     }

@@ -1,19 +1,19 @@
 import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
-import { AbstractBallMovementStrategy } from "./ballStrategies/AbstractBallMovementStrategy";
 import { AttachedWithKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithKeyPressedBallMovementStrategy";
 import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
+import { BallMovementStrategyInterface } from "./ballStrategies/BallMovementStrategyInterface";
 import { PlayingFreeBallMovementStrategy } from "./ballStrategies/PlayingFreeBallMovementStrategy";
 import { WaitingBallBallMovementStrategy } from "./ballStrategies/WaitingBallBallMovementStrategy";
-import { AbstractPlayerMovementStrategy } from "./playersStrategies/AbstractPlayerMovementStrategy";
 import { InputPlayerMovementStrategy } from "./playersStrategies/InputPlayerMovementStrategy";
 import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
+import { PlayerMovementStrategyInterface } from "./playersStrategies/PlayerMovementStrategyInterface";
 import { WaitingBallMovementStrategy } from "./playersStrategies/WaitingBallMovementStrategy";
 
 export class MovementSystem {
-    private playerStrategies: Array<AbstractPlayerMovementStrategy> = [];
-    private ballStrategies: Array<AbstractBallMovementStrategy> = [];
+    private playerStrategies: Array<PlayerMovementStrategyInterface> = [];
+    private ballStrategies: Array<BallMovementStrategyInterface> = [];
 
     public constructor(gameConfigs: GameConfigs, keyboardInputManager: KeyboardInputManager) {
         this.playerStrategies.push(new MenuMovementStrategy(gameConfigs));

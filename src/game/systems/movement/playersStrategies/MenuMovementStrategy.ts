@@ -4,13 +4,12 @@ import { GameStatus } from "../../../enums/GameStatus";
 import { PlayerSide } from "../../../enums/PlayerSide";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
-import { AbstractPlayerMovementStrategy } from "./AbstractPlayerMovementStrategy";
+import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
 
-export class MenuMovementStrategy extends AbstractPlayerMovementStrategy {
+export class MenuMovementStrategy implements PlayerMovementStrategyInterface {
     private readonly gameConfigs: GameConfigs;
 
     public constructor(gameConfigs: GameConfigs) {
-        super();
         this.gameConfigs = gameConfigs;
     }
 

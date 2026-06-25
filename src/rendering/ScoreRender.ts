@@ -50,7 +50,9 @@ export class ScoreRender {
             let frame = maxFrame;
             if (frame > 0 && gameWorld.score.shouldAnimateIndex(index)) {
                 const minFrame = (number - 1) * this.frameForNumber;
-                frame = minFrame + Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime); 
+                frame =
+                    minFrame +
+                    Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime);
                 frame = Math.min(frame, maxFrame);
             }
 

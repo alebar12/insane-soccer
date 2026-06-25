@@ -12,7 +12,8 @@ export class ScoreRender implements RenderInterface {
     private readonly positionArray: Array<Point>;
     private readonly frameForNumber: number = 6;
     private readonly totalNumbers: number = 9;
-    private readonly frameTime: number = 30;
+    private readonly totalAnimationTime: number = 300;
+    private readonly frameTime: number = this.totalAnimationTime / this.frameForNumber;
 
     public constructor(scoreContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.scoreContext = scoreContext;

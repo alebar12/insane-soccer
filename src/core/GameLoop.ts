@@ -48,7 +48,9 @@ export class GameLoop {
         this.uiInteractionSystem.update(
             this.gameWorld.menuButton,
             () => {
-                this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+                if (this.gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
+                    this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+                }                
             },
             delta,
         );

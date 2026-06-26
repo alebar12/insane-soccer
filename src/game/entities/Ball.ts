@@ -67,7 +67,7 @@ export class Ball {
         this.movementPosition.setSpeed(this.maxSpeed, this.angleWithPlayer);
     }
 
-    public resetOnGoal() : void {
+    public resetOnGoal(): void {
         this.ballStatus = BallStatus.FREE;
         this.attachedPlayer = null;
     }

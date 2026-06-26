@@ -155,7 +155,10 @@ export class Player {
     }
 
     public startBouncing(): void {
-        if (this.getBouncingProgress() > this.bounceTime / 2 && this.playerStatus === PlayerStatus.NORMAL) {
+        if (
+            this.getBouncingProgress() > this.bounceTime / 2 &&
+            this.playerStatus === PlayerStatus.NORMAL
+        ) {
             this.bouncingStartTime = Date.now();
         }
     }
@@ -201,7 +204,7 @@ export class Player {
         }
     }
 
-    public resetOnGoal() : void {
+    public resetOnGoal(): void {
         this.bouncingStartTime = 0;
         this.stunnedValue = 0;
         this.stunnedStars.stars = [];

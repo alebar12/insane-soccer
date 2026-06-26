@@ -34,7 +34,7 @@ export class BallBorderCollisionStrategy extends AbstractCollisionStrategy {
         const goalBorder = this.getGoalBorderLimits(ballMovement.size, playerSide);
 
         if (goalBorder.isPointInside(ballMovement.position)) {
-            gameWorld.increaseScore(playerSide);            
+            gameWorld.increaseScore(playerSide);
         }
     }
 }

@@ -20,7 +20,8 @@ export class BallRender implements RenderInterface {
 
         if (
             gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING ||
-            (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL &&
+            ((gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL || 
+                gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME) &&
                 ball.movementPosition.getSpeed() > 0)
         ) {
             this.gameContext.translate(

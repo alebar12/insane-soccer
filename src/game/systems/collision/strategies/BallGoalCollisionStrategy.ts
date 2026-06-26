@@ -11,7 +11,8 @@ export class BallGoalCollisionStrategy extends AbstractCollisionStrategy {
 
     public canBeApplied(gameWorld: GameWorld): boolean {
         return (
-            gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL &&
+            (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL || 
+                gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME) &&
             gameWorld.ball.movementPosition.getSpeed() > 0
         );
     }

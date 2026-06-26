@@ -1,3 +1,5 @@
+import { EventBus } from "ts-bus";
+import { EventBusUtilities } from "../../utils/EventBusUtilities";
 import { GameStatus } from "../enums/GameStatus";
 
 export class GameStatusManager {
@@ -5,6 +7,11 @@ export class GameStatusManager {
     private statusStartTime: number = 0;
     private scheduledEvents: Array<{ time: number; gameStatus: GameStatus }> = [];
     private time: number = 0;
+    private bus: EventBus;
+
+    public constructor(bus: EventBus) {
+        this.bus = bus;
+    }
 
     public changeStatus(gameStatus: GameStatus): void {
         this._gameStatus = gameStatus;
@@ -34,6 +41,7 @@ export class GameStatusManager {
         for (const e of this.scheduledEvents) {
             if (this.time >= e.time) {
                 this.changeStatus(e.gameStatus);
+                this.bus.publish(EventBusUtilities.statusChangedEvent(this.gameStatus));
             }
         }
         this.scheduledEvents = this.scheduledEvents.filter(e => this.time < e.time);

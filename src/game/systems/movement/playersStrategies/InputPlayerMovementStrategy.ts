@@ -2,6 +2,7 @@ import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
 import { Player } from "../../../entities/Player";
 import { GameStatus } from "../../../enums/GameStatus";
 import { Keys, KeysDirection } from "../../../enums/Keys";
+import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
 
@@ -16,7 +17,8 @@ export class InputPlayerMovementStrategy implements PlayerMovementStrategyInterf
         return (
             !player.isSubstitute &&
             !player.isCpu &&
-            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
+            player.playerStatus === PlayerStatus.NORMAL
         );
     }
 

@@ -24,6 +24,9 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
         }
 
         if (MovementPoint.areTouching(humanPlayer.movementPosition, cpuPlayer.movementPosition)) {
+            humanPlayer.updateStunnedValue(cpuPlayer.movementPosition.getSpeed());
+            cpuPlayer.updateStunnedValue(humanPlayer.movementPosition.getSpeed());
+
             const intersectionPoint = new Point(
                 (humanPlayer.movementPosition.position.x + cpuPlayer.movementPosition.position.x) /
                     2,

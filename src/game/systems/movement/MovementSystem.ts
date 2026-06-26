@@ -22,7 +22,7 @@ export class MovementSystem implements SystemInterface {
         this.playerStrategies.push(new WaitingBallMovementStrategy());
         this.playerStrategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
         //this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
-        this.playerStrategies.push(new StunnedPlayerMovementStrategy()); 
+        this.playerStrategies.push(new StunnedPlayerMovementStrategy());
 
         this.ballStrategies.push(new WaitingBallBallMovementStrategy());
         this.ballStrategies.push(new PlayingFreeBallMovementStrategy());

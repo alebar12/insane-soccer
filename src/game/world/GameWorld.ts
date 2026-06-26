@@ -35,7 +35,7 @@ export class GameWorld {
     public increaseScore(playerSide: PlayerSide): void {
         this.score.increaseScore(playerSide);
         this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
-        this.players.forEach(player => player.resetOnGoal()); 
+        this.players.forEach(player => player.resetOnGoal());
         this.ball.resetOnGoal();
 
         if (this.score.isGameOver) {

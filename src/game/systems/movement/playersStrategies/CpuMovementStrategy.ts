@@ -2,6 +2,7 @@ import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
+import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
@@ -17,7 +18,8 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
         return (
             !player.isSubstitute &&
             player.isCpu &&
-            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
+            player.playerStatus === PlayerStatus.NORMAL
         );
     }
 

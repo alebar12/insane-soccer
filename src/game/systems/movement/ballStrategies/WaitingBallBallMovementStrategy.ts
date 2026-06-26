@@ -5,7 +5,8 @@ import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
 
 export class WaitingBallBallMovementStrategy implements BallMovementStrategyInterface {
     public canBeApplied(_ball: Ball, gameWorld: GameWorld): boolean {
-        return gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL;
+        return gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL || 
+            gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME;
     }
 
     public apply(ball: Ball, _gameWorld: GameWorld, deltaMs: number): void {

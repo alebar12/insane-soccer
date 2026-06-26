@@ -1,3 +1,4 @@
+import { EventBus } from "ts-bus";
 import { AssetLoader } from "../../assets/AssetLoader";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Ball } from "../entities/Ball";
@@ -24,16 +25,22 @@ export class GameWorld {
         this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
-        this.score = new ScoreManager();
+        const bus = new EventBus();
+        this.score = new ScoreManager(bus);
         const playImg = assetLoader.getImage("play.png");
         this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
-        this.gameStatusManager = new GameStatusManager();
+        this.gameStatusManager = new GameStatusManager(bus);
     }
 
     public increaseScore(playerSide: PlayerSide): void {
         this.score.increaseScore(playerSide);
         this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
-        this.players.forEach(player => player.resetOnGoal());
+        this.players.forEach(player => player.resetOnGoal()); 
         this.ball.resetOnGoal();
+
+        if (this.score.isGameOver) {
+            this.gameStatusManager.changeStatus(GameStatus.END_GAME);
+            this.gameStatusManager.scheduleStatusChange(3000, GameStatus.MENU);
+        }
     }
 }

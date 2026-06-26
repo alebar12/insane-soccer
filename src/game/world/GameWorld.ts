@@ -4,6 +4,8 @@ import { Ball } from "../entities/Ball";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
+import { GameStatus } from "../enums/GameStatus";
+import { PlayerSide } from "../enums/PlayerSide";
 import { GameStatusManager } from "../managers/GameStatusManager";
 import { ScoreManager } from "../managers/ScoreManager";
 
@@ -26,5 +28,12 @@ export class GameWorld {
         const playImg = assetLoader.getImage("play.png");
         this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
         this.gameStatusManager = new GameStatusManager();
+    }
+
+    public increaseScore(playerSide: PlayerSide): void {
+        this.score.increaseScore(playerSide);
+        this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+        this.players.forEach(player => player.resetOnGoal());
+        this.ball.resetOnGoal();
     }
 }

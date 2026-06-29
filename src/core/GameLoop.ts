@@ -42,6 +42,7 @@ export class GameLoop {
     private update(delta: number): void {
         this.gameWorld.gameStatusManager.update(delta);
         this.mainSystem.update(this.gameWorld, delta);
+        this.gameWorld.fireworks.update(delta);
     }
 
     private updateInputs(delta: number): void {
@@ -50,6 +51,7 @@ export class GameLoop {
             () => {
                 if (this.gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
                     this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+                    this.uiInteractionSystem.input.reset();
                 }
             },
             delta,

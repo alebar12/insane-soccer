@@ -3,6 +3,7 @@ import { AssetLoader } from "../../assets/AssetLoader";
 import { EventBusUtilities } from "../../utils/EventBusUtilities";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Ball } from "../entities/Ball";
+import { Fireworks } from "../entities/Fireworks";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
@@ -15,6 +16,7 @@ export class GameWorld {
     public readonly goalPosts: GoalPosts;
     public readonly players: Array<Player> = [];
     public readonly ball: Ball;
+    public readonly fireworks: Fireworks;
     public readonly menuButton: MenuButton;
     public readonly gameStatusManager: GameStatusManager;
     public readonly score: ScoreManager;
@@ -26,6 +28,7 @@ export class GameWorld {
         this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
+        this.fireworks = new Fireworks(gameConfigs);
         const bus = new EventBus();
         this.score = new ScoreManager();
         const playImg = assetLoader.getImage("play.png");
@@ -47,7 +50,8 @@ export class GameWorld {
 
         if (this.score.isGameOver) {
             this.gameStatusManager.changeStatus(GameStatus.END_GAME);
-            this.gameStatusManager.scheduleStatusChange(5000, GameStatus.MENU);
+            this.fireworks.initFireworks();
+            this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
         }
     }
 

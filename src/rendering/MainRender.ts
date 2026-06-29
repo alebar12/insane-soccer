@@ -4,6 +4,7 @@ import { DomHandler } from "../ui/DomHandler";
 import { GameConfigs } from "../utils/GameConfigs";
 import { BallRender } from "./impl/BallRender";
 import { FieldRender } from "./impl/FieldRender";
+import { FireworksRender } from "./impl/FireworksRender";
 import { GatesRender } from "./impl/GatesRender";
 import { MenuRender } from "./impl/MenuRender";
 import { PlayerRender } from "./impl/PlayerRender";
@@ -23,6 +24,7 @@ export class MainRender {
         this.renders.push(new PlayerRender(domHandler.gameContext, gameConfigs, assetLoader));
         this.renders.push(new MenuRender(domHandler.menuContext, assetLoader));
         this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
+        this.renders.push(new FireworksRender(domHandler.gameContext));
     }
 
     public render(gameWorld: GameWorld): void {

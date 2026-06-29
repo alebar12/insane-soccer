@@ -1,6 +1,7 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
+import { GameStatus } from "../../../enums/GameStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
@@ -24,8 +25,10 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
         }
 
         if (MovementPoint.areTouching(humanPlayer.movementPosition, cpuPlayer.movementPosition)) {
-            humanPlayer.updateStunnedValue(cpuPlayer.movementPosition.getSpeed());
-            cpuPlayer.updateStunnedValue(humanPlayer.movementPosition.getSpeed());
+            if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {
+                humanPlayer.updateStunnedValue(cpuPlayer.movementPosition.getSpeed());
+                cpuPlayer.updateStunnedValue(humanPlayer.movementPosition.getSpeed());
+            }
 
             const intersectionPoint = new Point(
                 (humanPlayer.movementPosition.position.x + cpuPlayer.movementPosition.position.x) /

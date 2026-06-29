@@ -7,7 +7,8 @@ export class WaitingBallBallMovementStrategy implements BallMovementStrategyInte
     public canBeApplied(_ball: Ball, gameWorld: GameWorld): boolean {
         return (
             gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL ||
-            gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME
+            gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME || 
+            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION
         );
     }
 

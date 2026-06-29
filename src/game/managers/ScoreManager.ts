@@ -6,7 +6,7 @@ export class ScoreManager {
     private lastUpdateTime: number = 0;
     private lastSideUpdated: PlayerSide = PlayerSide.LEFT;
     private readonly maxScore: number = 5;
-    private readonly substitutionGoals: number = 3;
+    private readonly substitutionGoals: number = 2;
 
     public increaseScore(playerSide: PlayerSide): void {
         if (playerSide === PlayerSide.LEFT) {
@@ -61,6 +61,7 @@ export class ScoreManager {
     }
 
     public isSubstitutionTime(): boolean {
-        return (this.leftScore + this.rightScore) % this.substitutionGoals === 0;
+        const totalScore = this.leftScore + this.rightScore;
+        return totalScore > 0 && totalScore % this.substitutionGoals === 0;
     }
 }

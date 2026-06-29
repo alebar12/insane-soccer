@@ -8,12 +8,16 @@ export class StunnedPlayerMovementStrategy implements PlayerMovementStrategyInte
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
         return (
             !player.isSubstitute &&
-            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
-            player.playerStatus === PlayerStatus.STUNNED
+            (this.isPlayerStunnedDuringPlay(player, gameWorld) ||
+                this.hasPlayerLosedGame(player, gameWorld))
         );
     }
 
-    public apply(player: Player, _gameWorld: GameWorld, deltaMs: number): void {
+    public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
+        if (gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME) {
+            player.forceStunned();
+        }
+
         if (player.movementPosition.getSpeed() > player.maxSpeedWithBall / 5) {
             player.movementPosition.decrementSpeed(deltaMs);
         } else {
@@ -22,5 +26,21 @@ export class StunnedPlayerMovementStrategy implements PlayerMovementStrategyInte
             angle = angle + (Math.PI / 30) * deltaMs * 0.05;
             player.movementPosition.setSpeed(speed, angle);
         }
+    }
+
+    private isPlayerStunnedDuringPlay(player: Player, gameWorld: GameWorld): boolean {
+        return (
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
+            player.playerStatus === PlayerStatus.STUNNED
+        );
+    }
+
+    private hasPlayerLosedGame(player: Player, gameWorld: GameWorld): boolean {
+        const winningPlayerSide = gameWorld.score.getWinningPlayerSide();
+        return (
+            gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME &&
+            winningPlayerSide !== null &&
+            winningPlayerSide !== player.side
+        );
     }
 }

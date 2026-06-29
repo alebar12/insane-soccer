@@ -1,6 +1,3 @@
-import { EventBus } from "ts-bus";
-import { EventBusUtilities } from "../../utils/EventBusUtilities";
-import { GameStatus } from "../enums/GameStatus";
 import { PlayerSide } from "../enums/PlayerSide";
 
 export class ScoreManager {
@@ -9,16 +6,6 @@ export class ScoreManager {
     private lastUpdateTime: number = 0;
     private lastSideUpdated: PlayerSide = PlayerSide.LEFT;
     private readonly maxScore: number = 1;
-    private bus: EventBus;
-
-    public constructor(bus: EventBus) {
-        this.bus = bus;
-        this.bus.subscribe(EventBusUtilities.statusChangedEvent, event => {
-            if (event.payload === GameStatus.MENU) {
-                this.reset();
-            }
-        });
-    }
 
     public increaseScore(playerSide: PlayerSide): void {
         if (playerSide === PlayerSide.LEFT) {
@@ -59,5 +46,15 @@ export class ScoreManager {
 
     public get isGameOver(): boolean {
         return this.leftScore === this.maxScore || this.rightScore === this.maxScore;
+    }
+
+    public getWinningPlayerSide(): PlayerSide | null {
+        if (this.leftScore === this.maxScore) {
+            return PlayerSide.LEFT;
+        } else if (this.rightScore === this.maxScore) {
+            return PlayerSide.RIGHT;
+        } else {
+            return null;
+        }
     }
 }

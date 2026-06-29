@@ -11,6 +11,7 @@ import { InputPlayerMovementStrategy } from "./playersStrategies/InputPlayerMove
 import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
 import { PlayerMovementStrategyInterface } from "./playersStrategies/PlayerMovementStrategyInterface";
 import { StunnedPlayerMovementStrategy } from "./playersStrategies/StunnedPlayerMovementStrategy";
+import { SubstitutionMovementStrategy } from "./playersStrategies/SubstitutionMovementStrategy";
 import { WaitingBallMovementStrategy } from "./playersStrategies/WaitingBallMovementStrategy";
 import { WinningPlayerMovementStrategy } from "./playersStrategies/WinningPlayerMovementStrategy";
 
@@ -25,6 +26,7 @@ export class MovementSystem implements SystemInterface {
         //this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
         this.playerStrategies.push(new StunnedPlayerMovementStrategy());
         this.playerStrategies.push(new WinningPlayerMovementStrategy(gameConfigs));
+        this.playerStrategies.push(new SubstitutionMovementStrategy(gameConfigs));
 
         this.ballStrategies.push(new WaitingBallBallMovementStrategy());
         this.ballStrategies.push(new PlayingFreeBallMovementStrategy());

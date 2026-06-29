@@ -47,7 +47,11 @@ export class GameWorld {
 
     public increaseScore(playerSide: PlayerSide): void {
         this.score.increaseScore(playerSide);
-        this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+        if (this.score.isSubstitutionTime()) {
+            this.gameStatusManager.changeStatus(GameStatus.SUBSTITION);
+        } else {
+            this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+        }
         this.players.forEach(player => player.resetOnGoal());
         this.ball.resetOnGoal();
 

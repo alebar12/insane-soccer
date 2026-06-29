@@ -46,7 +46,7 @@ export class GameConfigs {
             (this.height - this.fieldHeight - this.athleticTrackHeight) / 2,
         );
 
-        this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 26);
+        this.playerSizeWithoutBorder = Math.floor(this.fieldHeight / 28);
         this.playerSizeWithBorder = this.playerSizeWithoutBorder + this.playerBorder;
         this.substitutionOffsetX = Math.round(this.fieldWidth / 4);
         this.playerSubstitutionX = this.fieldXOffset + this.substitutionOffsetX;

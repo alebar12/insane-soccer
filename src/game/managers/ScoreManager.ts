@@ -5,7 +5,7 @@ export class ScoreManager {
     public rightScore: number = 0;
     private lastUpdateTime: number = 0;
     private lastSideUpdated: PlayerSide = PlayerSide.LEFT;
-    private readonly maxScore: number = 1;
+    private readonly maxScore: number = 5;
 
     public increaseScore(playerSide: PlayerSide): void {
         if (playerSide === PlayerSide.LEFT) {
@@ -20,6 +20,7 @@ export class ScoreManager {
     public reset(): void {
         this.leftScore = 0;
         this.rightScore = 0;
+        this.lastUpdateTime = Date.now();
     }
 
     public getScoreAsArray(): Array<number> {

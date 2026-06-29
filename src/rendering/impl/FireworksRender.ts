@@ -1,4 +1,4 @@
-import { FireworkDto, Fireworks } from "../../game/entities/Fireworks";
+import { FireworkDto } from "../../game/entities/Fireworks";
 import { GameWorld } from "../../game/world/GameWorld";
 import { RenderInterface } from "../RenderInterface";
 
@@ -19,7 +19,7 @@ export class FireworksRender implements RenderInterface {
 
     private renderFirework(firework: FireworkDto, lineWidth: number): void {
         firework.components.forEach(component => {
-            const lenght = Fireworks.maxLengthFactor * firework.getFactor();
+            const lenght = firework.getLenght();
             const timeFactor = firework.getTimeFactor();
             const x1 =
                 firework.position.x +

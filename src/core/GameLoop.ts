@@ -51,6 +51,7 @@ export class GameLoop {
             () => {
                 if (this.gameWorld.gameStatusManager.gameStatus === GameStatus.MENU) {
                     this.gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+                    this.gameWorld.fireworks.reset();
                     this.uiInteractionSystem.input.reset();
                 }
             },

@@ -3,8 +3,6 @@ import { Point } from "../geometry/Point";
 
 export class Fireworks {
     public static readonly animationTime: number = 5000;
-    public static readonly singleDuration: number = 700;
-    public static readonly maxLengthFactor: number = 0.3;
     public readonly lineWidth: number;
     private readonly colorOffset: number = 100;
     private readonly maxComponents: number = 20;
@@ -71,6 +69,10 @@ export class Fireworks {
         });
     }
 
+    public reset(): void {
+        this.fireworks = [];
+    }
+
     private getRandomColorValue(): number {
         return Math.round(Math.random() * 255);
     }
@@ -88,6 +90,9 @@ export class Fireworks {
 }
 
 export class FireworkDto {
+    private readonly singleDuration: number = 700;
+    private readonly maxLengthFactor: number = 0.3;
+
     public constructor(
         public readonly position: Point,
         public startTime: number,
@@ -95,17 +100,18 @@ export class FireworkDto {
     ) {}
 
     public isFiring(): boolean {
-        return this.startTime >= 0 && this.startTime <= Fireworks.singleDuration;
+        return this.startTime >= 0 && this.startTime <= this.singleDuration;
     }
 
-    public getFactor(): number {
-        return this.startTime >= Fireworks.singleDuration / 2
-            ? (Fireworks.singleDuration - this.startTime) / (Fireworks.singleDuration / 2)
-            : this.startTime / (Fireworks.singleDuration / 2);
+    public getLenght(): number {
+        const factor = this.startTime >= this.singleDuration / 2
+            ? (this.singleDuration - this.startTime) / (this.singleDuration / 2)
+            : this.startTime / (this.singleDuration / 2);
+        return this.maxLengthFactor * factor;
     }
 
     public getTimeFactor(): number {
-        return this.startTime / Fireworks.singleDuration;
+        return this.startTime / this.singleDuration;
     }
 }
 

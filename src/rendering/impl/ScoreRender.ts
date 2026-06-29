@@ -14,6 +14,7 @@ export class ScoreRender implements RenderInterface {
     private readonly totalNumbers: number = 9;
     private readonly totalAnimationTime: number = 300;
     private readonly frameTime: number = this.totalAnimationTime / this.frameForNumber;
+    private scoreFrames: Array<number> = [0, 0, 0, 0];
 
     public constructor(scoreContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
         this.scoreContext = scoreContext;
@@ -48,20 +49,27 @@ export class ScoreRender implements RenderInterface {
 
         const scoreArray = gameWorld.score.getScoreAsArray();
         scoreArray.forEach((number, index) => {
-            let maxFrame = number * this.frameForNumber;
-            let frame = maxFrame;
-            if (frame > 0 && gameWorld.score.shouldAnimateIndex(index)) {
-                const minFrame = (number - 1) * this.frameForNumber;
-                frame =
-                    minFrame +
-                    Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime);
-                frame = Math.min(frame, maxFrame);
-            }
+            const targetFrame = number * this.frameForNumber;
+            let frameToDraw = targetFrame;
+            if (this.scoreFrames[index] !== targetFrame) {
+                let step = Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime);
+                
+                if (this.scoreFrames[index] > targetFrame) {
+                    step *= 2;
+                    frameToDraw = Math.max(targetFrame, this.scoreFrames[index] - step);
+                } else {
+                    frameToDraw = Math.min(targetFrame, this.scoreFrames[index] + step);
+                } 
+
+                if (frameToDraw === targetFrame) {
+                    this.scoreFrames[index] = targetFrame; 
+                }
+            }         
 
             this.scoreContext.drawImage(
                 this.digitsImages,
                 0,
-                this.innerImageDimensions.height * frame,
+                this.innerImageDimensions.height * frameToDraw,
                 this.innerImageDimensions.width,
                 this.innerImageDimensions.height,
                 this.positionArray[index].x,

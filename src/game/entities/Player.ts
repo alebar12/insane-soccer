@@ -191,6 +191,11 @@ export class Player {
         }
     }
 
+    public forceStunned(): void {
+        this.playerStatus = PlayerStatus.STUNNED;
+        this.stunnedStartTime = Date.now();
+    }
+
     public decrementStunnedValue(deltaMs: number): void {
         if (this.playerStatus === PlayerStatus.NORMAL) {
             this.stunnedValue = Math.max(0, this.stunnedValue - deltaMs / 2);
@@ -208,6 +213,7 @@ export class Player {
         this.bouncingStartTime = 0;
         this.stunnedValue = 0;
         this.stunnedStars.stars = [];
+        this.playerStatus = PlayerStatus.NORMAL;
     }
 
     private getBouncingProgress(): number {

@@ -53,18 +53,18 @@ export class ScoreRender implements RenderInterface {
             let frameToDraw = targetFrame;
             if (this.scoreFrames[index] !== targetFrame) {
                 let step = Math.floor((Date.now() - gameWorld.score.lastUpdate) / this.frameTime);
-                
+
                 if (this.scoreFrames[index] > targetFrame) {
                     step *= 2;
                     frameToDraw = Math.max(targetFrame, this.scoreFrames[index] - step);
                 } else {
                     frameToDraw = Math.min(targetFrame, this.scoreFrames[index] + step);
-                } 
+                }
 
                 if (frameToDraw === targetFrame) {
-                    this.scoreFrames[index] = targetFrame; 
+                    this.scoreFrames[index] = targetFrame;
                 }
-            }         
+            }
 
             this.scoreContext.drawImage(
                 this.digitsImages,

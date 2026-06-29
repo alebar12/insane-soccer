@@ -1,3 +1,4 @@
+import { GameWorld } from "../../game/world/GameWorld";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { RenderInterface } from "../RenderInterface";
 
@@ -10,52 +11,40 @@ export class GatesRender implements RenderInterface {
         this.gameConfigs = gameConfigs;
     }
 
-    public render(): void {
-        this.gameContext.save();
+    public render(gameWorld: GameWorld): void {
+        const angle = gameWorld.gates.currentAngle;
+        this.renderSingleGate(
+            angle,
+            this.gameConfigs.playerSubstitutionX -
+                this.gameConfigs.gatesLength / 2 +
+                this.gameConfigs.fieldBorderSize / 2,
+        );
+        this.renderSingleGate(
+            Math.PI - angle,
+            this.gameConfigs.cpuSubstitutionX +
+                this.gameConfigs.gatesLength / 2 -
+                this.gameConfigs.fieldBorderSize / 2,
+        );
+    }
 
+    private renderSingleGate(angle: number, x: number): void {
+        this.gameContext.save();
         this.gameContext.fillStyle = "#FF0000";
         this.gameContext.lineWidth = 1;
 
         this.gameContext.translate(
-            this.gameConfigs.playerSubstitutionX - this.gameConfigs.gatesLength / 2,
-            this.gameConfigs.fieldHeight,
-        );
-        const angle = 0; // TODO da rivedere
-        this.gameContext.rotate(angle);
-        this.gameContext.fillRect(
-            0,
-            0,
-            this.gameConfigs.gatesLength,
-            this.gameConfigs.fieldBorderSize,
-        );
-        this.gameContext.strokeRect(
-            0,
-            0,
-            this.gameConfigs.gatesLength,
-            this.gameConfigs.fieldBorderSize,
+            x,
+            this.gameConfigs.fieldHeight + this.gameConfigs.fieldBorderSize / 2,
         );
         this.gameContext.rotate(angle);
-
-        this.gameContext.translate(
-            this.gameConfigs.cpuSubstitutionX -
-                this.gameConfigs.playerSubstitutionX +
-                this.gameConfigs.gatesLength,
-            -this.gameConfigs.fieldBorderSize,
-        );
-        this.gameContext.rotate(Math.PI - angle);
-        this.gameContext.fillRect(
-            0,
-            -this.gameConfigs.fieldBorderSize * 2,
+        this.gameContext.rect(
+            -this.gameConfigs.fieldBorderSize / 2,
+            -this.gameConfigs.fieldBorderSize / 2,
             this.gameConfigs.gatesLength,
             this.gameConfigs.fieldBorderSize,
         );
-        this.gameContext.strokeRect(
-            0,
-            -this.gameConfigs.fieldBorderSize * 2,
-            this.gameConfigs.gatesLength,
-            this.gameConfigs.fieldBorderSize,
-        );
-
+        this.gameContext.fill();
+        this.gameContext.stroke();
         this.gameContext.restore();
     }
 }

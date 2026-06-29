@@ -4,6 +4,7 @@ import { EventBusUtilities } from "../../utils/EventBusUtilities";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Ball } from "../entities/Ball";
 import { Fireworks } from "../entities/Fireworks";
+import { Gate } from "../entities/Gate";
 import { GoalPosts } from "../entities/GoalPosts";
 import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
@@ -17,6 +18,7 @@ export class GameWorld {
     public readonly players: Array<Player> = [];
     public readonly ball: Ball;
     public readonly fireworks: Fireworks;
+    public readonly gates: Gate;
     public readonly menuButton: MenuButton;
     public readonly gameStatusManager: GameStatusManager;
     public readonly score: ScoreManager;
@@ -29,6 +31,7 @@ export class GameWorld {
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
         this.fireworks = new Fireworks(gameConfigs);
+        this.gates = new Gate();
         const bus = new EventBus();
         this.score = new ScoreManager();
         const playImg = assetLoader.getImage("play.png");

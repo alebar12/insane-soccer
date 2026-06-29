@@ -104,9 +104,10 @@ export class FireworkDto {
     }
 
     public getLenght(): number {
-        const factor = this.startTime >= this.singleDuration / 2
-            ? (this.singleDuration - this.startTime) / (this.singleDuration / 2)
-            : this.startTime / (this.singleDuration / 2);
+        const factor =
+            this.startTime >= this.singleDuration / 2
+                ? (this.singleDuration - this.startTime) / (this.singleDuration / 2)
+                : this.startTime / (this.singleDuration / 2);
         return this.maxLengthFactor * factor;
     }
 

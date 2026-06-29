@@ -2,6 +2,7 @@ import { KeyboardInputManager } from "../../input/KeyboardInputManager";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { GameWorld } from "../world/GameWorld";
 import { CollisionSystem } from "./collision/CollisionSystem";
+import { GateSystem } from "./GateSystem";
 import { MovementSystem } from "./movement/MovementSystem";
 import { SystemInterface } from "./SystemInterface";
 
@@ -11,6 +12,7 @@ export class MainSystem {
     public constructor(gameConfigs: GameConfigs) {
         this.systems.push(new MovementSystem(gameConfigs, new KeyboardInputManager()));
         this.systems.push(new CollisionSystem(gameConfigs));
+        this.systems.push(new GateSystem());
     }
 
     public update(gameWorld: GameWorld, deltaMs: number): void {

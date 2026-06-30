@@ -26,12 +26,19 @@ export abstract class AbstractCollisionStrategy {
         borderLimits: BorderLimits,
         invertSpeed: boolean,
         avoidBounceOnGoal: boolean = true,
+        avoidBounceOnSubstitution: boolean = false,
     ): boolean {
         const cfg = this.gameConfigs;
         const isInGoalYRange =
             !avoidBounceOnGoal &&
             movementPoint.position.y >= cfg.goalYOffset &&
             movementPoint.position.y <= cfg.goalYOffset + cfg.goalHeight;
+        const isInSubstitutionYRange =
+            avoidBounceOnSubstitution &&
+            ((movementPoint.position.x >= cfg.playerSubstitutionX - cfg.gatesLength / 2 &&
+                movementPoint.position.x <= cfg.playerSubstitutionX + cfg.gatesLength / 2) ||
+                (movementPoint.position.x >= cfg.cpuSubstitutionX - cfg.gatesLength / 2 &&
+                    movementPoint.position.x <= cfg.cpuSubstitutionX + cfg.gatesLength / 2));
         let hasCollided = false;
 
         if (!isInGoalYRange && movementPoint.position.x < borderLimits.left) {
@@ -61,7 +68,7 @@ export abstract class AbstractCollisionStrategy {
                 movementPoint.velocity.y = Math.max(0, movementPoint.velocity.y);
             }
         }
-        if (movementPoint.position.y > borderLimits.bottom) {
+        if (!isInSubstitutionYRange && movementPoint.position.y > borderLimits.bottom) {
             movementPoint.position.y = borderLimits.bottom;
             hasCollided = true;
             if (invertSpeed) {

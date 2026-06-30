@@ -1,4 +1,5 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
+import { GameStatus } from "../../../enums/GameStatus";
 import { GameWorld } from "../../../world/GameWorld";
 import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
 
@@ -15,10 +16,15 @@ export class PlayerBorderCollisionStrategy extends AbstractCollisionStrategy {
         gameWorld.players
             .filter(player => !player.isSubstitute)
             .forEach(player => {
+                const avoidBounceOnSubstitution =
+                    gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION;
+
                 const hasCollided = this.handleBorderCollision(
                     player.movementPosition,
                     this.getFieldBorderLimits(player.movementPosition.size),
                     false,
+                    true,
+                    avoidBounceOnSubstitution,
                 );
                 if (hasCollided) {
                     player.startBouncing();

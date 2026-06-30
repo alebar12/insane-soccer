@@ -6,7 +6,7 @@ import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
 
-export class SubstitutionMovementStrategy implements PlayerMovementStrategyInterface {
+export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly subPositionsMap: Map<PlayerSide, Array<PointWithAction>>;
     private playerDestinationPointMap: Map<Player, PointWithAction> = new Map();

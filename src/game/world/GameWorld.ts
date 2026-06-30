@@ -62,6 +62,14 @@ export class GameWorld {
         }
     }
 
+    public switchPlayerColor(playerSide: PlayerSide): void {
+        this.players
+            .filter(player => {
+                return player.side === playerSide;
+            })
+            .forEach(player => player.switchColorIndex());
+    }
+
     private resetEndGame(): void {
         this.players.forEach(player => player.resetOnGoal());
         this.ball.resetOnGoal();

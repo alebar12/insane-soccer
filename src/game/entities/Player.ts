@@ -216,6 +216,10 @@ export class Player {
         this.playerStatus = PlayerStatus.NORMAL;
     }
 
+    public switchColorIndex(): void {
+        this.colorIndex = this.colorIndex === 0 ? 1 : 0;
+    }
+
     private getBouncingProgress(): number {
         return Date.now() - this.bouncingStartTime;
     }

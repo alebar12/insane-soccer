@@ -23,7 +23,7 @@ export class GameStatusManager {
     }
 
     public isStatusChangedRecently(): boolean {
-        return Date.now() - this.statusStartTime < 1000;
+        return Date.now() - this.statusStartTime < 300;
     }
 
     public scheduleStatusChange(delay: number, gameStatus: GameStatus): void {

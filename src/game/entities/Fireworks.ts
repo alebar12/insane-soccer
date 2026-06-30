@@ -38,9 +38,15 @@ export class Fireworks {
                 const g = this.getColorValueWithOffset(green);
                 const b = this.getColorValueWithOffset(blue);
 
+                // create variable hexadecimal color
+                const color =
+                    "#" +
+                    r.toString(16).padStart(2, "0") +
+                    g.toString(16).padStart(2, "0") +
+                    b.toString(16).padStart(2, "0");
                 components.push(
                     new FireworkComponentDto(
-                        "#" + r.toString(16) + g.toString(16) + b.toString(16),
+                        color,
                         Math.random() * Math.PI * 2,
                         Math.round(
                             Math.random() * (this.maxDistance - this.minDistance) +

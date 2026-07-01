@@ -9,7 +9,7 @@ export class ScoreManager {
     private readonly substitutionGoals: number = 3;
 
     public increaseScore(playerSide: PlayerSide): void {
-        if (playerSide === PlayerSide.LEFT) {
+        if (playerSide === PlayerSide.RIGHT) {
             this.rightScore++;
         } else {
             this.leftScore++;
@@ -40,10 +40,6 @@ export class ScoreManager {
 
     public get lastUpdate(): number {
         return this.lastUpdateTime;
-    }
-
-    public get lastSide(): PlayerSide {
-        return this.lastSideUpdated;
     }
 
     public get isGameOver(): boolean {

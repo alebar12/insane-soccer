@@ -1,7 +1,7 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide } from "../../../enums/PlayerSide";
+import { PlayerSide, PlayerSideUtilities } from "../../../enums/PlayerSide";
 import { GameWorld } from "../../../world/GameWorld";
 import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
 
@@ -34,7 +34,7 @@ export class BallBorderCollisionStrategy extends AbstractCollisionStrategy {
         const goalBorder = this.getGoalBorderLimits(ballMovement.size, playerSide);
 
         if (goalBorder.isPointInside(ballMovement.position)) {
-            gameWorld.increaseScore(playerSide);
+            gameWorld.increaseScore(PlayerSideUtilities.getOppositeSide(playerSide));
         }
     }
 }

@@ -7,6 +7,7 @@ import { FieldRender } from "./impl/FieldRender";
 import { FireworksRender } from "./impl/FireworksRender";
 import { GatesRender } from "./impl/GatesRender";
 import { MenuRender } from "./impl/MenuRender";
+import { PlayerPowerShotRender } from "./impl/PlayerPowerShotRender";
 import { PlayerRender } from "./impl/PlayerRender";
 import { ScoreRender } from "./impl/ScoreRender";
 import { RenderInterface } from "./RenderInterface";
@@ -24,6 +25,7 @@ export class MainRender {
         this.renders.push(new PlayerRender(domHandler.gameContext, gameConfigs, assetLoader));
         this.renders.push(new MenuRender(domHandler.menuContext, assetLoader));
         this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
+        this.renders.push(new PlayerPowerShotRender(domHandler.gameContext, assetLoader));
         this.renders.push(new FireworksRender(domHandler.gameContext));
     }
 

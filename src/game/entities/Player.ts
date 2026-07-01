@@ -3,6 +3,7 @@ import { PlayerSide } from "../enums/PlayerSide";
 import { PlayerStatus } from "../enums/PlayerStatus";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
+import { PowerShotWrapper } from "./powerShots/PowerShotWrapper";
 import { StunnedStars } from "./StunnedStars";
 
 export class Player {
@@ -43,6 +44,10 @@ export class Player {
     private readonly stunnedMaxValue: number = 2000;
     private readonly stunnedStep: number = 1000;
     private readonly stunnedTime: number = 3000;
+    private powerShot: boolean = false;
+    private consecutiveGoals: number = 0;
+    private readonly consecutiveGoalsToPowerShot: number = 1;
+    public readonly powerShotWrapper: PowerShotWrapper;
 
     private constructor(
         gameConfigs: GameConfigs,
@@ -63,6 +68,8 @@ export class Player {
         this.side = side;
         this.colorIndex = colorIndex;
         this.initPositions(gameConfigs);
+
+        this.powerShotWrapper = new PowerShotWrapper(gameConfigs);
     }
 
     public static createHumanPlayer(gameConfigs: GameConfigs): Player {
@@ -218,6 +225,30 @@ export class Player {
 
     public switchColorIndex(): void {
         this.colorIndex = this.colorIndex === 0 ? 1 : 0;
+    }
+
+    public updateScoredGoal(playerSide: PlayerSide): void {
+        if (playerSide === this.side) {
+            this.consecutiveGoals++;
+            if (this.consecutiveGoals === this.consecutiveGoalsToPowerShot) {
+                this.powerShot = true;
+            }
+        } else {
+            this.consecutiveGoals = 0;
+        }
+    }
+
+    public getPowerShot(): boolean {
+        return this.powerShot;
+    }
+
+    public resetPowerShot(): void {
+        this.powerShot = false;
+        this.consecutiveGoals = 0;
+    }
+
+    public updatePowerShot(deltaMs: number): void {
+        this.powerShotWrapper.update(deltaMs, this);
     }
 
     private getBouncingProgress(): number {

@@ -63,6 +63,7 @@ export class Ball {
 
     public detachFromPlayer(): void {
         this.ballStatus = BallStatus.FREE;
+        this.attachedPlayer?.resetPowerShot();
         this.attachedPlayer = null;
         this.movementPosition.setSpeed(this.maxSpeed, this.angleWithPlayer);
     }

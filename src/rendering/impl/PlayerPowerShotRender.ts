@@ -1,10 +1,13 @@
 import { AssetLoader } from "../../assets/AssetLoader";
+import { Player } from "../../game/entities/Player";
 import { ElectricPowerShot } from "../../game/entities/powerShots/ElectricPowerShot";
 import { FirePowerShot } from "../../game/entities/powerShots/FirePowerShot";
 import { GameWorld } from "../../game/world/GameWorld";
+import { GameConfigs } from "../../utils/GameConfigs";
 import { RenderInterface } from "../RenderInterface";
 
 export class PlayerPowerShotRender implements RenderInterface {
+    private readonly gameConfigs: GameConfigs;
     private readonly gameContext: CanvasRenderingContext2D;
     private readonly flameImage: HTMLImageElement;
     private readonly cellsPerRow: number = 4;
@@ -12,7 +15,8 @@ export class PlayerPowerShotRender implements RenderInterface {
     private readonly cellWidth: number;
     private readonly cellHeight: number;
 
-    public constructor(gameContext: CanvasRenderingContext2D, assetLoader: AssetLoader) {
+    public constructor(gameContext: CanvasRenderingContext2D, assetLoader: AssetLoader, gameConfigs: GameConfigs) {
+        this.gameConfigs = gameConfigs;
         this.gameContext = gameContext;
         this.flameImage = assetLoader.getImage("RedParticle.png");
         this.cellWidth = this.flameImage.width / this.cellsPerRow;
@@ -27,7 +31,7 @@ export class PlayerPowerShotRender implements RenderInterface {
                     if (powerShotEntity instanceof FirePowerShot) {
                         this.renderFirePowerShot(powerShotEntity);
                     } else if (powerShotEntity instanceof ElectricPowerShot) {
-                        this.renderElectricPowerShot(powerShotEntity);
+                        this.renderElectricPowerShot(player, powerShotEntity);
                     }
                 }
             });
@@ -60,5 +64,20 @@ export class PlayerPowerShotRender implements RenderInterface {
         });
     }
 
-    private renderElectricPowerShot(_electricPowerShot: ElectricPowerShot): void {}
+    private renderElectricPowerShot(player: Player, _electricPowerShot: ElectricPowerShot): void {
+        this.gameContext.save();
+        const gradient = this.gameContext.createRadialGradient(player.movementPosition.position.x, 
+            player.movementPosition.position.y, this.gameConfigs.playerSizeWithBorder/5, player.movementPosition.position.x, 
+            player.movementPosition.position.y, this.gameConfigs.playerSizeWithBorder);
+        gradient.addColorStop(0, "#FFFFFF");
+		gradient.addColorStop(1, "transparent");
+        this.gameContext.beginPath();
+		this.gameContext.arc(player.movementPosition.position.x, player.movementPosition.position.y, 
+            this.gameConfigs.playerSizeWithBorder, 0, 2 * Math.PI, false);
+		this.gameContext.closePath();
+		this.gameContext.fillStyle = gradient; 
+		this.gameContext.fill();
+
+        this.gameContext.restore();
+    }
 }

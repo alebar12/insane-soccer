@@ -44,7 +44,7 @@ export class Player {
     private readonly stunnedMaxValue: number = 2000;
     private readonly stunnedStep: number = 1000;
     private readonly stunnedTime: number = 3000;
-    private powerShot: boolean = false;
+    private powerShot: boolean = true;
     private consecutiveGoals: number = 0;
     private readonly consecutiveGoalsToPowerShot: number = 1;
     public readonly powerShotWrapper: PowerShotWrapper;
@@ -73,7 +73,7 @@ export class Player {
     }
 
     public static createHumanPlayer(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, false, PlayerSide.LEFT, 0);
+        return new Player(gameConfigs, false, false, PlayerSide.LEFT, 1);
     }
 
     public static createCpuPlayer(gameConfigs: GameConfigs): Player {

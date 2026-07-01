@@ -10,6 +10,10 @@ export class PositionHistory {
         this.positions.push(new HistoryPoint(position, now));
         this.positions = this.positions.filter(p => now - p.timestamp < this.retentionTime);
     }
+
+    public getFactor(index: number): number {
+        return this.positions[index].getFactor(this.retentionTime);
+    }
 }
 
 export class HistoryPoint {
@@ -17,4 +21,8 @@ export class HistoryPoint {
         public position: Point,
         public timestamp: number,
     ) {}
+
+    public getFactor(retentionTime: number): number {
+        return (Date.now() - this.timestamp) / retentionTime;
+    }
 }

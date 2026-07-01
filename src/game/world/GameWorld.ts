@@ -64,6 +64,9 @@ export class GameWorld {
             this.gameStatusManager.changeStatus(GameStatus.END_GAME);
             this.fireworks.initFireworks();
             this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
+            this.players.forEach(player => {
+                player.resetPowerShot();
+            });
         }
     }
 

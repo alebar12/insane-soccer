@@ -9,7 +9,7 @@ export class PowerShotWrapper {
 
     constructor(gameConfigs: GameConfigs) {
         this.powerShots.push(new FirePowerShot(gameConfigs));
-        this.powerShots.push(new ElectricPowerShot());
+        this.powerShots.push(new ElectricPowerShot(gameConfigs));
     }
 
     public update(deltaMs: number, player: Player): void {

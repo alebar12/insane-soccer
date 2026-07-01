@@ -21,10 +21,10 @@ export class MainRender {
 
         this.renders.push(new FieldRender(domHandler.backgroundContext, gameConfigs, assetLoader));
         this.renders.push(new ScoreRender(domHandler.scoreContext, assetLoader));
+        this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
         this.renders.push(new GatesRender(domHandler.gameContext, gameConfigs));
         this.renders.push(new PlayerRender(domHandler.gameContext, gameConfigs, assetLoader));
         this.renders.push(new MenuRender(domHandler.menuContext, assetLoader));
-        this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
         this.renders.push(
             new PlayerPowerShotRender(domHandler.gameContext, assetLoader, gameConfigs),
         );

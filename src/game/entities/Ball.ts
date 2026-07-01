@@ -18,7 +18,7 @@ export class Ball {
         0,
     );
     private isSetForStart: boolean = false;
-    public positionHistory: PositionHistory = new PositionHistory(1000);
+    public positionHistory: PositionHistory = new PositionHistory(5000);
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -50,7 +50,9 @@ export class Ball {
     }
 
     public move(deltaMs: number): void {
-        this.positionHistory.addPosition(this.movementPosition.position);
+        this.positionHistory.addPosition(
+            new Point(this.movementPosition.position.x, this.movementPosition.position.y),
+        );
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
     }

@@ -12,6 +12,7 @@ export class PlayerPowerShotRender implements RenderInterface {
     private readonly flameImage: HTMLImageElement;
     private readonly cellsPerRow: number = 4;
     private readonly cellsPerColumn: number = 4;
+    private readonly lightningBoltNumber: number = 3;
     private readonly cellWidth: number;
     private readonly cellHeight: number;
 
@@ -68,22 +69,23 @@ export class PlayerPowerShotRender implements RenderInterface {
         });
     }
 
-    private renderElectricPowerShot(player: Player, _electricPowerShot: ElectricPowerShot): void {
+    private renderElectricPowerShot(player: Player, electricPowerShot: ElectricPowerShot): void {
+        const position = player.movementPosition.position;
         this.gameContext.save();
         const gradient = this.gameContext.createRadialGradient(
-            player.movementPosition.position.x,
-            player.movementPosition.position.y,
+            position.x,
+            position.y,
             this.gameConfigs.playerSizeWithBorder / 5,
-            player.movementPosition.position.x,
-            player.movementPosition.position.y,
+            position.x,
+            position.y,
             this.gameConfigs.playerSizeWithBorder,
         );
         gradient.addColorStop(0, "#FFFFFF");
         gradient.addColorStop(1, "transparent");
         this.gameContext.beginPath();
         this.gameContext.arc(
-            player.movementPosition.position.x,
-            player.movementPosition.position.y,
+            position.x,
+            position.y,
             this.gameConfigs.playerSizeWithBorder,
             0,
             2 * Math.PI,
@@ -92,6 +94,41 @@ export class PlayerPowerShotRender implements RenderInterface {
         this.gameContext.closePath();
         this.gameContext.fillStyle = gradient;
         this.gameContext.fill();
+
+        this.gameContext.restore();
+
+        this.gameContext.save();
+        this.gameContext.translate(position.x, position.y);
+        this.gameContext.rotate(electricPowerShot.angleOffset);
+
+        for (let i = 0; i < this.lightningBoltNumber; i++) {
+            this.gameContext.rotate(Math.PI / this.lightningBoltNumber);
+            this.gameContext.globalAlpha = 0.5; 
+            for (let j = 0; j < electricPowerShot.lightningBoltSize - 1; j++) {
+                const point = electricPowerShot.lightningBoltPointArray[j];
+                const nextPoint = electricPowerShot.lightningBoltPointArray[j + 1];
+                this.gameContext.beginPath();
+				this.gameContext.fillStyle = '#000000';
+				this.gameContext.strokeStyle = "#000000";
+				this.gameContext.lineWidth = electricPowerShot.bigLineWidth;
+				this.gameContext.moveTo(point.x, point.y);
+				this.gameContext.lineTo(nextPoint.x, nextPoint.y);
+				this.gameContext.stroke();
+				this.gameContext.closePath();
+
+                if (electricPowerShot.whiteLineVisible) {
+                    this.gameContext.globalAlpha = 1;
+                    this.gameContext.beginPath();
+                    this.gameContext.fillStyle = '#FFFFFF';
+                    this.gameContext.strokeStyle = "#FFFFFF";
+                    this.gameContext.lineWidth = electricPowerShot.lineWidth;
+                    this.gameContext.moveTo(point.x, point.y);
+                    this.gameContext.lineTo(nextPoint.x, nextPoint.y);
+                    this.gameContext.stroke();
+                    this.gameContext.closePath();
+                }
+            }
+        }
 
         this.gameContext.restore();
     }

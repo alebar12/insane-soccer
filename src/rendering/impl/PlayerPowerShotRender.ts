@@ -15,7 +15,11 @@ export class PlayerPowerShotRender implements RenderInterface {
     private readonly cellWidth: number;
     private readonly cellHeight: number;
 
-    public constructor(gameContext: CanvasRenderingContext2D, assetLoader: AssetLoader, gameConfigs: GameConfigs) {
+    public constructor(
+        gameContext: CanvasRenderingContext2D,
+        assetLoader: AssetLoader,
+        gameConfigs: GameConfigs,
+    ) {
         this.gameConfigs = gameConfigs;
         this.gameContext = gameContext;
         this.flameImage = assetLoader.getImage("RedParticle.png");
@@ -66,17 +70,28 @@ export class PlayerPowerShotRender implements RenderInterface {
 
     private renderElectricPowerShot(player: Player, _electricPowerShot: ElectricPowerShot): void {
         this.gameContext.save();
-        const gradient = this.gameContext.createRadialGradient(player.movementPosition.position.x, 
-            player.movementPosition.position.y, this.gameConfigs.playerSizeWithBorder/5, player.movementPosition.position.x, 
-            player.movementPosition.position.y, this.gameConfigs.playerSizeWithBorder);
+        const gradient = this.gameContext.createRadialGradient(
+            player.movementPosition.position.x,
+            player.movementPosition.position.y,
+            this.gameConfigs.playerSizeWithBorder / 5,
+            player.movementPosition.position.x,
+            player.movementPosition.position.y,
+            this.gameConfigs.playerSizeWithBorder,
+        );
         gradient.addColorStop(0, "#FFFFFF");
-		gradient.addColorStop(1, "transparent");
+        gradient.addColorStop(1, "transparent");
         this.gameContext.beginPath();
-		this.gameContext.arc(player.movementPosition.position.x, player.movementPosition.position.y, 
-            this.gameConfigs.playerSizeWithBorder, 0, 2 * Math.PI, false);
-		this.gameContext.closePath();
-		this.gameContext.fillStyle = gradient; 
-		this.gameContext.fill();
+        this.gameContext.arc(
+            player.movementPosition.position.x,
+            player.movementPosition.position.y,
+            this.gameConfigs.playerSizeWithBorder,
+            0,
+            2 * Math.PI,
+            false,
+        );
+        this.gameContext.closePath();
+        this.gameContext.fillStyle = gradient;
+        this.gameContext.fill();
 
         this.gameContext.restore();
     }

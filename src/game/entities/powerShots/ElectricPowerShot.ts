@@ -47,10 +47,10 @@ export class ElectricPowerShot implements PowerShotInterface {
         for (let i = 0; i < this.lightningBoltSize; i++) {
             this.lightningBoltPointArray.push(
                 new Point(
-                    this.width / this.lightningBoltSize * i - this.width/2,
-                    Math.round(Math.random() * this.height) - this.height/2,
+                    (this.width / this.lightningBoltSize) * i - this.width / 2,
+                    Math.round(Math.random() * this.height) - this.height / 2,
                 ),
             );
         }
-    }   
+    }
 }

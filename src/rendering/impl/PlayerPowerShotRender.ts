@@ -103,23 +103,23 @@ export class PlayerPowerShotRender implements RenderInterface {
 
         for (let i = 0; i < this.lightningBoltNumber; i++) {
             this.gameContext.rotate(Math.PI / this.lightningBoltNumber);
-            this.gameContext.globalAlpha = 0.5; 
+            this.gameContext.globalAlpha = 0.5;
             for (let j = 0; j < electricPowerShot.lightningBoltSize - 1; j++) {
                 const point = electricPowerShot.lightningBoltPointArray[j];
                 const nextPoint = electricPowerShot.lightningBoltPointArray[j + 1];
                 this.gameContext.beginPath();
-				this.gameContext.fillStyle = '#000000';
-				this.gameContext.strokeStyle = "#000000";
-				this.gameContext.lineWidth = electricPowerShot.bigLineWidth;
-				this.gameContext.moveTo(point.x, point.y);
-				this.gameContext.lineTo(nextPoint.x, nextPoint.y);
-				this.gameContext.stroke();
-				this.gameContext.closePath();
+                this.gameContext.fillStyle = "#000000";
+                this.gameContext.strokeStyle = "#000000";
+                this.gameContext.lineWidth = electricPowerShot.bigLineWidth;
+                this.gameContext.moveTo(point.x, point.y);
+                this.gameContext.lineTo(nextPoint.x, nextPoint.y);
+                this.gameContext.stroke();
+                this.gameContext.closePath();
 
                 if (electricPowerShot.whiteLineVisible) {
                     this.gameContext.globalAlpha = 1;
                     this.gameContext.beginPath();
-                    this.gameContext.fillStyle = '#FFFFFF';
+                    this.gameContext.fillStyle = "#FFFFFF";
                     this.gameContext.strokeStyle = "#FFFFFF";
                     this.gameContext.lineWidth = electricPowerShot.lineWidth;
                     this.gameContext.moveTo(point.x, point.y);

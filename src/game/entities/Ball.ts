@@ -2,6 +2,7 @@ import { GameConfigs } from "../../utils/GameConfigs";
 import { BallStatus } from "../enums/BallStatus";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
+import { PositionHistory } from "../geometry/PositionHistory";
 import { Player } from "./Player";
 
 export class Ball {
@@ -17,6 +18,7 @@ export class Ball {
         0,
     );
     private isSetForStart: boolean = false;
+    public positionHistory: PositionHistory = new PositionHistory(1000);
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -48,6 +50,7 @@ export class Ball {
     }
 
     public move(deltaMs: number): void {
+        this.positionHistory.addPosition(this.movementPosition.position);
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
     }

@@ -23,7 +23,7 @@ export class ElectricPowerShot implements PowerShotInterface {
         this.lastChangeDeltaTime += deltaMs;
         if (this.lastChangeDeltaTime >= this.interval) {
             this.lastChangeDeltaTime = 0;
-            this.angleOffset += Math.PI / 45 * this.interval * 0.05;
+            this.angleOffset += (Math.PI / 45) * this.interval * 0.05;
         }
     }
 

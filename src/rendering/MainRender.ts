@@ -25,7 +25,9 @@ export class MainRender {
         this.renders.push(new PlayerRender(domHandler.gameContext, gameConfigs, assetLoader));
         this.renders.push(new MenuRender(domHandler.menuContext, assetLoader));
         this.renders.push(new BallRender(domHandler.gameContext, gameConfigs));
-        this.renders.push(new PlayerPowerShotRender(domHandler.gameContext, assetLoader, gameConfigs));
+        this.renders.push(
+            new PlayerPowerShotRender(domHandler.gameContext, assetLoader, gameConfigs),
+        );
         this.renders.push(new FireworksRender(domHandler.gameContext));
     }
 

@@ -45,6 +45,7 @@ export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategy
             destinationPoint = destinationList[0];
             this.playerDestinationPointMap.set(player, destinationPoint);
         }
+        player.currentMaxSpeed = (player.maxSpeedWithBall * 2) / 3;
         player.destinationPosition.position = destinationPoint.point;
         player.adjustSpeedToDestinationPoint(deltaMs);
 
@@ -96,11 +97,11 @@ export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategy
     }
 }
 
-export interface Action {
+interface Action {
     (player: Player, gameWorld: GameWorld): void;
 }
 
-export class PointWithAction {
+class PointWithAction {
     public constructor(
         public point: Point,
         public action: Action,

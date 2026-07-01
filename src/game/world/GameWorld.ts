@@ -52,7 +52,12 @@ export class GameWorld {
         } else {
             this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
         }
-        this.players.forEach(player => player.resetOnGoal());
+        this.players
+            .filter(player => !player.isSubstitute)
+            .forEach(player => {
+                player.resetOnGoal();
+                player.updateScoredGoal(playerSide);
+            });
         this.ball.resetOnGoal();
 
         if (this.score.isGameOver) {

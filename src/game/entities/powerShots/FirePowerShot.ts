@@ -28,7 +28,7 @@ export class FirePowerShot implements PowerShotInterface {
         this.lastAddedDeltaTime += deltaMs;
         if (
             this.lastAddedDeltaTime >= this.interval &&
-            player.getPowerShot() &&
+            player.powerShotWrapper.getPowerShot() &&
             player.colorIndex === 0 &&
             player.playerStatus === PlayerStatus.NORMAL
         ) {

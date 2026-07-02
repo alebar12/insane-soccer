@@ -5,7 +5,7 @@ export class ScoreManager {
     public rightScore: number = 0;
     private lastUpdateTime: number = 0;
     private lastSideUpdated: PlayerSide = PlayerSide.LEFT;
-    private readonly maxScore: number = 5;
+    private readonly maxScore: number = 10;
     private readonly substitutionGoals: number = 3;
 
     public increaseScore(playerSide: PlayerSide): void {

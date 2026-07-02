@@ -27,7 +27,7 @@ export class PlayerBorderCollisionStrategy extends AbstractCollisionStrategy {
                     avoidBounceOnSubstitution,
                 );
                 if (hasCollided) {
-                    player.startBouncing();
+                    player.bounceWrapper.startBouncing();
                 }
             });
     }

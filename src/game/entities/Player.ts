@@ -3,6 +3,7 @@ import { PlayerSide } from "../enums/PlayerSide";
 import { PlayerStatus } from "../enums/PlayerStatus";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
+import { BounceWrapper } from "./bounce/BounceWrapper";
 import { PowerShotWrapper } from "./powerShots/PowerShotWrapper";
 import { StunnedWrapper } from "./stunned/StunnedWrapper";
 
@@ -14,12 +15,7 @@ export class Player {
     public readonly maxSpeedWithBall: number;
     public readonly reachedDistanceTolerance: number;
     public readonly closeToPointDistance: number;
-
-    private bouncingStartTime: number = 0;
-    private readonly bounceTime: number = 2000;
-    private readonly bounceMaxAmplitude: number = 0.5;
-    private readonly bounceExponentialFactor: number = 0.00346;
-    private readonly bounceNumber: number = 5;
+    public readonly bounceWrapper: BounceWrapper = new BounceWrapper(this);
 
     public movementPosition: MovementPoint = new MovementPoint(
         new Point(0, 0),
@@ -153,33 +149,6 @@ export class Player {
         );
     }
 
-    public startBouncing(): void {
-        if (
-            this.getBouncingProgress() > this.bounceTime / 2 &&
-            this.playerStatus === PlayerStatus.NORMAL
-        ) {
-            this.bouncingStartTime = Date.now();
-        }
-    }
-
-    public getBouncingAmplitude(): number {
-        if (!this.isBouncing()) {
-            return 0;
-        }
-
-        return (
-            this.bounceMaxAmplitude *
-            Math.pow(Math.E, -this.getBouncingProgress() * this.bounceExponentialFactor) *
-            Math.sin(this.getBouncingProgress() / (2 * Math.PI * this.bounceNumber))
-        );
-    }
-
-    public resetOnGoal(): void {
-        this.bouncingStartTime = 0;
-        this.stunnedWrapper.reset();
-        this.playerStatus = PlayerStatus.NORMAL;
-    }
-
     public switchColorIndex(): void {
         this.colorIndex = this.colorIndex === 0 ? 1 : 0;
     }
@@ -188,12 +157,10 @@ export class Player {
         this.powerShotWrapper.update(deltaMs, this);
     }
 
-    private getBouncingProgress(): number {
-        return Date.now() - this.bouncingStartTime;
-    }
-
-    private isBouncing(): boolean {
-        return this.getBouncingProgress() <= this.bounceTime;
+    public resetOnGoal(): void {
+        this.bounceWrapper.reset();
+        this.stunnedWrapper.reset();
+        this.playerStatus = PlayerStatus.NORMAL;
     }
 
     private initPositions(gameConfigs: GameConfigs): void {

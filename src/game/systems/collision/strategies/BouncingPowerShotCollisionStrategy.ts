@@ -15,7 +15,7 @@ export class BouncingPowerShotCollisionStrategy extends AbstractCollisionStrateg
         return (
             gameWorld.ball.ballStatus === BallStatus.FREE &&
             gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
-            !gameWorld.ball.shouldStopOnPlayerBounce()
+            !gameWorld.ball.ballPowerShot.shouldStopOnPlayerBounce()
         );
     }
 

@@ -15,7 +15,7 @@ export class PowerShotUtilities {
         }
     }
 
-    public static getSpeedFactor(powerShotType: PowerShotType): number {
+    public static getSpeedFactor(powerShotType: PowerShotType | null): number {
         switch (powerShotType) {
             case PowerShotType.FIRE:
                 return 2;
@@ -37,14 +37,14 @@ export class PowerShotUtilities {
         }
     }
 
-    public static shouldCancelOnLowSpeed(powerShotType: PowerShotType): boolean {
+    public static shouldMoveToGoal(powerShotType: PowerShotType): boolean {
         switch (powerShotType) {
             case PowerShotType.FIRE:
-                return true;
-            case PowerShotType.ELECTRIC:
                 return false;
-            default:
+            case PowerShotType.ELECTRIC:
                 return true;
+            default:
+                return false;
         }
     }
 }

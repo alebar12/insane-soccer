@@ -46,7 +46,7 @@ export class Player {
     private readonly stunnedTime: number = 3000;
     private powerShot: boolean = false;
     private consecutiveGoals: number = 0;
-    private readonly consecutiveGoalsToPowerShot: number = 1;
+    private readonly consecutiveGoalsToPowerShot: number = 3;
     public readonly powerShotWrapper: PowerShotWrapper;
 
     private constructor(

@@ -1,10 +1,11 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { BallStatus } from "../enums/BallStatus";
-import { PowerShotType, PowerShotUtilities } from "../enums/PowerShotType";
+import { PowerShotUtilities } from "../enums/PowerShotType";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
 import { PositionHistory } from "../geometry/PositionHistory";
 import { Player } from "./Player";
+import { BallPowerShot } from "./powerShots/BallPowerShot";
 
 export class Ball {
     public readonly maxSpeed: number;
@@ -20,8 +21,7 @@ export class Ball {
     );
     private isSetForStart: boolean = false;
     public positionHistory: PositionHistory = new PositionHistory(5000);
-    private powerShot: boolean = false;
-    private powerShotType: PowerShotType | null = null;
+    public readonly ballPowerShot: BallPowerShot = new BallPowerShot();
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -53,7 +53,7 @@ export class Ball {
     }
 
     public move(deltaMs: number): void {
-        if (this.powerShot) {
+        if (this.ballPowerShot.isPowerShot) {
             this.positionHistory.addPosition(
                 new Point(this.movementPosition.position.x, this.movementPosition.position.y),
             );
@@ -61,8 +61,8 @@ export class Ball {
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
 
-        if (this.shouldCancelOnLowSpeed() && this.movementPosition.getSpeed() < this.maxSpeed / 2) {
-            this.resetPowerShot();
+        if (this.movementPosition.getSpeed() < this.maxSpeed / 2) {
+            this.ballPowerShot.resetPowerShot();
         }
     }
 
@@ -77,17 +77,15 @@ export class Ball {
             player.movementPosition.position,
             this.movementPosition.position,
         );
+        this.ballPowerShot.resetPowerShot();
     }
 
     public detachFromPlayer(): void {
         this.ballStatus = BallStatus.FREE;
         let speedFactor = 1;
         if (this.attachedPlayer?.getPowerShot()) {
-            this.powerShot = true;
-            this.powerShotType = PowerShotUtilities.getPowerShotType(
-                this.attachedPlayer.colorIndex,
-            );
-            speedFactor = PowerShotUtilities.getSpeedFactor(this.powerShotType);
+            this.ballPowerShot.enablePowerShot(this.attachedPlayer);
+            speedFactor = PowerShotUtilities.getSpeedFactor(this.ballPowerShot.getPowerShotType());
         }
         this.attachedPlayer?.resetPowerShot();
         this.attachedPlayer = null;
@@ -97,29 +95,6 @@ export class Ball {
     public resetOnGoal(): void {
         this.ballStatus = BallStatus.FREE;
         this.attachedPlayer = null;
-        this.resetPowerShot();
-    }
-
-    public get isPowerShot(): boolean {
-        return this.powerShot;
-    }
-
-    public shouldStopOnPlayerBounce(): boolean {
-        if (!this.powerShot || this.powerShotType === null) {
-            return true;
-        }
-        return PowerShotUtilities.shouldStopOnPlayerBounce(this.powerShotType);
-    }
-
-    private shouldCancelOnLowSpeed(): boolean {
-        if (!this.powerShot || this.powerShotType === null) {
-            return true;
-        }
-        return PowerShotUtilities.shouldCancelOnLowSpeed(this.powerShotType);
-    }
-
-    private resetPowerShot(): void {
-        this.powerShot = false;
-        this.powerShotType = null;
+        this.ballPowerShot.resetPowerShot();
     }
 }

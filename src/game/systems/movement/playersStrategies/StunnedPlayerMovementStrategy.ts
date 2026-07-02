@@ -15,7 +15,7 @@ export class StunnedPlayerMovementStrategy implements PlayerMovementStrategyInte
 
     public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
         if (gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME) {
-            player.forceStunned();
+            player.stunnedWrapper.forceStunned();
         }
 
         if (player.movementPosition.getSpeed() > player.maxSpeedWithBall / 5) {

@@ -2,10 +2,11 @@ import { GameConfigs } from "../../../../utils/GameConfigs";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
+import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
 import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
 
-export class BallPlayerCollisionStrategy extends AbstractCollisionStrategy {
+export class BouncingPowerShotCollisionStrategy extends AbstractCollisionStrategy {
     public constructor(gameConfigs: GameConfigs) {
         super(gameConfigs);
     }
@@ -14,7 +15,7 @@ export class BallPlayerCollisionStrategy extends AbstractCollisionStrategy {
         return (
             gameWorld.ball.ballStatus === BallStatus.FREE &&
             gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
-            gameWorld.ball.shouldStopOnPlayerBounce()
+            !gameWorld.ball.shouldStopOnPlayerBounce()
         );
     }
 
@@ -28,7 +29,22 @@ export class BallPlayerCollisionStrategy extends AbstractCollisionStrategy {
                         player.movementPosition,
                     )
                 ) {
-                    gameWorld.ball.attachToPlayer(player);
+                    const middlePoint = new Point(
+                        (gameWorld.ball.movementPosition.position.x +
+                            player.movementPosition.position.x) /
+                            2,
+                        (gameWorld.ball.movementPosition.position.y +
+                            player.movementPosition.position.y) /
+                            2,
+                    );
+                    const angle = Point.getAngleBetweenPoints(
+                        middlePoint,
+                        player.movementPosition.position,
+                    );
+                    player.movementPosition.setSpeed(
+                        gameWorld.ball.movementPosition.getSpeed(),
+                        angle,
+                    );
                 }
             });
     }

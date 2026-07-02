@@ -232,6 +232,7 @@ export class Player {
             this.consecutiveGoals++;
             if (this.consecutiveGoals === this.consecutiveGoalsToPowerShot) {
                 this.powerShot = true;
+                this.consecutiveGoals = 0;
             }
         } else {
             this.consecutiveGoals = 0;

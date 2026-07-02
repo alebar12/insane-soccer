@@ -6,6 +6,7 @@ import { BallBorderCollisionStrategy } from "./strategies/BallBorderCollisionStr
 import { BallGoalCollisionStrategy } from "./strategies/BallGoalCollisionStrategy";
 import { BallGoalStakesCollisionStrategy } from "./strategies/BallGoalStakesCollisionStrategy";
 import { BallPlayerCollisionStrategy } from "./strategies/BallPlayerCollisionStrategy";
+import { BouncingPowerShotCollisionStrategy } from "./strategies/BouncingPowerShotCollisionStrategy";
 import { PlayerBorderCollisionStrategy } from "./strategies/PlayerBorderCollisionStrategy";
 import { PlayerCollisionStrategy } from "./strategies/PlayerCollisionStrategy";
 
@@ -19,6 +20,7 @@ export class CollisionSystem implements SystemInterface {
         this.strategies.push(new BallGoalCollisionStrategy(gameConfigs));
         this.strategies.push(new BallBorderCollisionStrategy(gameConfigs));
         this.strategies.push(new BallGoalStakesCollisionStrategy(gameConfigs));
+        this.strategies.push(new BouncingPowerShotCollisionStrategy(gameConfigs));
     }
 
     public update(gameWorld: GameWorld): void {

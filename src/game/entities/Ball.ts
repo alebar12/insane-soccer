@@ -20,7 +20,7 @@ export class Ball {
     );
     private isSetForStart: boolean = false;
     public positionHistory: PositionHistory = new PositionHistory(5000);
-    private isPowerShot: boolean = false;
+    private powerShot: boolean = false;
     private powerShotType: PowerShotType | null = null;
 
     public constructor(gameConfigs: GameConfigs) {
@@ -53,13 +53,17 @@ export class Ball {
     }
 
     public move(deltaMs: number): void {
-        if (this.isPowerShot) {
+        if (this.powerShot) {
             this.positionHistory.addPosition(
                 new Point(this.movementPosition.position.x, this.movementPosition.position.y),
             );
-        }        
+        }
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
+
+        if (this.shouldCancelOnLowSpeed() && this.movementPosition.getSpeed() < this.maxSpeed / 2) {
+            this.resetPowerShot();
+        }
     }
 
     public updateTrajectory(deltaMs: number): void {
@@ -77,13 +81,17 @@ export class Ball {
 
     public detachFromPlayer(): void {
         this.ballStatus = BallStatus.FREE;
+        let speedFactor = 1;
         if (this.attachedPlayer?.getPowerShot()) {
-            this.isPowerShot = true;
-            this.powerShotType = PowerShotUtilities.getPowerShotType(this.attachedPlayer.colorIndex);
+            this.powerShot = true;
+            this.powerShotType = PowerShotUtilities.getPowerShotType(
+                this.attachedPlayer.colorIndex,
+            );
+            speedFactor = PowerShotUtilities.getSpeedFactor(this.powerShotType);
         }
         this.attachedPlayer?.resetPowerShot();
         this.attachedPlayer = null;
-        this.movementPosition.setSpeed(this.maxSpeed, this.angleWithPlayer);
+        this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
     }
 
     public resetOnGoal(): void {
@@ -92,8 +100,26 @@ export class Ball {
         this.resetPowerShot();
     }
 
+    public get isPowerShot(): boolean {
+        return this.powerShot;
+    }
+
+    public shouldStopOnPlayerBounce(): boolean {
+        if (!this.powerShot || this.powerShotType === null) {
+            return true;
+        }
+        return PowerShotUtilities.shouldStopOnPlayerBounce(this.powerShotType);
+    }
+
+    private shouldCancelOnLowSpeed(): boolean {
+        if (!this.powerShot || this.powerShotType === null) {
+            return true;
+        }
+        return PowerShotUtilities.shouldCancelOnLowSpeed(this.powerShotType);
+    }
+
     private resetPowerShot(): void {
-        this.isPowerShot = false;
+        this.powerShot = false;
         this.powerShotType = null;
     }
 }

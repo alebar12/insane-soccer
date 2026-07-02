@@ -74,7 +74,7 @@ export class PlayerRender implements RenderInterface {
     }
 
     private renderStunnedStars(player: Player): void {
-        player.stunnedStars.stars.forEach(star => {
+        player.stunnedWrapper.stunnedStars.stars.forEach(star => {
             this.gameContext.save();
             const factor = star.getFactor();
             const x = star.position.x + Math.cos(star.direction) * (factor * this.startMaxDistance);

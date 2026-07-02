@@ -1,4 +1,4 @@
-import { Point } from "../geometry/Point";
+import { Point } from "../../geometry/Point";
 
 export class StunnedStars {
     private readonly deltaBetweenStars: number = 200;

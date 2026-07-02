@@ -50,7 +50,7 @@ export class MovementSystem implements SystemInterface {
             this.playerStrategies
                 .filter(strategy => strategy.canBeApplied(player, gameWorld))
                 .forEach(strategy => strategy.apply(player, gameWorld, deltaMs));
-            player.decrementStunnedValue(deltaMs);
+            player.stunnedWrapper.decrementStunnedValue(deltaMs);
             player.updatePowerShot(deltaMs);
             player.move(deltaMs);
         });

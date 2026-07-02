@@ -1,5 +1,6 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { BallStatus } from "../enums/BallStatus";
+import { PowerShotType, PowerShotUtilities } from "../enums/PowerShotType";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
 import { PositionHistory } from "../geometry/PositionHistory";
@@ -19,6 +20,8 @@ export class Ball {
     );
     private isSetForStart: boolean = false;
     public positionHistory: PositionHistory = new PositionHistory(5000);
+    private isPowerShot: boolean = false;
+    private powerShotType: PowerShotType | null = null;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -50,11 +53,17 @@ export class Ball {
     }
 
     public move(deltaMs: number): void {
-        this.positionHistory.addPosition(
-            new Point(this.movementPosition.position.x, this.movementPosition.position.y),
-        );
+        if (this.isPowerShot) {
+            this.positionHistory.addPosition(
+                new Point(this.movementPosition.position.x, this.movementPosition.position.y),
+            );
+        }        
         this.movementPosition.updatePosition(deltaMs);
         this.movementPosition.decrementSpeed(deltaMs);
+    }
+
+    public updateTrajectory(deltaMs: number): void {
+        this.positionHistory.update(deltaMs);
     }
 
     public attachToPlayer(player: Player): void {
@@ -68,6 +77,10 @@ export class Ball {
 
     public detachFromPlayer(): void {
         this.ballStatus = BallStatus.FREE;
+        if (this.attachedPlayer?.getPowerShot()) {
+            this.isPowerShot = true;
+            this.powerShotType = PowerShotUtilities.getPowerShotType(this.attachedPlayer.colorIndex);
+        }
         this.attachedPlayer?.resetPowerShot();
         this.attachedPlayer = null;
         this.movementPosition.setSpeed(this.maxSpeed, this.angleWithPlayer);
@@ -76,5 +89,11 @@ export class Ball {
     public resetOnGoal(): void {
         this.ballStatus = BallStatus.FREE;
         this.attachedPlayer = null;
+        this.resetPowerShot();
+    }
+
+    private resetPowerShot(): void {
+        this.isPowerShot = false;
+        this.powerShotType = null;
     }
 }

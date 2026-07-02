@@ -6,9 +6,12 @@ export class PositionHistory {
     public constructor(public retentionTime: number) {}
 
     public addPosition(position: Point): void {
-        const now = Date.now();
-        this.positions.push(new HistoryPoint(position, now));
-        this.positions = this.positions.filter(p => now - p.timestamp < this.retentionTime);
+        this.positions.push(new HistoryPoint(position, 0));
+    }
+
+    public update(deltaMs: number) {
+        this.positions.forEach(p => p.delta += deltaMs);
+        this.positions = this.positions.filter(p => p.delta < this.retentionTime);
     }
 
     public getFactor(index: number): number {
@@ -19,10 +22,10 @@ export class PositionHistory {
 export class HistoryPoint {
     public constructor(
         public position: Point,
-        public timestamp: number,
+        public delta: number,
     ) {}
 
     public getFactor(retentionTime: number): number {
-        return (Date.now() - this.timestamp) / retentionTime;
+        return this.delta / retentionTime;
     }
 }

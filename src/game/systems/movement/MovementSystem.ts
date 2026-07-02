@@ -58,5 +58,6 @@ export class MovementSystem implements SystemInterface {
         this.ballStrategies
             .filter(strategy => strategy.canBeApplied(gameWorld.ball, gameWorld))
             .forEach(strategy => strategy.apply(gameWorld.ball, gameWorld, deltaMs));
+        gameWorld.ball.updateTrajectory(deltaMs);
     }
 }

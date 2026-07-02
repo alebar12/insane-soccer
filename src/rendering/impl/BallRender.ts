@@ -86,8 +86,7 @@ export class BallRender implements RenderInterface {
                     Point.getDistance(position.position, nextPosition.position) <
                     this.trajectoryMaxDistance
                 ) {
-                    const factor = 1 - ball.positionHistory.getFactor(index);
-                    this.gameContext.globalAlpha = factor;
+                    this.gameContext.globalAlpha = 1 - ball.positionHistory.getFactor(index);
                     this.gameContext.lineWidth = this.gameConfigs.ballSizeWithBorder;
                     this.gameContext.beginPath();
                     this.gameContext.moveTo(position.position.x, position.position.y);

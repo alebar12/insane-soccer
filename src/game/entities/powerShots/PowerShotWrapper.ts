@@ -8,7 +8,7 @@ import { PowerShotInterface } from "./PowerShotInterface";
 export class PowerShotWrapper {
     private powerShot: boolean = false;
     private consecutiveGoals: number = 0;
-    private readonly consecutiveGoalsToPowerShot: number = 3;
+    private readonly consecutiveGoalsToPowerShot: number = 2;
     private readonly side: PlayerSide;
     private powerShots: Array<PowerShotInterface> = [];
 

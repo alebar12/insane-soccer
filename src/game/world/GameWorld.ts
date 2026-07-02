@@ -3,6 +3,7 @@ import { AssetLoader } from "../../assets/AssetLoader";
 import { EventBusUtilities } from "../../utils/EventBusUtilities";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Ball } from "../entities/Ball";
+import { Explosion } from "../entities/Explosion";
 import { Fireworks } from "../entities/Fireworks";
 import { Gate } from "../entities/Gate";
 import { GoalPosts } from "../entities/GoalPosts";
@@ -10,6 +11,7 @@ import { MenuButton } from "../entities/MenuButton";
 import { Player } from "../entities/Player";
 import { GameStatus } from "../enums/GameStatus";
 import { PlayerSide } from "../enums/PlayerSide";
+import { PowerShotType } from "../enums/PowerShotType";
 import { GameStatusManager } from "../managers/GameStatusManager";
 import { ScoreManager } from "../managers/ScoreManager";
 
@@ -19,6 +21,7 @@ export class GameWorld {
     public readonly ball: Ball;
     public readonly fireworks: Fireworks;
     public readonly gates: Gate;
+    public readonly explosion: Explosion;
     public readonly menuButton: MenuButton;
     public readonly gameStatusManager: GameStatusManager;
     public readonly score: ScoreManager;
@@ -31,6 +34,7 @@ export class GameWorld {
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
         this.fireworks = new Fireworks(gameConfigs);
+        this.explosion = new Explosion(gameConfigs);
         this.gates = new Gate();
         const bus = new EventBus();
         this.score = new ScoreManager();
@@ -58,6 +62,12 @@ export class GameWorld {
                 player.resetOnGoal();
                 player.powerShotWrapper.updateScoredGoal(playerSide);
             });
+        if (this.ball.ballPowerShot.isPowerShot) {
+            this.explosion.addExplosion(
+                this.ball.movementPosition.position,
+                this.ball.ballPowerShot.getPowerShotType() ?? PowerShotType.FIRE,
+            );
+        }
         this.ball.resetOnGoal();
 
         if (this.score.isGameOver) {

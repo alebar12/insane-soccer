@@ -9,8 +9,8 @@ export class PositionHistory {
         this.positions.push(new HistoryPoint(position, 0));
     }
 
-    public update(deltaMs: number) {
-        this.positions.forEach(p => p.delta += deltaMs);
+    public update(deltaMs: number): void {
+        this.positions.forEach(p => (p.delta += deltaMs));
         this.positions = this.positions.filter(p => p.delta < this.retentionTime);
     }
 

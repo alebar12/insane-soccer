@@ -56,7 +56,7 @@ export class GameWorld {
             .filter(player => !player.isSubstitute)
             .forEach(player => {
                 player.resetOnGoal();
-                player.updateScoredGoal(playerSide);
+                player.powerShotWrapper.updateScoredGoal(playerSide);
             });
         this.ball.resetOnGoal();
 
@@ -65,7 +65,7 @@ export class GameWorld {
             this.fireworks.initFireworks();
             this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
             this.players.forEach(player => {
-                player.resetPowerShot();
+                player.powerShotWrapper.resetPowerShot();
             });
         }
     }

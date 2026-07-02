@@ -44,9 +44,6 @@ export class Player {
     private readonly stunnedMaxValue: number = 2000;
     private readonly stunnedStep: number = 1000;
     private readonly stunnedTime: number = 3000;
-    private powerShot: boolean = false;
-    private consecutiveGoals: number = 0;
-    private readonly consecutiveGoalsToPowerShot: number = 3;
     public readonly powerShotWrapper: PowerShotWrapper;
 
     private constructor(
@@ -69,7 +66,7 @@ export class Player {
         this.colorIndex = colorIndex;
         this.initPositions(gameConfigs);
 
-        this.powerShotWrapper = new PowerShotWrapper(gameConfigs);
+        this.powerShotWrapper = new PowerShotWrapper(gameConfigs, side);
     }
 
     public static createHumanPlayer(gameConfigs: GameConfigs): Player {
@@ -225,29 +222,6 @@ export class Player {
 
     public switchColorIndex(): void {
         this.colorIndex = this.colorIndex === 0 ? 1 : 0;
-    }
-
-    public updateScoredGoal(playerSide: PlayerSide): void {
-        if (playerSide === this.side) {
-            this.consecutiveGoals++;
-            if (this.consecutiveGoals === this.consecutiveGoalsToPowerShot) {
-                this.powerShot = true;
-                this.consecutiveGoals = 0;
-            }
-        } else {
-            this.consecutiveGoals = 0;
-        }
-    }
-
-    public getPowerShot(): boolean {
-        return this.powerShot;
-    }
-
-    public resetPowerShot(): void {
-        if (this.powerShot) {
-            this.powerShot = false;
-            this.consecutiveGoals = 0;
-        }
     }
 
     public updatePowerShot(deltaMs: number): void {

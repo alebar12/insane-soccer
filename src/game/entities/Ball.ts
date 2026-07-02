@@ -83,11 +83,11 @@ export class Ball {
     public detachFromPlayer(): void {
         this.ballStatus = BallStatus.FREE;
         let speedFactor = 1;
-        if (this.attachedPlayer?.getPowerShot()) {
+        if (this.attachedPlayer?.powerShotWrapper.getPowerShot()) {
             this.ballPowerShot.enablePowerShot(this.attachedPlayer);
             speedFactor = PowerShotUtilities.getSpeedFactor(this.ballPowerShot.getPowerShotType());
         }
-        this.attachedPlayer?.resetPowerShot();
+        this.attachedPlayer?.powerShotWrapper.resetPowerShot();
         this.attachedPlayer = null;
         this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
     }

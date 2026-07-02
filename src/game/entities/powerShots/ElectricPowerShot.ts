@@ -37,7 +37,7 @@ export class ElectricPowerShot implements PowerShotInterface {
     public shouldRender(player: Player): boolean {
         return (
             player.colorIndex === 1 &&
-            player.getPowerShot() &&
+            player.powerShotWrapper.getPowerShot() &&
             player.playerStatus === PlayerStatus.NORMAL
         );
     }

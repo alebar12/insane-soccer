@@ -40,8 +40,8 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
                 (humanPlayer.movementPosition.position.y + cpuPlayer.movementPosition.position.y) /
                     2,
             );
-            humanPlayer.startBouncing();
-            cpuPlayer.startBouncing();
+            humanPlayer.bounceWrapper.startBouncing();
+            cpuPlayer.bounceWrapper.startBouncing();
             const collisionSpeed =
                 (humanPlayer.movementPosition.getSpeed() + cpuPlayer.movementPosition.getSpeed()) /
                 2;

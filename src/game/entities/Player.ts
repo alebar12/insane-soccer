@@ -89,16 +89,11 @@ export class Player {
 
     public adjustSpeedToDestinationPoint(deltaMs: number): void {
         const projectedPosition = this.movementPosition.projectToFinalPosition();
+        const targetPosition = this.destinationPosition.projectToFinalPosition();
 
-        const angle = Point.getAngleBetweenPoints(
-            this.movementPosition.position,
-            this.destinationPosition.position,
-        );
+        const angle = Point.getAngleBetweenPoints(this.movementPosition.position, targetPosition);
 
-        if (
-            Point.getDistance(projectedPosition, this.destinationPosition.position) <
-            this.reachedDistanceTolerance
-        ) {
+        if (Point.getDistance(projectedPosition, targetPosition) < this.reachedDistanceTolerance) {
             const currentSpeed = this.movementPosition.getSpeed();
             if (currentSpeed > 0) {
                 const newSpeed = Math.max(

@@ -8,6 +8,7 @@ import { BallMovementStrategyInterface } from "./ballStrategies/BallMovementStra
 import { MoveToGoalPowerShotMovementStrategy } from "./ballStrategies/MoveToGoalPowerShotMovementStrategy";
 import { PlayingFreeBallMovementStrategy } from "./ballStrategies/PlayingFreeBallMovementStrategy";
 import { WaitingBallBallMovementStrategy } from "./ballStrategies/WaitingBallBallMovementStrategy";
+import { CpuMovementStrategy } from "./playersStrategies/CpuMovementStrategy";
 import { InputPlayerMovementStrategy } from "./playersStrategies/InputPlayerMovementStrategy";
 import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
 import { PlayerMovementStrategyInterface } from "./playersStrategies/PlayerMovementStrategyInterface";
@@ -24,7 +25,7 @@ export class MovementSystem implements SystemInterface {
         this.playerStrategies.push(new MenuMovementStrategy(gameConfigs));
         this.playerStrategies.push(new WaitingBallMovementStrategy());
         this.playerStrategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
-        //this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
+        this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
         this.playerStrategies.push(new StunnedPlayerMovementStrategy());
         this.playerStrategies.push(new WinningPlayerMovementStrategy(gameConfigs));
         this.playerStrategies.push(new SubstitutePlayersMovementStrategy(gameConfigs));

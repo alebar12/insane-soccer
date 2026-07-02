@@ -54,6 +54,15 @@ export class MovementPoint {
         }
     }
 
+    public clone(): MovementPoint {
+        return new MovementPoint(
+            new Point(this.position.x, this.position.y),
+            new Point(this.velocity.x, this.velocity.y),
+            this.acceleration,
+            this.size,
+        );
+    }
+
     private calculateDestinationPosition(position: number, speed: number): number {
         while (Math.abs(speed) > 0) {
             position += speed;

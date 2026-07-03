@@ -1,5 +1,3 @@
-import { PlayerStatus } from "../../enums/PlayerStatus";
-import { Player } from "../Player";
 
 export class BounceWrapper {
     private bouncingStartTime: number = 0;
@@ -7,17 +5,9 @@ export class BounceWrapper {
     private readonly bounceMaxAmplitude: number = 0.5;
     private readonly bounceExponentialFactor: number = 0.00346;
     private readonly bounceNumber: number = 5;
-    private readonly player: Player;
-
-    public constructor(player: Player) {
-        this.player = player;
-    }
 
     public startBouncing(): void {
-        if (
-            this.getBouncingProgress() > this.bounceTime / 2 &&
-            this.player.playerStatus === PlayerStatus.NORMAL
-        ) {
+        if (this.getBouncingProgress() > this.bounceTime / 2) {
             this.bouncingStartTime = Date.now();
         }
     }

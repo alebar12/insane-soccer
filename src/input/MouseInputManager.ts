@@ -14,6 +14,7 @@ export class MouseInputManager {
     private onMouseMove = (event: MouseEvent): void => {
         const rect = this.element.getBoundingClientRect();
         this.mousePosition = new Point(event.clientX - rect.left, event.clientY - rect.top);
+        this.reset();
     };
 
     private onClick = (): void => {

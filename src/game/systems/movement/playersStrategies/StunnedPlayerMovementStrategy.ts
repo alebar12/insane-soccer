@@ -18,10 +18,10 @@ export class StunnedPlayerMovementStrategy implements PlayerMovementStrategyInte
             player.stunnedWrapper.forceStunned();
         }
 
-        if (player.movementPosition.getSpeed() > player.maxSpeedWithBall / 5) {
+        if (player.movementPosition.getSpeed() > player.currentMaxSpeed / 5) {
             player.movementPosition.decrementSpeed(deltaMs);
         } else {
-            const speed = player.maxSpeedWithBall / 15;
+            const speed = player.currentMaxSpeed / 15;
             let angle = player.movementPosition.getSpeedAngle();
             angle = angle + (Math.PI / 30) * deltaMs * 0.05;
             player.movementPosition.setSpeed(speed, angle);

@@ -12,7 +12,6 @@ export class Player {
     public readonly isSubstitute: boolean;
     public readonly side: PlayerSide;
     public readonly normalMaxSpeed: number;
-    public readonly maxSpeedWithBall: number;
     public readonly reachedDistanceTolerance: number;
     public readonly closeToPointDistance: number;
     public readonly bounceWrapper: BounceWrapper = new BounceWrapper();
@@ -44,8 +43,10 @@ export class Player {
         side: PlayerSide,
         colorIndex: number,
     ) {
-        this.normalMaxSpeed = gameConfigs.fieldHeight / 500;
-        this.maxSpeedWithBall = this.normalMaxSpeed / 1.332;
+        this.normalMaxSpeed = gameConfigs.fieldHeight / 700;
+        if (isCpu) {
+            this.normalMaxSpeed = this.normalMaxSpeed * 0.8;
+        }
         this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
         this.movementPosition.acceleration = this.normalMaxSpeed / 300;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
@@ -156,12 +157,13 @@ export class Player {
         this.bounceWrapper.reset();
         this.stunnedWrapper.reset();
         this.playerStatus = PlayerStatus.NORMAL;
+        this.resetToStartGame();
     }
 
     public startBouncing(): void {
         if (this.playerStatus === PlayerStatus.NORMAL) {
             this.bounceWrapper.startBouncing();
-        }        
+        }
     }
 
     private initPositions(gameConfigs: GameConfigs): void {

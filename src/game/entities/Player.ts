@@ -15,7 +15,7 @@ export class Player {
     public readonly maxSpeedWithBall: number;
     public readonly reachedDistanceTolerance: number;
     public readonly closeToPointDistance: number;
-    public readonly bounceWrapper: BounceWrapper = new BounceWrapper(this);
+    public readonly bounceWrapper: BounceWrapper = new BounceWrapper();
 
     public movementPosition: MovementPoint = new MovementPoint(
         new Point(0, 0),
@@ -156,6 +156,12 @@ export class Player {
         this.bounceWrapper.reset();
         this.stunnedWrapper.reset();
         this.playerStatus = PlayerStatus.NORMAL;
+    }
+
+    public startBouncing(): void {
+        if (this.playerStatus === PlayerStatus.NORMAL) {
+            this.bounceWrapper.startBouncing();
+        }        
     }
 
     private initPositions(gameConfigs: GameConfigs): void {

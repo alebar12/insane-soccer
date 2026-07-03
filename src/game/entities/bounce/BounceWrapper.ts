@@ -1,4 +1,3 @@
-
 export class BounceWrapper {
     private bouncingStartTime: number = 0;
     private readonly bounceTime: number = 2000;

@@ -2,6 +2,7 @@ import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Player } from "../../../entities/Player";
 import { GameStatus } from "../../../enums/GameStatus";
 import { PlayerSide } from "../../../enums/PlayerSide";
+import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
@@ -45,8 +46,13 @@ export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategy
             destinationPoint = destinationList[0];
             this.playerDestinationPointMap.set(player, destinationPoint);
         }
-        player.currentMaxSpeed = (player.maxSpeedWithBall * 2) / 3;
-        player.destinationPosition.position = destinationPoint.point;
+        player.currentMaxSpeed = (player.normalMaxSpeed * 2) / 3;
+        player.destinationPosition = new MovementPoint(
+            destinationPoint.point,
+            new Point(0, 0),
+            0,
+            0,
+        );
         player.adjustSpeedToDestinationPoint(deltaMs);
 
         if (player.reachedDestinationPosition()) {

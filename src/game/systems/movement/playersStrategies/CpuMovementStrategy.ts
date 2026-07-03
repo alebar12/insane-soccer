@@ -1,4 +1,5 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
+import { Ball } from "../../../entities/Ball";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
@@ -40,6 +41,8 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
         } else if (ball.ballStatus === BallStatus.ATTACHED && attachedPlayer !== null) {
             if (!attachedPlayer.isCpu) {
                 destinationPosition = attachedPlayer.movementPosition.clone();
+                destinationPosition.velocity = new Point(0, 0);
+                destinationPosition.acceleration = 0;
             } else {
                 if (player.movementPosition.position.x > this.centerFieldX) {
                     destinationPosition = new MovementPoint(
@@ -49,9 +52,9 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
                         0,
                     );
                 } else {
-                    player.currentMaxSpeed = player.maxSpeedWithBall;
                     this.rotateCpu(player, deltaMs);
                 }
+                this.tryKick(player, ball);
             }
         }
 
@@ -73,5 +76,23 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
         angle = angle + this.rotateDirection * this.rotateAngle * deltaMs;
         player.movementPosition.setSpeed(speed, angle);
         player.movementPosition.adjustToMaxSpeed(player.currentMaxSpeed);
+    }
+
+    private tryKick(player: Player, ball: Ball): void {
+        if (ball.movementPosition.position.x < player.movementPosition.position.x) {
+            const m =
+                (ball.movementPosition.position.y - player.movementPosition.position.y) /
+                (ball.movementPosition.position.x - player.movementPosition.position.x);
+            const y =
+                m * (this.gameConfigs.fieldXOffset - player.movementPosition.position.x) +
+                player.movementPosition.position.y;
+            const offset = this.gameConfigs.goalHeight / 2;
+            if (
+                y >= this.gameConfigs.goalYOffset - offset &&
+                y <= this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight + offset
+            ) {
+                ball.detachFromPlayer();
+            }
+        }
     }
 }

@@ -38,7 +38,6 @@ export class Fireworks {
                 const g = this.getColorValueWithOffset(green);
                 const b = this.getColorValueWithOffset(blue);
 
-                // create variable hexadecimal color
                 const color =
                     "#" +
                     r.toString(16).padStart(2, "0") +

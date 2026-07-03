@@ -13,8 +13,8 @@ export class PowerShotWrapper {
     private powerShots: Array<PowerShotInterface> = [];
 
     constructor(gameConfigs: GameConfigs, side: PlayerSide) {
-        this.powerShots.push(new FirePowerShot(gameConfigs));
         this.powerShots.push(new ElectricPowerShot(gameConfigs));
+        this.powerShots.push(new FirePowerShot(gameConfigs));
         this.side = side;
     }
 

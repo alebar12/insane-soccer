@@ -12,12 +12,14 @@ import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterfa
 export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly centerFieldX: number;
+    private readonly goalOffset: number;
     private rotateDirection = 0;
     private rotateAngle = 0;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
         this.centerFieldX = gameConfigs.fieldXOffset + gameConfigs.fieldWidth / 2;
+        this.goalOffset = this.gameConfigs.goalHeight * 0.5;
     }
 
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
@@ -86,10 +88,10 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
             const y =
                 m * (this.gameConfigs.fieldXOffset - player.movementPosition.position.x) +
                 player.movementPosition.position.y;
-            const offset = this.gameConfigs.goalHeight / 2;
+
             if (
-                y >= this.gameConfigs.goalYOffset - offset &&
-                y <= this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight + offset
+                y >= this.gameConfigs.goalYOffset - this.goalOffset &&
+                y <= this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight + this.goalOffset
             ) {
                 ball.detachFromPlayer();
             }

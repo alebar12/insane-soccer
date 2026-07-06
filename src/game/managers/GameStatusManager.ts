@@ -16,6 +16,7 @@ export class GameStatusManager {
     public changeStatus(gameStatus: GameStatus): void {
         this._gameStatus = gameStatus;
         this.currentStatusTime = 0;
+        this.publishStatusChange();
     }
 
     public get gameStatus(): GameStatus {
@@ -42,9 +43,13 @@ export class GameStatusManager {
         for (const e of this.scheduledEvents) {
             if (this.time >= e.time) {
                 this.changeStatus(e.gameStatus);
-                this.bus.publish(EventBusUtilities.statusChangedEvent(this.gameStatus));
+                this.publishStatusChange();
             }
         }
         this.scheduledEvents = this.scheduledEvents.filter(e => this.time < e.time);
+    }
+
+    private publishStatusChange(): void {
+        this.bus.publish(EventBusUtilities.statusChangedEvent(this.gameStatus));
     }
 }

@@ -11,6 +11,11 @@ export class MouseInputManager {
         element.addEventListener("click", this.onClick);
     }
 
+    public dispose(): void {
+        this.element.removeEventListener("mousemove", this.onMouseMove);
+        this.element.removeEventListener("click", this.onClick);
+    }
+
     private onMouseMove = (event: MouseEvent): void => {
         const rect = this.element.getBoundingClientRect();
         this.mousePosition = new Point(event.clientX - rect.left, event.clientY - rect.top);

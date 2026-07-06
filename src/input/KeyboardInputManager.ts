@@ -8,6 +8,11 @@ export class KeyboardInputManager {
         document.addEventListener("keyup", this.onKeyUp);
     }
 
+    public dispose(): void {
+        document.removeEventListener("keydown", this.onKeyDown);
+        document.removeEventListener("keyup", this.onKeyUp);
+    }
+
     public isKeyPressed(key: Keys): boolean {
         return this.pressedKeys.has(key);
     }

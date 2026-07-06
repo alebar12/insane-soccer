@@ -80,16 +80,20 @@ export class Ball {
         this.ballPowerShot.resetPowerShot();
     }
 
-    public detachFromPlayer(): void {
-        this.ballStatus = BallStatus.FREE;
+    public kick(): void {
         let speedFactor = 1;
         if (this.attachedPlayer?.powerShotWrapper.getPowerShot()) {
             this.ballPowerShot.enablePowerShot(this.attachedPlayer);
             speedFactor = PowerShotUtilities.getSpeedFactor(this.ballPowerShot.getPowerShotType());
         }
         this.attachedPlayer?.powerShotWrapper.resetPowerShot();
-        this.attachedPlayer = null;
+        this.releaseFromPlayer();
         this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
+    }
+
+    public releaseFromPlayer(): void {
+        this.attachedPlayer = null;
+        this.ballStatus = BallStatus.FREE;
     }
 
     public resetOnGoal(): void {

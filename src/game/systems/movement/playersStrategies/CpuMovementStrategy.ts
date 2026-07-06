@@ -93,7 +93,7 @@ export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
                 y >= this.gameConfigs.goalYOffset - this.goalOffset &&
                 y <= this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight + this.goalOffset
             ) {
-                ball.detachFromPlayer();
+                ball.kick();
             }
         }
     }

@@ -52,7 +52,7 @@ export class GameWorld {
     public increaseScore(playerSide: PlayerSide): void {
         this.score.increaseScore(playerSide);
         if (this.score.isSubstitutionTime()) {
-            this.gameStatusManager.changeStatus(GameStatus.SUBSTITION);
+            this.gameStatusManager.changeStatus(GameStatus.SUBSTITUTION);
         } else {
             this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
         }

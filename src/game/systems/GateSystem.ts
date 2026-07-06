@@ -6,7 +6,7 @@ export class GateSystem implements SystemInterface {
     public update(gameWorld: GameWorld, deltaMs: number): void {
         gameWorld.gates.update(
             deltaMs,
-            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION,
+            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION,
         );
     }
 }

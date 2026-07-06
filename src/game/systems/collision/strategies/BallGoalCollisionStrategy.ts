@@ -13,7 +13,7 @@ export class BallGoalCollisionStrategy extends AbstractCollisionStrategy {
         return (
             (gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL ||
                 gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME ||
-                gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION) &&
+                gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION) &&
             gameWorld.ball.movementPosition.getSpeed() > 0
         );
     }

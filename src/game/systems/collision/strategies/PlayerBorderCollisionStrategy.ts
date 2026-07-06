@@ -17,7 +17,7 @@ export class PlayerBorderCollisionStrategy extends AbstractCollisionStrategy {
             .filter(player => !player.isSubstitute)
             .forEach(player => {
                 const avoidBounceOnSubstitution =
-                    gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION;
+                    gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION;
 
                 const hasCollided = this.handleBorderCollision(
                     player.movementPosition,

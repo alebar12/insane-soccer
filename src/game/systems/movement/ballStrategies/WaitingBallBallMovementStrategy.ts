@@ -8,7 +8,7 @@ export class WaitingBallBallMovementStrategy implements BallMovementStrategyInte
         return (
             gameWorld.gameStatusManager.gameStatus === GameStatus.WAITING_BALL ||
             gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME ||
-            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION
+            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION
         );
     }
 

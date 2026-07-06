@@ -11,19 +11,15 @@ export class StunnedStars {
         this.starDelta += delta;
         if (this.starDelta >= this.deltaBetweenStars) {
             this.stars.push(
-                new StarDto(
-                    new Point(position.x, position.y),
-                    0,
-                    Math.random() * 2 * Math.PI,
-                    Date.now(),
-                ),
+                new StarDto(new Point(position.x, position.y), 0, Math.random() * 2 * Math.PI),
             );
             this.starDelta = 0;
         }
 
         this.stars.forEach((star, _index) => {
+            star.update(delta);
             star.angle += this.angleStep * delta;
-            if (Date.now() - star.addedTime > StunnedStars.duration) {
+            if (star.getFactor() >= 1) {
                 this.stars.splice(this.stars.indexOf(star), 1);
             }
         });
@@ -31,14 +27,19 @@ export class StunnedStars {
 }
 
 export class StarDto {
+    private duration: number = 0;
+
     public constructor(
         public readonly position: Point,
         public angle: number,
         public readonly direction: number,
-        public readonly addedTime: number,
     ) {}
 
+    public update(delta: number): void {
+        this.duration += delta;
+    }
+
     public getFactor(): number {
-        return (Date.now() - this.addedTime) / StunnedStars.duration;
+        return this.duration / StunnedStars.duration;
     }
 }

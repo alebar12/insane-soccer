@@ -3,7 +3,7 @@ import { PlayerSide } from "../enums/PlayerSide";
 export class ScoreManager {
     public leftScore: number = 0;
     public rightScore: number = 0;
-    private lastUpdateTime: number = 0;
+    private lastUpdateDuration: number = 0;
     private lastSideUpdated: PlayerSide = PlayerSide.LEFT;
     private readonly maxScore: number = 10;
     private readonly substitutionGoals: number = 3;
@@ -14,14 +14,18 @@ export class ScoreManager {
         } else {
             this.leftScore++;
         }
-        this.lastUpdateTime = Date.now();
+        this.lastUpdateDuration = 0;
         this.lastSideUpdated = playerSide;
+    }
+
+    public update(delta: number): void {
+        this.lastUpdateDuration += delta;
     }
 
     public reset(): void {
         this.leftScore = 0;
         this.rightScore = 0;
-        this.lastUpdateTime = Date.now();
+        this.lastUpdateDuration = 0;
     }
 
     public getScoreAsArray(): Array<number> {
@@ -38,8 +42,8 @@ export class ScoreManager {
         }
     }
 
-    public get lastUpdate(): number {
-        return this.lastUpdateTime;
+    public getLastUpdateDuration(): number {
+        return this.lastUpdateDuration;
     }
 
     public get isGameOver(): boolean {

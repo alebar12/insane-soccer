@@ -44,6 +44,7 @@ export class GameLoop {
         this.mainSystem.update(this.gameWorld, delta);
         this.gameWorld.fireworks.update(delta);
         this.gameWorld.explosion.update(delta);
+        this.gameWorld.score.update(delta);
     }
 
     private updateInputs(delta: number): void {

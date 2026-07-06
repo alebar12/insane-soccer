@@ -64,13 +64,10 @@ export class MovementPoint {
     }
 
     private calculateDestinationPosition(position: number, speed: number): number {
-        while (Math.abs(speed) > 0) {
-            position += speed;
-            speed = Math.sign(speed) * Math.max(Math.abs(speed) - this.acceleration, 0);
-            if (Math.abs(speed) <= this.acceleration) {
-                speed = 0;
-            }
-        }
-        return position;
+        if (speed === 0 || this.acceleration <= 0) return position;
+        const absSpeed = Math.abs(speed);
+        const n = Math.ceil(absSpeed / this.acceleration);
+        const distance = (n * (2 * absSpeed - (n - 1) * this.acceleration)) / 2;
+        return position + Math.sign(speed) * distance;
     }
 }

@@ -4,7 +4,7 @@ import { GameStatus } from "../enums/GameStatus";
 
 export class GameStatusManager {
     private _gameStatus: GameStatus = GameStatus.MENU;
-    private statusStartTime: number = 0;
+    private currentStatusTime: number = 0;
     private scheduledEvents: Array<{ time: number; gameStatus: GameStatus }> = [];
     private time: number = 0;
     private bus: EventBus;
@@ -15,7 +15,7 @@ export class GameStatusManager {
 
     public changeStatus(gameStatus: GameStatus): void {
         this._gameStatus = gameStatus;
-        this.statusStartTime = Date.now();
+        this.currentStatusTime = 0;
     }
 
     public get gameStatus(): GameStatus {
@@ -23,7 +23,7 @@ export class GameStatusManager {
     }
 
     public isStatusChangedRecently(): boolean {
-        return Date.now() - this.statusStartTime < 300;
+        return this.currentStatusTime < 300;
     }
 
     public scheduleStatusChange(delay: number, gameStatus: GameStatus): void {
@@ -38,6 +38,7 @@ export class GameStatusManager {
 
     public update(delta: number): void {
         this.time += delta;
+        this.currentStatusTime += delta;
         for (const e of this.scheduledEvents) {
             if (this.time >= e.time) {
                 this.changeStatus(e.gameStatus);

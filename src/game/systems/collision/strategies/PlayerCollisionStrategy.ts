@@ -54,7 +54,7 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
                     collisionSpeed,
                     Point.getAngleBetweenPoints(intersectionPoint, ball.movementPosition.position),
                 );
-                ball.ballStatus = BallStatus.FREE;
+                ball.releaseFromPlayer();
             }
         }
     }

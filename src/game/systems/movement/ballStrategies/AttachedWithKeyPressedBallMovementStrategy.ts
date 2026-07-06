@@ -25,7 +25,7 @@ export class AttachedWithKeyPressedBallMovementStrategy implements BallMovementS
     }
 
     public apply(ball: Ball, _gameWorld: GameWorld, deltaMs: number): void {
-        ball.detachFromPlayer();
+        ball.kick();
         ball.move(deltaMs);
     }
 }

@@ -5,7 +5,7 @@ import { CheckerStrategyInterface } from "./CheckerStrategyInterface";
 
 export class SubstitutionCheckerStrategy implements CheckerStrategyInterface {
     public canBeApplied(gameWorld: GameWorld): boolean {
-        return gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION;
+        return gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION;
     }
 
     public apply(gameWorld: GameWorld): void {

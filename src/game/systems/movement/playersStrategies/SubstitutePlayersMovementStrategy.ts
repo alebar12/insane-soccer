@@ -27,7 +27,8 @@ export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategy
 
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
         return (
-            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITION && !player.isSubstitute
+            gameWorld.gameStatusManager.gameStatus === GameStatus.SUBSTITUTION &&
+            !player.isSubstitute
         );
     }
 

@@ -3,5 +3,5 @@ export enum GameStatus {
     WAITING_BALL = "WAITING_BALL",
     PLAYING = "PLAYING",
     END_GAME = "END_GAME",
-    SUBSTITION = "SUBSTITION",
+    SUBSTITUTION = "SUBSTITUTION",
 }

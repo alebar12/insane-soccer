@@ -26,6 +26,7 @@ export class ScoreManager {
         this.leftScore = 0;
         this.rightScore = 0;
         this.lastUpdateDuration = 0;
+        this.lastSideUpdated = PlayerSide.LEFT;
     }
 
     public getScoreAsArray(): Array<number> {

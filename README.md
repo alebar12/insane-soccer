@@ -8,18 +8,17 @@
 
 ## Screenshot
 
-![Insane Soccer screenshot](screenshots/insanesoccer1.jpg)
+![Insane Soccer screenshot](meta/screenshots/insanesoccer1.jpg)
 
 ## About
 
 **Insane Soccer** is an open-source, browser-based HTML5 soccer game built entirely in **TypeScript**. Play 1-on-1 against a CPU opponent on a top-down pitch rendered through multiple HTML5 Canvas layers.
 
 The game features:
-- ⚽ Fast-paced 1v1 soccer gameplay (player vs. CPU)
-- 🔥 **Fire Power Shot** — a blazing-fast shot that ignores player bounces and charges straight ahead
-- ⚡ **Electric Power Shot** — a precise homing shot that curves toward the goal and stuns any player it hits
-- 🌀 Substitute players waiting on the sideline that swap in mid-game
-- 🎆 Goal celebrations with fireworks and explosions
+- Fast-paced 1v1 soccer gameplay (player vs. CPU)
+- Power Shots
+- Substitute players
+- Goal celebrations with fireworks and explosions
 
 ## Tech Stack
 
@@ -37,11 +36,6 @@ The game features:
 - [Node.js](https://nodejs.org/) (v18 or newer recommended) with `npm`
 
 ### 1. Clone the repository
-
-```bash
-git clone <your-repo-url>
-cd Insane Soccer
-```
 
 ### 2. Install dependencies
 
@@ -78,13 +72,6 @@ The optimised bundle is written to `public/js/game.js`. Serve the `public/` fold
 |---|---|
 | `↑` `↓` `←` `→` | Move player |
 | `SPACE` | Shot |
-
-## Power Shots
-
-| Shot | Effect |
-|---|---|
-| 🔥 Fire | 2× speed, passes through bouncing players |
-| ⚡ Electric | 1.2× speed, homes toward goal, stuns hit players |
 
 ## Project Structure
 
@@ -127,8 +114,3 @@ Insane Soccer/
 ## Contributing
 
 Contributions are welcome! Feel free to open issues or pull requests.
-
-## License
-
-This project is licensed under the **ISC License**.  
-Developed by [Alessio Barducci](http://alessiobarducci.altervista.org).

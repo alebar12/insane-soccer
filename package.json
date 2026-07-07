@@ -4,18 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.prod.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
-    "minify-css": "npx minify public/css/style.css > public/css/style.min.css",
-    "start-local": "npm-run-all --parallel watch:build watch:server --print-label",
-    "watch:server": "npx http-server -d false -o -s -c-1",
-    "watch:build": "webpack -w",
-    "watch:typecheck": "tsc --noEmit --watch --pretty",
-    "watch:lint": "nodemon --watch src --ext ts --exec \"eslint src --ext .ts\" --quiet"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +31,7 @@
     "ts-loader": "^9.6.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
+    "vite": "^8.1.3",
     "webpack": "^5.107.2",
     "webpack-cli": "^7.0.3"
   },

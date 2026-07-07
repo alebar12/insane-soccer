@@ -10,6 +10,10 @@
 
 ![Insane Soccer screenshot](meta/screenshots/insanesoccer1.jpg)
 
+## Play
+
+- [alebar12.github.io/insane-soccer/](https://alebar12.github.io/insane-soccer/)
+
 ## About
 
 **Insane Soccer** is an open-source, browser-based HTML5 soccer game built entirely in **TypeScript**. Play 1-on-1 against a CPU opponent on a top-down pitch rendered through multiple HTML5 Canvas layers.

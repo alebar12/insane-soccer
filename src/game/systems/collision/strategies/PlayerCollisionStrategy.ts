@@ -27,9 +27,11 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
         if (MovementPoint.areTouching(humanPlayer.movementPosition, cpuPlayer.movementPosition)) {
             if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {
                 humanPlayer.stunnedWrapper.updateStunnedValue(
+                    humanPlayer.movementPosition.getSpeed(),
                     cpuPlayer.movementPosition.getSpeed(),
                 );
                 cpuPlayer.stunnedWrapper.updateStunnedValue(
+                    cpuPlayer.movementPosition.getSpeed(),
                     humanPlayer.movementPosition.getSpeed(),
                 );
             }

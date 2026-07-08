@@ -32,8 +32,11 @@ export class Player {
     public currentMaxSpeed: number = 0;
     public colorIndex: number;
 
-    public playerStatus: PlayerStatus = PlayerStatus.NORMAL;
-    public stunnedWrapper: StunnedWrapper = new StunnedWrapper(this);
+    public stunnedWrapper: StunnedWrapper = new StunnedWrapper();
+
+    public get playerStatus(): PlayerStatus {
+        return this.stunnedWrapper.isStunned() ? PlayerStatus.STUNNED : PlayerStatus.NORMAL;
+    }
     public readonly powerShotWrapper: PowerShotWrapper;
 
     private constructor(
@@ -156,7 +159,6 @@ export class Player {
     public resetOnGoal(): void {
         this.bounceWrapper.reset();
         this.stunnedWrapper.reset();
-        this.playerStatus = PlayerStatus.NORMAL;
         this.resetToStartGame();
     }
 

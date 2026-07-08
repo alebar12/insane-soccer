@@ -11,7 +11,8 @@
     "noFallthroughCasesInSwitch": true,
     "noPropertyAccessFromIndexSignature": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,                  
-    "forceConsistentCasingInFileNames": true  
-  }
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
 }

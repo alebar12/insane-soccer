@@ -6,9 +6,9 @@ import { PlayerSide } from "../../../enums/PlayerSide";
 import { PowerShotUtilities } from "../../../enums/PowerShotType";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
-import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
+import { BallStrategyInterface } from "./BallStrategyInterface";
 
-export class MoveToGoalPowerShotMovementStrategy implements BallMovementStrategyInterface {
+export class MoveToGoalPowerShotStrategy implements BallStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly minGoalDistance: number;
     private readonly ballRotateOffset: number = 250;

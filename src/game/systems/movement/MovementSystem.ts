@@ -2,43 +2,39 @@ import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
 import { SystemInterface } from "../SystemInterface";
-import { AttachedWithKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithKeyPressedBallMovementStrategy";
-import { AttachedWithoutKeyPressedBallMovementStrategy } from "./ballStrategies/AttachedWithoutKeyPressedBallMovementStrategy";
-import { BallMovementStrategyInterface } from "./ballStrategies/BallMovementStrategyInterface";
-import { MoveToGoalPowerShotMovementStrategy } from "./ballStrategies/MoveToGoalPowerShotMovementStrategy";
-import { PlayingFreeBallMovementStrategy } from "./ballStrategies/PlayingFreeBallMovementStrategy";
-import { WaitingBallBallMovementStrategy } from "./ballStrategies/WaitingBallBallMovementStrategy";
-import { CpuMovementStrategy } from "./playersStrategies/CpuMovementStrategy";
-import { InputPlayerMovementStrategy } from "./playersStrategies/InputPlayerMovementStrategy";
-import { MenuMovementStrategy } from "./playersStrategies/MenuMovementStrategy";
-import { PlayerMovementStrategyInterface } from "./playersStrategies/PlayerMovementStrategyInterface";
-import { StunnedPlayerMovementStrategy } from "./playersStrategies/StunnedPlayerMovementStrategy";
-import { SubstitutePlayersMovementStrategy } from "./playersStrategies/SubstitutePlayersMovementStrategy";
-import { WaitingBallMovementStrategy } from "./playersStrategies/WaitingBallMovementStrategy";
-import { WinningPlayerMovementStrategy } from "./playersStrategies/WinningPlayerMovementStrategy";
+import { BallAttachedWithKeyPressedStrategy } from "./ballStrategies/BallAttachedWithKeyPressedStrategy";
+import { BallAttachedWithoutKeyPressedStrategy } from "./ballStrategies/BallAttachedWithoutKeyPressedStrategy";
+import { BallStrategyInterface } from "./ballStrategies/BallStrategyInterface";
+import { FreeBallStrategy } from "./ballStrategies/FreeBallStrategy";
+import { MoveToGoalPowerShotStrategy } from "./ballStrategies/MoveToGoalPowerShotStrategy";
+import { WaitingBallStrategy } from "./ballStrategies/WaitingBallStrategy";
+import { CpuStrategy } from "./playersStrategies/CpuStrategy";
+import { MenuStrategy } from "./playersStrategies/MenuStrategy";
+import { PlayerInputStrategy } from "./playersStrategies/PlayerInputStrategy";
+import { PlayerStrategyInterface } from "./playersStrategies/PlayerStrategyInterface";
+import { StunnedPlayerStrategy } from "./playersStrategies/StunnedPlayerStrategy";
+import { SubstitutePlayersStrategy } from "./playersStrategies/SubstitutePlayersStrategy";
+import { WaitingBallPlayerStrategy } from "./playersStrategies/WaitingBallPlayerStrategy";
+import { WinningPlayerStrategy } from "./playersStrategies/WinningPlayerStrategy";
 
 export class MovementSystem implements SystemInterface {
-    private playerStrategies: Array<PlayerMovementStrategyInterface> = [];
-    private ballStrategies: Array<BallMovementStrategyInterface> = [];
+    private playerStrategies: Array<PlayerStrategyInterface> = [];
+    private ballStrategies: Array<BallStrategyInterface> = [];
 
     public constructor(gameConfigs: GameConfigs, keyboardInputManager: KeyboardInputManager) {
-        this.playerStrategies.push(new MenuMovementStrategy(gameConfigs));
-        this.playerStrategies.push(new WaitingBallMovementStrategy());
-        this.playerStrategies.push(new InputPlayerMovementStrategy(keyboardInputManager));
-        this.playerStrategies.push(new CpuMovementStrategy(gameConfigs));
-        this.playerStrategies.push(new StunnedPlayerMovementStrategy());
-        this.playerStrategies.push(new WinningPlayerMovementStrategy(gameConfigs));
-        this.playerStrategies.push(new SubstitutePlayersMovementStrategy(gameConfigs));
+        this.playerStrategies.push(new MenuStrategy(gameConfigs));
+        this.playerStrategies.push(new WaitingBallPlayerStrategy());
+        this.playerStrategies.push(new PlayerInputStrategy(keyboardInputManager));
+        this.playerStrategies.push(new CpuStrategy(gameConfigs));
+        this.playerStrategies.push(new StunnedPlayerStrategy());
+        this.playerStrategies.push(new WinningPlayerStrategy(gameConfigs));
+        this.playerStrategies.push(new SubstitutePlayersStrategy(gameConfigs));
 
-        this.ballStrategies.push(new WaitingBallBallMovementStrategy());
-        this.ballStrategies.push(new PlayingFreeBallMovementStrategy());
-        this.ballStrategies.push(
-            new AttachedWithoutKeyPressedBallMovementStrategy(keyboardInputManager),
-        );
-        this.ballStrategies.push(
-            new AttachedWithKeyPressedBallMovementStrategy(keyboardInputManager),
-        );
-        this.ballStrategies.push(new MoveToGoalPowerShotMovementStrategy(gameConfigs));
+        this.ballStrategies.push(new WaitingBallStrategy());
+        this.ballStrategies.push(new FreeBallStrategy());
+        this.ballStrategies.push(new BallAttachedWithoutKeyPressedStrategy(keyboardInputManager));
+        this.ballStrategies.push(new BallAttachedWithKeyPressedStrategy(keyboardInputManager));
+        this.ballStrategies.push(new MoveToGoalPowerShotStrategy(gameConfigs));
     }
 
     public update(gameWorld: GameWorld, deltaMs: number): void {

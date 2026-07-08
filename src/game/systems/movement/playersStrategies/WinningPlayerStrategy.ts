@@ -4,9 +4,9 @@ import { GameStatus } from "../../../enums/GameStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
-import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
+import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
-export class WinningPlayerMovementStrategy implements PlayerMovementStrategyInterface {
+export class WinningPlayerStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;
 
     public constructor(gameConfigs: GameConfigs) {

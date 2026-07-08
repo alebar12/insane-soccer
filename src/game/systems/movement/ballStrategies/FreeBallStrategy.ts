@@ -2,9 +2,9 @@ import { Ball } from "../../../entities/Ball";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
 import { GameWorld } from "../../../world/GameWorld";
-import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
+import { BallStrategyInterface } from "./BallStrategyInterface";
 
-export class PlayingFreeBallMovementStrategy implements BallMovementStrategyInterface {
+export class FreeBallStrategy implements BallStrategyInterface {
     public canBeApplied(ball: Ball, gameWorld: GameWorld): boolean {
         return (
             ball.ballStatus === BallStatus.FREE &&

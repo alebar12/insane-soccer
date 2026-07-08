@@ -5,9 +5,9 @@ import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
 import { Keys } from "../../../enums/Keys";
 import { GameWorld } from "../../../world/GameWorld";
-import { BallMovementStrategyInterface } from "./BallMovementStrategyInterface";
+import { BallStrategyInterface } from "./BallStrategyInterface";
 
-export class AttachedWithoutKeyPressedBallMovementStrategy implements BallMovementStrategyInterface {
+export class BallAttachedWithoutKeyPressedStrategy implements BallStrategyInterface {
     private readonly angleTollerance: number = Math.PI / 30;
     private readonly keyboardInputManager: KeyboardInputManager;
 

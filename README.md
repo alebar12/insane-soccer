@@ -1,8 +1,8 @@
 # Insane Soccer 
 
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?logo=typescript&logoColor=white)
 ![License](https://img.shields.io/badge/license-ISC-green)
-![Build](https://img.shields.io/badge/build-webpack-informational)
+![Build](https://img.shields.io/badge/build-vite-646cff?logo=vite&logoColor=white)
 
 ![Insane Soccer title](public/images/title.png)
 
@@ -28,10 +28,8 @@ The game features:
 
 | Layer | Technology |
 |---|---|
-| Language | TypeScript |
-| Bundler | Webpack |
-| Rendering | HTML5 Canvas (multiple layers) |
-| Input | Keyboard + Mouse |
+| Language | TypeScript 6.x |
+| Bundler | Vite |
 
 ## How do I build and run this?
 
@@ -50,11 +48,11 @@ npm install
 ### 3. Start the development server
 
 ```bash
-npm run start-local
+npm run dev
 ```
 
-This runs Webpack in watch mode and spins up a local HTTP server in parallel.  
-Open your browser at **http://localhost:8080** to play.
+This starts the Vite dev server with HMR.
+Open your browser at **http://localhost:5173** to play.
 
 ### 4. Production build
 
@@ -62,7 +60,15 @@ Open your browser at **http://localhost:8080** to play.
 npm run build
 ```
 
-The optimised bundle is written to `public/js/game.js`. Serve the `public/` folder with any static file server.
+The optimised bundle is written to the `dist/` folder.
+
+### 5. Preview the production build
+
+```bash
+npm run preview
+```
+
+Serves the `dist/` folder locally so you can verify the production build before deploying.
 
 ## How do I play this?
 
@@ -77,38 +83,13 @@ The optimised bundle is written to `public/js/game.js`. Serve the `public/` fold
 | `↑` `↓` `←` `→` | Move player |
 | `SPACE` | Shot |
 
-## Project Structure
-
-```
-Insane Soccer/
-├── public/             # Static assets served to the browser
-│   ├── css/            # Stylesheets
-│   ├── images/         # Sprites and backgrounds
-│   └── index.html      # Game entry point
-├── src/
-│   ├── assets/         # Asset loading
-│   ├── core/           # Game loop
-│   ├── game/
-│   │   ├── entities/   # Ball, Player, Power Shots, Effects
-│   │   ├── enums/      # Game state enums
-│   │   ├── geometry/   # Points, movement, border limits
-│   │   ├── managers/   # Score & game status
-│   │   ├── systems/    # Movement, collision, gate, checker systems
-│   │   └── world/      # GameWorld state
-│   ├── input/          # Keyboard & mouse input managers
-│   ├── rendering/      # Canvas render pipeline
-│   ├── ui/             # DOM handling & UI interaction
-│   └── utils/          # GameConfigs, EventBus utilities
-├── webpack.config.js
-└── package.json
-```
-
 ## Development Scripts
 
 | Command | Description |
 |---|---|
-| `npm run start-local` | Watch build + local HTTP server (development) |
-| `npm run build` | Production bundle via Webpack |
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Production bundle via Vite |
+| `npm run preview` | Serve the production build locally |
 | `npm run typecheck` | TypeScript type-check without emitting |
 | `npm run lint` | ESLint check on `src/` |
 | `npm run lint:fix` | ESLint auto-fix |

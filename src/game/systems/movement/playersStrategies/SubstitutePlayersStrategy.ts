@@ -5,9 +5,9 @@ import { PlayerSide } from "../../../enums/PlayerSide";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
-import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
+import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
-export class SubstitutePlayersMovementStrategy implements PlayerMovementStrategyInterface {
+export class SubstitutePlayersStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly subPositionsMap: Map<PlayerSide, Array<PointWithAction>>;
     private playerDestinationPointMap: Map<Player, PointWithAction> = new Map();

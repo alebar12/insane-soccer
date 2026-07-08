@@ -7,9 +7,9 @@ import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
-import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
+import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
-export class CpuMovementStrategy implements PlayerMovementStrategyInterface {
+export class CpuStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly centerFieldX: number;
     private readonly goalOffset: number;

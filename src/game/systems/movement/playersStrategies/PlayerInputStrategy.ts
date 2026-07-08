@@ -4,9 +4,9 @@ import { GameStatus } from "../../../enums/GameStatus";
 import { Keys, KeysDirection } from "../../../enums/Keys";
 import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { GameWorld } from "../../../world/GameWorld";
-import { PlayerMovementStrategyInterface } from "./PlayerMovementStrategyInterface";
+import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
-export class InputPlayerMovementStrategy implements PlayerMovementStrategyInterface {
+export class PlayerInputStrategy implements PlayerStrategyInterface {
     private keyboardInputManager: KeyboardInputManager;
 
     public constructor(keyboardInputManager: KeyboardInputManager) {

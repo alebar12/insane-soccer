@@ -8,7 +8,7 @@
 
 ## Screenshot
 
-![Insane Soccer screenshot](meta/screenshots/insanesoccer1.jpg)
+![Insane Soccer screenshot](meta/screenshots/insanesoccer1.png)
 
 ## Play
 

@@ -62,11 +62,6 @@ jobs:
       - name: Execute typecheck
         run: npm run typecheck
 
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./badges
-
   build:
     needs: install
     runs-on: ubuntu-latest

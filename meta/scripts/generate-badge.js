@@ -27,22 +27,33 @@ if (errors > 0 && errors <= 5) {
     color = "red";
 }
 
-const badge = {
-    schemaVersion: 1,
-    label: "Lint",
-    message: `${errors} errors`,
-    color
-};
-
 const outputDir = path.join(projectRoot, "dist", "badges");
 
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);
 }
 
+let badge = {
+    schemaVersion: 1,
+    label: "Lint",
+    message: `${errors} errors`,
+    color
+};
+
 fs.writeFileSync(
     path.join(outputDir, "lint-badge.json"),
     JSON.stringify(badge, null, 2)
 );
 
-console.log(`Badge created (${errors} errors, ${warnings} warnings)`);
+
+badge = {
+    schemaVersion: 1,
+    label: "Type Check",
+    message: `OK`,
+    "brightgreen"
+};
+
+fs.writeFileSync(
+    path.join(outputDir, "typecheck-badge.json"),
+    JSON.stringify(badge, null, 2)
+);

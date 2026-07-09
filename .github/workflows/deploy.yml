@@ -91,7 +91,7 @@ jobs:
         run: npm run build
 
       - name: Download quality results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: quality-results
           path: ./dist

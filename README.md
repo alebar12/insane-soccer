@@ -1,8 +1,9 @@
 # Insane Soccer 
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/license-ISC-green)
 ![Build](https://img.shields.io/badge/build-vite-646cff?logo=vite&logoColor=white)
+
+![Quality](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/lint-badge.json)
 
 ![Insane Soccer title](public/images/title.png)
 

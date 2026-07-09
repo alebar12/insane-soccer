@@ -41,7 +41,7 @@ if (!fs.existsSync(outputDir)) {
 }
 
 fs.writeFileSync(
-    path.join(outputDir, "badge.json"),
+    path.join(outputDir, "lint-badge.json"),
     JSON.stringify(badge, null, 2)
 );
 

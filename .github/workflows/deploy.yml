@@ -57,13 +57,21 @@ jobs:
           key: node-modules-${{ github.sha }}
 
       - name: Execute lint
-        run: npm run lint
+        run: npm run lintOnFile
 
       - name: Execute typecheck
         run: npm run typecheck
 
+      - name: Create badges
+        run: node meta/scripts/generate-badge.js
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./meta/badges
+
   build:
-    needs: install
+    needs: quality
     runs-on: ubuntu-latest
 
     steps:

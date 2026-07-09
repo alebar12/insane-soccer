@@ -14,6 +14,8 @@ import { PlayerInputStrategy } from "./playersStrategies/PlayerInputStrategy";
 import { PlayerStrategyInterface } from "./playersStrategies/PlayerStrategyInterface";
 import { StunnedPlayerStrategy } from "./playersStrategies/StunnedPlayerStrategy";
 import { SubstitutePlayersStrategy } from "./playersStrategies/SubstitutePlayersStrategy";
+import { SubstitutionBeforeSwitchStrategy } from "./playersStrategies/SubstitutionBeforeSwitchStrategy";
+import { SubstitutionTrainingStrategy } from "./playersStrategies/SubstitutionTrainingStrategy";
 import { WaitingBallPlayerStrategy } from "./playersStrategies/WaitingBallPlayerStrategy";
 import { WinningPlayerStrategy } from "./playersStrategies/WinningPlayerStrategy";
 
@@ -29,6 +31,8 @@ export class MovementSystem implements SystemInterface {
         this.playerStrategies.push(new StunnedPlayerStrategy(gameConfigs));
         this.playerStrategies.push(new WinningPlayerStrategy(gameConfigs));
         this.playerStrategies.push(new SubstitutePlayersStrategy(gameConfigs));
+        this.playerStrategies.push(new SubstitutionTrainingStrategy(gameConfigs));
+        this.playerStrategies.push(new SubstitutionBeforeSwitchStrategy());
 
         this.ballStrategies.push(new WaitingBallStrategy());
         this.ballStrategies.push(new FreeBallStrategy());

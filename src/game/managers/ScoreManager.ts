@@ -65,4 +65,9 @@ export class ScoreManager {
         const totalScore = this.leftScore + this.rightScore;
         return totalScore > 0 && totalScore % this.substitutionGoals === 0;
     }
+
+    public isGoalBeforeSubstitution(): boolean {
+        const totalScore = this.leftScore + this.rightScore;
+        return totalScore % this.substitutionGoals === this.substitutionGoals - 1;
+    }
 }

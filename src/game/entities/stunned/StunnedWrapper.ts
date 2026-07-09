@@ -2,13 +2,16 @@ import { Point } from "../../geometry/Point";
 import { StunnedStars } from "./StunnedStars";
 
 export class StunnedWrapper {
-    private stunned: boolean = false;
-    private stunnedValue: number = 0;
-    private stunnedTime: number = 0;
-    public stunnedStars: StunnedStars = new StunnedStars();
     private readonly stunnedMaxValue: number = 2000;
     private readonly stunnedStep: number = 1000;
     private readonly stunnedDuration: number = 3000;
+
+    private stunned: boolean = false;
+    private stunnedValue: number = 0;
+    private stunnedTime: number = 0;
+
+    public stunnedStars: StunnedStars = new StunnedStars();
+    public isInitialAngleSet: boolean = false;
 
     public isStunned(): boolean {
         return this.stunned;
@@ -25,6 +28,7 @@ export class StunnedWrapper {
             if (this.stunnedValue > this.stunnedMaxValue) {
                 this.stunned = true;
                 this.stunnedTime = 0;
+                this.isInitialAngleSet = false;
             }
         }
     }
@@ -41,9 +45,7 @@ export class StunnedWrapper {
             this.stunnedTime += deltaMs;
             this.stunnedStars.update(deltaMs, position);
             if (this.stunnedTime > this.stunnedDuration) {
-                this.stunned = false;
-                this.stunnedValue = 0;
-                this.stunnedStars.stars = [];
+                this.reset();
             }
         }
     }
@@ -52,5 +54,6 @@ export class StunnedWrapper {
         this.stunned = false;
         this.stunnedValue = 0;
         this.stunnedStars.stars = [];
+        this.isInitialAngleSet = false;
     }
 }

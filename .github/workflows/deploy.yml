@@ -65,10 +65,11 @@ jobs:
       - name: Create badges
         run: node meta/scripts/generate-badge.js
 
-      - uses: peaceiris/actions-gh-pages@v4
+      - name: Upload quality results
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./meta/badges
+          name: quality-results
+          path: ./dist
 
   build:
     needs: quality
@@ -91,6 +92,12 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Download quality results
+        uses: actions/download-artifact@v4
+        with:
+          name: quality-results
+          path: ./dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

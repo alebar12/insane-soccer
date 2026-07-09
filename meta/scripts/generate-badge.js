@@ -1,7 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const reportPath = path.join(__dirname, "../../", "eslint-report.json");
+const projectRoot = process.env.GITHUB_WORKSPACE || path.resolve(__dirname, "../../");
+const reportPath = path.join(projectRoot, "dist/reports", "eslint-report.json");
 
 if (!fs.existsSync(reportPath)) {
     console.error("eslint-report.json non trovato");
@@ -33,7 +34,7 @@ const badge = {
     color
 };
 
-const outputDir = path.join(__dirname, "..", "badges");
+const outputDir = path.join(projectRoot, "dist", "badges");
 
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir);

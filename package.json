@@ -6,7 +6,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
-    "lintOnFile": "eslint src --ext .ts --format json --output-file eslint-report.json",
+    "lintOnFile": "eslint src --ext .ts --format json --output-file dist/reports/eslint-report.json",
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",

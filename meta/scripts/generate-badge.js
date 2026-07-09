@@ -50,7 +50,7 @@ badge = {
     schemaVersion: 1,
     label: "Type Check",
     message: `OK`,
-    "brightgreen"
+    color: "brightgreen"
 };
 
 fs.writeFileSync(

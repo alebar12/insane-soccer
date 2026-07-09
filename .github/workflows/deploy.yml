@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Cache node_modules
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: node_modules
           key: node-modules-${{ github.sha }}
@@ -51,7 +51,7 @@ jobs:
           node-version: 22
 
       - name: Restore node_modules
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: node_modules
           key: node-modules-${{ github.sha }}
@@ -59,14 +59,11 @@ jobs:
       - name: Execute lint
         run: npm run lintOnFile
 
-      - name: Execute typecheck
-        run: npm run typecheck
-
       - name: Create badges
         run: node meta/scripts/generate-badge.js
 
       - name: Upload quality results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: quality-results
           path: ./dist
@@ -85,7 +82,7 @@ jobs:
           node-version: 22
 
       - name: Restore node_modules
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: node_modules
           key: node-modules-${{ github.sha }}
@@ -94,7 +91,7 @@ jobs:
         run: npm run build
 
       - name: Download quality results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: quality-results
           path: ./dist

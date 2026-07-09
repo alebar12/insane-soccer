@@ -8,7 +8,7 @@ export class FirePowerShot implements PowerShotInterface {
     public readonly maxSize: number;
     public readonly minSize: number;
     private readonly maxIndex: number = 16;
-    private readonly interval: number = 1;
+    private readonly interval: number = 30;
     private lastAddedDeltaTime: number = this.interval;
     public flames: Array<FlameDto> = [];
 

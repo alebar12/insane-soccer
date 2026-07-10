@@ -9,6 +9,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  security-events: write
 
 concurrency:
   group: pages
@@ -70,6 +71,31 @@ jobs:
         with:
           name: quality-results
           path: ./dist
+
+
+  semgrep:
+    needs: quality
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Run Semgrep
+        run: semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.sarif
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: dist/reports/semgrep.sarif
+
 
   build:
     needs: quality

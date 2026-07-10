@@ -103,7 +103,7 @@ if (!fs.existsSync(reportPath)) {
 }
 
 const coverage = fs.readFileSync(reportPath, "utf8").trim();
-let color = "red";
+color = "red";
 
 if (coverage >= 90) {
     color = "brightgreen";

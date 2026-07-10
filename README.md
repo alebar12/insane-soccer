@@ -7,6 +7,9 @@
 ![Typecheck](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/typecheck-badge.json)
 ![Semgrep](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/semgrep-badge.json)
 
+![Tests](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/tests-badge.json)
+![Tests coverage](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/testscoverage-badge.json)
+
 ![Insane Soccer title](public/images/title.png)
 
 ## Screenshot

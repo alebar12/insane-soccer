@@ -58,7 +58,7 @@ jobs:
           key: node-modules-${{ github.sha }}
 
       - name: Execute tests
-        run: npm run test:coverage > dist/reports/coverage.txt
+        run: mkdir -p dist/reports && npm run test:coverage 2>&1 | tee dist/reports/coverage.txt
 
       - name: Extract coverage percentage
         run: cat dist/reports/coverage.txt | awk '/All files/ {print $4}' > dist/reports/coveragePercentage.txt

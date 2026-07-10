@@ -91,3 +91,46 @@ fs.writeFileSync(
     path.join(outputDir, "semgrep-badge.json"),
     JSON.stringify(badge, null, 2)
 );
+
+
+// tests
+
+reportPath = path.join(projectRoot, "dist/reports", "coveragePercentage.txt");
+
+if (!fs.existsSync(reportPath)) {
+    console.error("coveragePercentage.txt non trovato");
+    process.exit(1);
+}
+
+const coverage = fs.readFileSync(reportPath, "utf8").trim();
+let color = "red";
+
+if (coverage >= 90) {
+    color = "brightgreen";
+} else if (coverage >= 70) {
+    color = "yellow";
+}
+
+badge = {
+    schemaVersion: 1,
+    label: "Tests coverage",
+    message: `${coverage}%`,
+    color
+};
+
+fs.writeFileSync(
+    path.join(outputDir, "testscoverage-badge.json"),
+    JSON.stringify(badge, null, 2)
+);
+
+badge = {
+    schemaVersion: 1,
+    label: "Tests",
+    message: `OK`,
+    color: "brightgreen"
+};
+
+fs.writeFileSync(
+    path.join(outputDir, "tests-badge.json"),
+    JSON.stringify(badge, null, 2)
+);

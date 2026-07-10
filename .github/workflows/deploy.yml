@@ -57,7 +57,7 @@ jobs:
         run: semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.sarif
 
       - name: Run Semgrep for JSON output
-        run: semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.json
+        run: semgrep scan --config auto --json src/ --output dist/reports/semgrep.json
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v4

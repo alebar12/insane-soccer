@@ -38,8 +38,39 @@ jobs:
           path: node_modules
           key: node-modules-${{ github.sha }}
 
-  semgrep:
+  tests:
     needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ github.sha }}
+
+      - name: Execute tests
+        run: npm run test:coverage > dist/reports/coverage.txt
+
+      - name: Extract coverage percentage
+        run: cat dist/reports/coverage.txt | awk '/All files/ {print $4}' > dist/reports/coveragePercentage.txt
+
+      - name: Upload tests results
+        uses: actions/upload-artifact@v6
+        with:
+          name: results
+          path: ./dist
+
+  semgrep:
+    needs: tests
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
@@ -52,6 +83,12 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
+
+      - name: Download test results
+        uses: actions/download-artifact@v8
+        with:
+          name: results
+          path: ./dist
 
       - name: Run Semgrep for SARIF output
         run: semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.sarif
@@ -67,7 +104,7 @@ jobs:
       - name: Upload semgrep results
         uses: actions/upload-artifact@v6
         with:
-          name: quality-results
+          name: results
           path: ./dist
 
   quality:
@@ -92,7 +129,7 @@ jobs:
       - name: Download semgrep results
         uses: actions/download-artifact@v8
         with:
-          name: quality-results
+          name: results
           path: ./dist
 
       - name: Execute lint
@@ -107,7 +144,7 @@ jobs:
       - name: Upload quality results
         uses: actions/upload-artifact@v6
         with:
-          name: quality-results
+          name: results
           path: ./dist
 
   build:
@@ -135,7 +172,7 @@ jobs:
       - name: Download quality results
         uses: actions/download-artifact@v8
         with:
-          name: quality-results
+          name: results
           path: ./dist
 
       - name: Upload artifact

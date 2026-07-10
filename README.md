@@ -5,6 +5,7 @@
 
 ![Lint](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/lint-badge.json)
 ![Typecheck](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/typecheck-badge.json)
+![Semgrep](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/semgrep-badge.json)
 
 ![Insane Soccer title](public/images/title.png)
 

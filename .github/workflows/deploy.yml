@@ -66,11 +66,11 @@ jobs:
       - name: Upload tests results
         uses: actions/upload-artifact@v6
         with:
-          name: results
+          name: test-results
           path: ./dist
 
   semgrep:
-    needs: tests
+    needs: install
     runs-on: ubuntu-latest
     container:
       image: semgrep/semgrep
@@ -84,14 +84,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Download test results
-        uses: actions/download-artifact@v8
-        with:
-          name: results
-          path: ./dist
-
       - name: Run Semgrep for SARIF output
-        run: semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.sarif
+        run: mkdir -p dist/reports && semgrep scan --config auto --sarif src/ --output dist/reports/semgrep.sarif
 
       - name: Run Semgrep for JSON output
         run: semgrep scan --config auto --json src/ --output dist/reports/semgrep.json
@@ -104,11 +98,11 @@ jobs:
       - name: Upload semgrep results
         uses: actions/upload-artifact@v6
         with:
-          name: results
+          name: semgrep-results
           path: ./dist
 
   quality:
-    needs: semgrep
+    needs: install
     runs-on: ubuntu-latest
 
     steps:
@@ -126,29 +120,55 @@ jobs:
           path: node_modules
           key: node-modules-${{ github.sha }}
 
-      - name: Download semgrep results
-        uses: actions/download-artifact@v8
-        with:
-          name: results
-          path: ./dist
-
       - name: Execute lint
-        run: npm run lintOnFile
+        run: mkdir -p dist/reports && npm run lintOnFile
 
       - name: Execute typecheck
         run: npm run typecheck
 
+      - name: Upload quality results
+        uses: actions/upload-artifact@v6
+        with:
+          name: quality-results
+          path: ./dist
+
+  generate-badge:
+    needs: [tests, semgrep, quality]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v6
+        with:
+          path: node_modules
+          key: node-modules-${{ github.sha }}
+
+      - name: Download all results
+        uses: actions/download-artifact@v8
+        with:
+          pattern: '*-results'
+          path: ./dist
+          merge-multiple: true
+
       - name: Create badges
         run: node meta/scripts/generate-badge.js
 
-      - name: Upload quality results
+      - name: Upload badge results
         uses: actions/upload-artifact@v6
         with:
           name: results
           path: ./dist
 
   build:
-    needs: quality
+    needs: generate-badge
     runs-on: ubuntu-latest
 
     steps:
@@ -169,7 +189,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Download quality results
+      - name: Download results
         uses: actions/download-artifact@v8
         with:
           name: results

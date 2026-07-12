@@ -1,7 +1,7 @@
 import { GameConfigs } from "../../../../utils/GameConfigs";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide, PlayerSideUtilities } from "../../../enums/PlayerSide";
+import { PlayerSide } from "../../../enums/PlayerSide";
 import { GameWorld } from "../../../world/GameWorld";
 import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
 
@@ -25,16 +25,18 @@ export class BallBorderCollisionStrategy extends AbstractCollisionStrategy {
             true,
             false,
         );
-        this.checkIfBallInsideGoal(gameWorld, PlayerSide.LEFT);
-        this.checkIfBallInsideGoal(gameWorld, PlayerSide.RIGHT);
+        this.checkIfBallInsideGoal(gameWorld);
     }
 
-    private checkIfBallInsideGoal(gameWorld: GameWorld, playerSide: PlayerSide): void {
+    private checkIfBallInsideGoal(gameWorld: GameWorld): void {
         const ballMovement = gameWorld.ball.movementPosition;
-        const goalBorder = this.getGoalBorderLimits(ballMovement.size, playerSide);
-
-        if (goalBorder.isPointInside(ballMovement.position)) {
-            gameWorld.increaseScore(PlayerSideUtilities.getOppositeSide(playerSide));
+        if (ballMovement.position.x < this.gameConfigs.fieldXOffset) {
+            gameWorld.increaseScore(PlayerSide.RIGHT);
+        } else if (
+            ballMovement.position.x >
+            this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth
+        ) {
+            gameWorld.increaseScore(PlayerSide.LEFT);
         }
     }
 }

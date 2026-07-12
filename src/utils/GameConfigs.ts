@@ -60,7 +60,7 @@ export class GameConfigs {
         this.substituteStartPositionYOffset =
             this.fieldHeight + this.athleticTrackYOffset + this.athleticTrackHeight / 2;
 
-        this.gatesLength = this.playerSizeWithBorder * 3.5;
+        this.gatesLength = this.playerSizeWithBorder * 3;
 
         this.ballSizeWithoutBorder = Math.round(this.fieldHeight / 80);
         this.ballSizeWithBorder = this.ballSizeWithoutBorder + this.ballBorder;

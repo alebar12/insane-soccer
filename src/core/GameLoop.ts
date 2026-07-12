@@ -40,11 +40,8 @@ export class GameLoop {
     }
 
     private update(delta: number): void {
-        this.gameWorld.gameStatusManager.update(delta);
+        this.gameWorld.update(delta);
         this.mainSystem.update(this.gameWorld, delta);
-        this.gameWorld.fireworks.update(delta);
-        this.gameWorld.explosion.update(delta);
-        this.gameWorld.score.update(delta);
     }
 
     private updateInputs(delta: number): void {

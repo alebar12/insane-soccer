@@ -88,6 +88,13 @@ export class GameWorld {
             .forEach(player => player.switchColorIndex());
     }
 
+    public update(delta: number): void {
+        this.gameStatusManager.update(delta);
+        this.fireworks.update(delta);
+        this.explosion.update(delta);
+        this.score.update(delta);
+    }
+
     private resetEndGame(): void {
         this.players.forEach(player => player.resetOnGoal());
         this.ball.resetOnGoal();

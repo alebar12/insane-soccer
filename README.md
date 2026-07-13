@@ -3,8 +3,8 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?logo=typescript&logoColor=white)
 ![Build](https://img.shields.io/badge/build-vite-646cff?logo=vite&logoColor=white)
 
-![Lint](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/lint-badge.json)
 ![Typecheck](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/typecheck-badge.json)
+![Lint](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/lint-badge.json)
 ![Semgrep](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/semgrep-badge.json)
 
 ![Tests](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/tests-badge.json)

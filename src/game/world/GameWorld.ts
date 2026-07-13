@@ -1,5 +1,4 @@
 import { EventBus } from "ts-bus";
-import { AssetLoader } from "../../assets/AssetLoader";
 import { EventBusUtilities } from "../../utils/EventBusUtilities";
 import { GameConfigs } from "../../utils/GameConfigs";
 import { Ball } from "../entities/Ball";
@@ -26,7 +25,7 @@ export class GameWorld {
     public readonly gameStatusManager: GameStatusManager;
     public readonly score: ScoreManager;
 
-    public constructor(gameConfigs: GameConfigs, assetLoader: AssetLoader) {
+    public constructor(gameConfigs: GameConfigs, menuButtonImageRatio: number) {
         this.goalPosts = new GoalPosts(gameConfigs);
         this.players.push(Player.createHumanPlayer(gameConfigs));
         this.players.push(Player.createCpuPlayer(gameConfigs));
@@ -38,8 +37,7 @@ export class GameWorld {
         this.gates = new Gate();
         const bus = new EventBus();
         this.score = new ScoreManager();
-        const playImg = assetLoader.getImage("play.png");
-        this.menuButton = new MenuButton(gameConfigs, playImg.width, playImg.height);
+        this.menuButton = new MenuButton(gameConfigs, menuButtonImageRatio);
         this.gameStatusManager = new GameStatusManager(bus);
 
         bus.subscribe(EventBusUtilities.statusChangedEvent, event => {

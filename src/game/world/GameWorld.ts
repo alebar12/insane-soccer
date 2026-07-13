@@ -31,9 +31,6 @@ export class GameWorld {
         players: Array<Player>,
     ) {
         this.goalPosts = new GoalPosts(gameConfigs);
-        //this.players.push(Player.createHumanPlayer(gameConfigs));
-        //this.players.push(Player.createCpuPlayer(gameConfigs, PlayerSide.LEFT));
-        //this.players.push(Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT));
         this.players.push(...players);
         this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
@@ -64,7 +61,7 @@ export class GameWorld {
         return new GameWorld(gameConfigs, menuButtonImageRatio, players);
     }
 
-    public static createSimulaterGameWorld(gameConfigs: GameConfigs): GameWorld {
+    public static createSimulatedGameWorld(gameConfigs: GameConfigs): GameWorld {
         const players = [
             Player.createCpuPlayer(gameConfigs, PlayerSide.LEFT),
             Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT),
@@ -118,7 +115,7 @@ export class GameWorld {
         this.score.update(delta);
     }
 
-    private resetEndGame(): void {
+    public resetEndGame(): void {
         this.players.forEach(player => player.resetOnGoal());
         this.ball.resetOnGoal();
         this.score.reset();

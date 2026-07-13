@@ -30,6 +30,11 @@ export class KeyboardInputManager {
         return null;
     }
 
+    public setPressedKeys(keys: Set<Keys>): void {
+        this.pressedKeys.clear();
+        keys.forEach(key => this.pressedKeys.add(key));
+    }
+
     private onKeyDown = (event: KeyboardEvent): void => {
         this.pressedKeys.add(event.key as Keys);
     };

@@ -4,7 +4,7 @@ import { Point } from "../game/geometry/Point";
 import { GameWorld } from "../game/world/GameWorld";
 import { GameConfigs } from "../utils/GameConfigs";
 
-export class LearningWrapper {
+export class ObservationWrapper {
     private readonly gameConfigs: GameConfigs;
     private readonly gameWorld: GameWorld;
 
@@ -13,12 +13,12 @@ export class LearningWrapper {
         this.gameConfigs = gameConfigs;
     }
 
-    public extractStatus(): Status {
+    public extractObservation(): Observation {
         const player1 = this.gameWorld.players[0];
         const player2 = this.gameWorld.players[1];
         const ball = this.gameWorld.ball;
 
-        return new Status(
+        return new Observation(
             this.normalizeXCoordinate(player1.movementPosition.position.x, player1.side),
             this.normalizeYCoordinate(player1.movementPosition.position.y),
             this.normalizeSpeed(player1.movementPosition.velocity.x, player1.normalMaxSpeed),
@@ -47,7 +47,7 @@ export class LearningWrapper {
         );
     }
 
-    public calculateReward(previousStatus: Status, currentStatus: Status): number {
+    public calculateReward(previousStatus: Observation, currentStatus: Observation): number {
         const previousBallDistance = Point.getDistance(
             new Point(previousStatus.player1X, previousStatus.player1Y),
             new Point(previousStatus.ballX, previousStatus.ballY),
@@ -93,7 +93,7 @@ export class LearningWrapper {
     }
 }
 
-export class Status {
+export class Observation {
     public constructor(
         public readonly player1X: number,
         public readonly player1Y: number,
@@ -151,6 +151,6 @@ export class Status {
     ];
 
     public toArray(): Array<number> {
-        return Status.fieldsOrder.map(f => this[f as keyof Status] as number);
+        return Observation.fieldsOrder.map(f => this[f as keyof Observation] as number);
     }
 }

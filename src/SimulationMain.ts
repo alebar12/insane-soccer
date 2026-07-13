@@ -1,15 +1,15 @@
 import * as readline from "readline";
-import { GameStatus } from "../game/enums/GameStatus";
-import { Keys } from "../game/enums/Keys";
-import { MainSystem } from "../game/systems/MainSystem";
-import { GameWorld } from "../game/world/GameWorld";
-import { GameConfigs } from "../utils/GameConfigs";
-import { LearningWrapper } from "./LearningWrapper";
+import { ObservationWrapper } from "./ai/ObservationWrapper";
+import { GameStatus } from "./game/enums/GameStatus";
+import { Keys } from "./game/enums/Keys";
+import { MainSystem } from "./game/systems/MainSystem";
+import { GameWorld } from "./game/world/GameWorld";
+import { GameConfigs } from "./utils/GameConfigs";
 
 const gameConfigs = new GameConfigs(800, 550);
-const gameWorld = GameWorld.createPlayingGameWorld(gameConfigs, 1);
+const gameWorld = GameWorld.createPlayingGameWorldWithScriptedCpu(gameConfigs, 1);
 const mainSystem = new MainSystem(gameConfigs);
-const statusExtractor = new LearningWrapper(gameWorld, gameConfigs);
+const statusExtractor = new ObservationWrapper(gameWorld, gameConfigs);
 
 gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
 gameWorld.fireworks.reset();
@@ -27,7 +27,7 @@ rl.on("line", async line => {
         hasErrors: false,
         reward: 0,
     };
-    const previousStatus = statusExtractor.extractStatus();
+    const previousStatus = statusExtractor.extractObservation();
     try {
         const request: LearningRequest = JSON.parse(line);
         if (request.action === "reset") {
@@ -41,7 +41,7 @@ rl.on("line", async line => {
         console.log("error during input process", error);
     }
 
-    const currentStatus = statusExtractor.extractStatus();
+    const currentStatus = statusExtractor.extractObservation();
     const reward = statusExtractor.calculateReward(previousStatus, currentStatus);
     response.status = currentStatus.toArray();
     response.isFinished = gameWorld.score.isGameOver;

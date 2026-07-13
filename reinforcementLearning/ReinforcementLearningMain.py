@@ -35,7 +35,7 @@ class MyEnv(gym.Env):
 
         self.proc = subprocess.Popen(["npx", 
             "ts-node", 
-            "./SimulationMain.ts"], 
+            "../src/SimulationMain.ts"], 
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 
     def reset(self, seed=None, options=None):
@@ -114,44 +114,39 @@ model = PPO(
 # Training
 # =====================================================
 
-model.learn(total_timesteps=10000)
+model.learn(total_timesteps=50000)
 
 # =====================================================
-# Salvataggio
+# Export actor network weights to JSON (cross-language, sync-friendly)
 # =====================================================
-# model.save("ppo_model")
-
-# =====================================================
-# Export actor network to ONNX (cross-language)
-# =====================================================
-
-class ActorOnly(torch.nn.Module):
-    """Wraps only the actor path of the SB3 PPO policy."""
-    def __init__(self, policy):
-        super().__init__()
-        self.policy = policy
-
-    def forward(self, obs: torch.Tensor) -> torch.Tensor:
-        features = self.policy.extract_features(obs, self.policy.pi_features_extractor)
-        latent_pi = self.policy.mlp_extractor.forward_actor(features)
-        return self.policy.action_net(latent_pi)   # raw logits
 
 policy = model.policy
 policy.set_training_mode(False)
 
-actor = ActorOnly(policy)
-dummy_obs = torch.zeros(1, 21)   # batch=1, obs_size=21
+def dump_actor_weights(policy, path="ppo_actor_weights.json"):
+    layers = []
+    for layer in policy.mlp_extractor.policy_net:
+        if isinstance(layer, torch.nn.Linear):
+            layers.append({
+                "type": "linear",
+                "weight": layer.weight.detach().cpu().numpy().tolist(),  # [out, in]
+                "bias": layer.bias.detach().cpu().numpy().tolist(),
+            })
+        elif isinstance(layer, torch.nn.Tanh):
+            layers.append({"type": "tanh"})
+        elif isinstance(layer, torch.nn.ReLU):
+            layers.append({"type": "relu"})
+    a = policy.action_net
+    layers.append({
+        "type": "linear",
+        "weight": a.weight.detach().cpu().numpy().tolist(),
+        "bias": a.bias.detach().cpu().numpy().tolist(),
+    })
+    with open(path, "w") as f:
+        json.dump({"layers": layers, "nvec": [3, 3, 2]}, f)
 
-torch.onnx.export(
-    actor,
-    dummy_obs,
-    "ppo_actor.onnx",
-    input_names=["obs"],
-    output_names=["logits"],
-    dynamic_axes={"obs": {0: "batch"}, "logits": {0: "batch"}},
-    opset_version=11,
-)
-print("Actor exported to ppo_actor.onnx")
+dump_actor_weights(policy)
+print("Actor exported to ppo_actor_weights.json")
 
 
 # =====================================================
@@ -171,12 +166,3 @@ print("Actor exported to ppo_actor.onnx")
 #     if terminated or truncated:
 #         obs, info = env.reset()
 
-
-# to read from typescript
-# npm install onnxruntime-node
-
-# import * as ort from 'onnxruntime-node';
-# const session = await ort.InferenceSession.create('./ppo_actor.onnx');
-# const obs = new ort.Tensor('float32', new Float32Array(21), [1, 21]);
-# const { logits } = await session.run({ obs });
-# // split logits and argmax per head

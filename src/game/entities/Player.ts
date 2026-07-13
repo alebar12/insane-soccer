@@ -1,4 +1,5 @@
 import { GameConfigs } from "../../utils/GameConfigs";
+import { CpuType } from "../enums/CpuType";
 import { PlayerSide } from "../enums/PlayerSide";
 import { PlayerStatus } from "../enums/PlayerStatus";
 import { MovementPoint } from "../geometry/MovementPoint";
@@ -9,6 +10,7 @@ import { StunnedWrapper } from "./stunned/StunnedWrapper";
 
 export class Player {
     public readonly isCpu: boolean;
+    public readonly cpuType: CpuType | null;
     public readonly isSubstitute: boolean;
     public readonly side: PlayerSide;
     public readonly normalMaxSpeed: number;
@@ -45,6 +47,7 @@ export class Player {
         isSubstitute: boolean,
         side: PlayerSide,
         colorIndex: number,
+        cpuType: CpuType | null,
     ) {
         this.normalMaxSpeed = gameConfigs.fieldHeight / 700;
         if (isCpu) {
@@ -56,6 +59,7 @@ export class Player {
         this.movementPosition.size = gameConfigs.playerSizeWithBorder;
 
         this.isCpu = isCpu;
+        this.cpuType = cpuType;
         this.isSubstitute = isSubstitute;
         this.side = side;
         this.colorIndex = colorIndex;
@@ -65,19 +69,26 @@ export class Player {
     }
 
     public static createHumanPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {
-        return new Player(gameConfigs, false, false, playerSide, 0);
+        return new Player(gameConfigs, false, false, playerSide, 0, null);
     }
 
-    public static createCpuPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {
-        return new Player(gameConfigs, true, false, playerSide, 0);
+    public static createScriptedCpuPlayer(
+        gameConfigs: GameConfigs,
+        playerSide: PlayerSide,
+    ): Player {
+        return new Player(gameConfigs, true, false, playerSide, 0, CpuType.SCRIPTED);
+    }
+
+    public static createAiCpuPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {
+        return new Player(gameConfigs, true, false, playerSide, 0, CpuType.AI);
     }
 
     public static createLeftSubstitutePlayer(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, true, PlayerSide.LEFT, 1);
+        return new Player(gameConfigs, false, true, PlayerSide.LEFT, 1, null);
     }
 
     public static createRightSubstitutePlayer(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, true, PlayerSide.RIGHT, 1);
+        return new Player(gameConfigs, false, true, PlayerSide.RIGHT, 1, null);
     }
 
     public reachedDestinationPosition(): boolean {

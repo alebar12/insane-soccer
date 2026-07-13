@@ -25,10 +25,16 @@ export class GameWorld {
     public readonly gameStatusManager: GameStatusManager;
     public readonly score: ScoreManager;
 
-    public constructor(gameConfigs: GameConfigs, menuButtonImageRatio: number) {
+    private constructor(
+        gameConfigs: GameConfigs,
+        menuButtonImageRatio: number,
+        players: Array<Player>,
+    ) {
         this.goalPosts = new GoalPosts(gameConfigs);
-        this.players.push(Player.createHumanPlayer(gameConfigs));
-        this.players.push(Player.createCpuPlayer(gameConfigs));
+        //this.players.push(Player.createHumanPlayer(gameConfigs));
+        //this.players.push(Player.createCpuPlayer(gameConfigs, PlayerSide.LEFT));
+        //this.players.push(Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT));
+        this.players.push(...players);
         this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
         this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
         this.ball = new Ball(gameConfigs);
@@ -45,6 +51,25 @@ export class GameWorld {
                 this.resetEndGame();
             }
         });
+    }
+
+    public static createPlayingGameWorld(
+        gameConfigs: GameConfigs,
+        menuButtonImageRatio: number,
+    ): GameWorld {
+        const players = [
+            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+        ];
+        return new GameWorld(gameConfigs, menuButtonImageRatio, players);
+    }
+
+    public static createSimulaterGameWorld(gameConfigs: GameConfigs): GameWorld {
+        const players = [
+            Player.createCpuPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+        ];
+        return new GameWorld(gameConfigs, 1, players);
     }
 
     public increaseScore(playerSide: PlayerSide): void {

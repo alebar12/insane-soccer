@@ -4,8 +4,6 @@ import { Keys } from "../game/enums/Keys";
 import { MainSystem } from "../game/systems/MainSystem";
 import { GameWorld } from "../game/world/GameWorld";
 import { GameConfigs } from "../utils/GameConfigs";
-import { LearningRequest } from "./LearningRequest";
-import { LearningResponse } from "./LearningResponse";
 import { LearningWrapper } from "./LearningWrapper";
 
 const gameConfigs = new GameConfigs(800, 550);
@@ -82,4 +80,16 @@ function parseRequestToKeySet(requestInputs: Array<number>): Set<Keys> {
 function updateWorld(delta: number): void {
     gameWorld.update(delta);
     mainSystem.update(gameWorld, delta);
+}
+
+export interface LearningRequest {
+    action: string;
+    inputs: Array<number>;
+}
+
+export interface LearningResponse {
+    status: Array<number>;
+    isFinished: boolean;
+    hasErrors: boolean;
+    reward: number;
 }

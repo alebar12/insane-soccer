@@ -48,7 +48,6 @@ export class LearningWrapper {
     }
 
     public calculateReward(previousStatus: Status, currentStatus: Status): number {
-        // get distance from ball for player1
         const previousBallDistance = Point.getDistance(
             new Point(previousStatus.player1X, previousStatus.player1Y),
             new Point(previousStatus.ballX, previousStatus.ballY),

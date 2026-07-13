@@ -64,12 +64,12 @@ export class Player {
         this.powerShotWrapper = new PowerShotWrapper(gameConfigs, side);
     }
 
-    public static createHumanPlayer(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, false, false, PlayerSide.LEFT, 0);
+    public static createHumanPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {
+        return new Player(gameConfigs, false, false, playerSide, 0);
     }
 
-    public static createCpuPlayer(gameConfigs: GameConfigs): Player {
-        return new Player(gameConfigs, true, false, PlayerSide.RIGHT, 0);
+    public static createCpuPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {
+        return new Player(gameConfigs, true, false, playerSide, 0);
     }
 
     public static createLeftSubstitutePlayer(gameConfigs: GameConfigs): Player {

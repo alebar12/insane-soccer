@@ -17,38 +17,35 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
     }
 
     public apply(gameWorld: GameWorld): void {
-        const humanPlayer = gameWorld.players.find(player => !player.isSubstitute && !player.isCpu);
-        const cpuPlayer = gameWorld.players.find(player => !player.isSubstitute && player.isCpu);
+        const player1 = gameWorld.players[0];
+        const player2 = gameWorld.players[1];
 
-        if (humanPlayer === undefined || cpuPlayer === undefined) {
+        if (player1 === undefined || player2 === undefined) {
             return;
         }
 
-        if (MovementPoint.areTouching(humanPlayer.movementPosition, cpuPlayer.movementPosition)) {
+        if (MovementPoint.areTouching(player1.movementPosition, player2.movementPosition)) {
             if (gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING) {
-                humanPlayer.stunnedWrapper.updateStunnedValue(
-                    humanPlayer.movementPosition.getSpeed(),
-                    cpuPlayer.movementPosition.getSpeed(),
+                player1.stunnedWrapper.updateStunnedValue(
+                    player1.movementPosition.getSpeed(),
+                    player2.movementPosition.getSpeed(),
                 );
-                cpuPlayer.stunnedWrapper.updateStunnedValue(
-                    cpuPlayer.movementPosition.getSpeed(),
-                    humanPlayer.movementPosition.getSpeed(),
+                player2.stunnedWrapper.updateStunnedValue(
+                    player2.movementPosition.getSpeed(),
+                    player1.movementPosition.getSpeed(),
                 );
             }
 
             const intersectionPoint = new Point(
-                (humanPlayer.movementPosition.position.x + cpuPlayer.movementPosition.position.x) /
-                    2,
-                (humanPlayer.movementPosition.position.y + cpuPlayer.movementPosition.position.y) /
-                    2,
+                (player1.movementPosition.position.x + player2.movementPosition.position.x) / 2,
+                (player1.movementPosition.position.y + player2.movementPosition.position.y) / 2,
             );
-            humanPlayer.startBouncing();
-            cpuPlayer.startBouncing();
+            player1.startBouncing();
+            player2.startBouncing();
             const collisionSpeed =
-                (humanPlayer.movementPosition.getSpeed() + cpuPlayer.movementPosition.getSpeed()) /
-                2;
-            this.bouncePlayers(humanPlayer, cpuPlayer, intersectionPoint, collisionSpeed);
-            this.bouncePlayers(cpuPlayer, humanPlayer, intersectionPoint, collisionSpeed);
+                (player1.movementPosition.getSpeed() + player2.movementPosition.getSpeed()) / 2;
+            this.bouncePlayers(player1, player2, intersectionPoint, collisionSpeed);
+            this.bouncePlayers(player2, player1, intersectionPoint, collisionSpeed);
 
             const ball = gameWorld.ball;
             if (ball.ballStatus === BallStatus.ATTACHED) {

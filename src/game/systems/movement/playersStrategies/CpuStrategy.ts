@@ -3,6 +3,7 @@ import { Ball } from "../../../entities/Ball";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
+import { PlayerSide } from "../../../enums/PlayerSide";
 import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
@@ -41,14 +42,14 @@ export class CpuStrategy implements PlayerStrategyInterface {
             destinationPosition = ball.movementPosition.clone();
             this.rotateDirection = 0;
         } else if (ball.ballStatus === BallStatus.ATTACHED && attachedPlayer !== null) {
-            if (!attachedPlayer.isCpu) {
+            if (attachedPlayer !== player) {
                 destinationPosition = attachedPlayer.movementPosition.clone();
                 destinationPosition.velocity = new Point(0, 0);
                 destinationPosition.acceleration = 0;
             } else {
-                if (player.movementPosition.position.x > this.centerFieldX) {
+                if (this.isPlayerBeforeMidfield(player)) {
                     destinationPosition = new MovementPoint(
-                        new Point(this.gameConfigs.fieldXOffset, this.gameConfigs.fieldHeight / 2),
+                        this.getGoalPosition(player),
                         new Point(0, 0),
                         0,
                         0,
@@ -81,12 +82,12 @@ export class CpuStrategy implements PlayerStrategyInterface {
     }
 
     private tryKick(player: Player, ball: Ball): void {
-        if (ball.movementPosition.position.x < player.movementPosition.position.x) {
+        if (this.isBallDirectedToGoal(ball, player)) {
             const m =
                 (ball.movementPosition.position.y - player.movementPosition.position.y) /
                 (ball.movementPosition.position.x - player.movementPosition.position.x);
             const y =
-                m * (this.gameConfigs.fieldXOffset - player.movementPosition.position.x) +
+                m * (this.getGoalX(player) - player.movementPosition.position.x) +
                 player.movementPosition.position.y;
 
             if (
@@ -96,5 +97,34 @@ export class CpuStrategy implements PlayerStrategyInterface {
                 ball.kick();
             }
         }
+    }
+
+    private isPlayerBeforeMidfield(player: Player): boolean {
+        return (
+            (player.side === PlayerSide.LEFT &&
+                player.movementPosition.position.x < this.centerFieldX) ||
+            (player.side === PlayerSide.RIGHT &&
+                player.movementPosition.position.x > this.centerFieldX)
+        );
+    }
+
+    private getGoalPosition(player: Player): Point {
+        return new Point(this.getGoalX(player), this.gameConfigs.fieldHeight / 2);
+    }
+
+    private getGoalX(player: Player): number {
+        return (
+            this.gameConfigs.fieldXOffset +
+            (player.side === PlayerSide.RIGHT ? 0 : this.gameConfigs.fieldWidth)
+        );
+    }
+
+    private isBallDirectedToGoal(ball: Ball, player: Player): boolean {
+        return (
+            (player.side === PlayerSide.LEFT &&
+                ball.movementPosition.position.x > player.movementPosition.position.x) ||
+            (player.side === PlayerSide.RIGHT &&
+                ball.movementPosition.position.x < player.movementPosition.position.x)
+        );
     }
 }

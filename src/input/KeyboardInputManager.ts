@@ -4,13 +4,17 @@ export class KeyboardInputManager {
     private pressedKeys: Set<Keys> = new Set();
 
     public constructor() {
-        document.addEventListener("keydown", this.onKeyDown);
-        document.addEventListener("keyup", this.onKeyUp);
+        if (typeof window !== "undefined") {
+            document.addEventListener("keydown", this.onKeyDown);
+            document.addEventListener("keyup", this.onKeyUp);
+        }
     }
 
     public dispose(): void {
-        document.removeEventListener("keydown", this.onKeyDown);
-        document.removeEventListener("keyup", this.onKeyUp);
+        if (typeof window !== "undefined") {
+            document.removeEventListener("keydown", this.onKeyDown);
+            document.removeEventListener("keyup", this.onKeyUp);
+        }
     }
 
     public isKeyPressed(key: Keys): boolean {

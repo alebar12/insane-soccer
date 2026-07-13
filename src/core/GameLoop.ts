@@ -19,7 +19,10 @@ export class GameLoop {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
         const playImg = assetLoader.getImage("play.png");
         const menuButtonImageRatio = playImg.width / playImg.height;
-        this.gameWorld = GameWorld.createPlayingGameWorld(gameConfigs, menuButtonImageRatio);
+        this.gameWorld = GameWorld.createPlayingGameWorldWithScriptedCpu(
+            gameConfigs,
+            menuButtonImageRatio,
+        );
         this.uiInteractionSystem = new UIInteractionSystem(
             new MouseInputManager(domHandler.menuCanvas),
         );

@@ -50,21 +50,32 @@ export class GameWorld {
         });
     }
 
-    public static createPlayingGameWorld(
+    public static createPlayingGameWorldWithScriptedCpu(
         gameConfigs: GameConfigs,
         menuButtonImageRatio: number,
     ): GameWorld {
         const players = [
             Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT),
         ];
         return new GameWorld(gameConfigs, menuButtonImageRatio, players);
     }
 
-    public static createSimulatedGameWorld(gameConfigs: GameConfigs): GameWorld {
+    public static createPlayingGameWorldWithAiCpu(
+        gameConfigs: GameConfigs,
+        menuButtonImageRatio: number,
+    ): GameWorld {
         const players = [
-            Player.createCpuPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createAiCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+        ];
+        return new GameWorld(gameConfigs, menuButtonImageRatio, players);
+    }
+
+    public static createSimulatedGameWorldWithScriptedCpu(gameConfigs: GameConfigs): GameWorld {
+        const players = [
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT),
         ];
         return new GameWorld(gameConfigs, 1, players);
     }

@@ -2,6 +2,7 @@ import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Ball } from "../../../entities/Ball";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
+import { CpuType } from "../../../enums/CpuType";
 import { GameStatus } from "../../../enums/GameStatus";
 import { PlayerSide } from "../../../enums/PlayerSide";
 import { PlayerStatus } from "../../../enums/PlayerStatus";
@@ -10,7 +11,7 @@ import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
-export class CpuStrategy implements PlayerStrategyInterface {
+export class ScriptedCpuStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly centerFieldX: number;
     private readonly goalOffset: number;
@@ -28,7 +29,8 @@ export class CpuStrategy implements PlayerStrategyInterface {
             !player.isSubstitute &&
             player.isCpu &&
             gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
-            player.playerStatus === PlayerStatus.NORMAL
+            player.playerStatus === PlayerStatus.NORMAL &&
+            player.cpuType === CpuType.SCRIPTED
         );
     }
 

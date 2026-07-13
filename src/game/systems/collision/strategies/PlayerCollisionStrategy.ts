@@ -2,6 +2,7 @@ import { GameConfigs } from "../../../../utils/GameConfigs";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
+import { PlayerSide } from "../../../enums/PlayerSide";
 import { MovementPoint } from "../../../geometry/MovementPoint";
 import { Point } from "../../../geometry/Point";
 import { GameWorld } from "../../../world/GameWorld";
@@ -17,8 +18,8 @@ export class PlayerCollisionStrategy extends AbstractCollisionStrategy {
     }
 
     public apply(gameWorld: GameWorld): void {
-        const player1 = gameWorld.players[0];
-        const player2 = gameWorld.players[1];
+        const player1 = gameWorld.players.find(player => player.side === PlayerSide.LEFT);
+        const player2 = gameWorld.players.find(player => player.side === PlayerSide.RIGHT);
 
         if (player1 === undefined || player2 === undefined) {
             return;

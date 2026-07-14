@@ -1,4 +1,4 @@
-import model from "./ppo_actor_weights.json";
+import model from "./weights.json";
 
 export class InferenceWrapper {
     public predict(obs: number[]): Array<number> {

@@ -1,18 +1,18 @@
 import * as readline from "readline";
 import { ObservationWrapper } from "./ai/ObservationWrapper";
+import { Player } from "./game/entities/Player";
 import { GameStatus } from "./game/enums/GameStatus";
 import { Keys } from "./game/enums/Keys";
+import { PlayerSide } from "./game/enums/PlayerSide";
 import { MainSystem } from "./game/systems/MainSystem";
 import { GameWorld } from "./game/world/GameWorld";
 import { GameConfigs } from "./utils/GameConfigs";
 
 const gameConfigs = new GameConfigs(800, 550);
-const gameWorld = GameWorld.createPlayingGameWorldWithScriptedCpu(gameConfigs, 1);
 const mainSystem = new MainSystem(gameConfigs);
-const statusExtractor = new ObservationWrapper(gameWorld, gameConfigs);
+const statusExtractor = new ObservationWrapper(gameConfigs);
 
-gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
-gameWorld.fireworks.reset();
+let [gameWorld, refPlayer] = initGameWorldAndRefPlayer();
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -20,19 +20,25 @@ const rl = readline.createInterface({
     terminal: false,
 });
 
+let finishedGames = 0;
+let gamesWon = 0;
+
 rl.on("line", async line => {
     let response: LearningResponse = {
         status: [],
         isFinished: false,
         hasErrors: false,
         reward: 0,
+        info: {
+            score1: gameWorld.score.leftScore,
+            score2: gameWorld.score.rightScore,
+        },
     };
-    const previousStatus = statusExtractor.extractObservation();
+    const previousStatus = statusExtractor.extractObservation(gameWorld, refPlayer);
     try {
         const request: LearningRequest = JSON.parse(line);
         if (request.action === "reset") {
-            gameWorld.resetEndGame();
-            gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+            [gameWorld, refPlayer] = initGameWorldAndRefPlayer();
         } else {
             processInput(request.inputs);
         }
@@ -41,10 +47,21 @@ rl.on("line", async line => {
         console.log("error during input process", error);
     }
 
-    const currentStatus = statusExtractor.extractObservation();
+    const currentStatus = statusExtractor.extractObservation(gameWorld, refPlayer);
     const reward = statusExtractor.calculateReward(previousStatus, currentStatus);
     response.status = currentStatus.toArray();
-    response.isFinished = gameWorld.score.isGameOver;
+    if (gameWorld.score.isGameOver) {
+        finishedGames++;
+        if (gameWorld.score.getWinningPlayerSide() === PlayerSide.LEFT) {
+            gamesWon++;
+        }
+        response.isFinished = true;
+        response.info = {
+            finishedGames: finishedGames,
+            gamesWon: gamesWon,
+        };
+    }
+
     response.reward = reward;
     process.stdout.write(JSON.stringify(response) + "\n");
 });
@@ -82,6 +99,19 @@ function updateWorld(delta: number): void {
     mainSystem.update(gameWorld, delta);
 }
 
+function initGameWorldAndRefPlayer(): [GameWorld, Player] {
+    let gameWorld = GameWorld.createPlayingGameWorldWithScriptedCpu(gameConfigs, 1);
+    gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
+    gameWorld.fireworks.reset();
+    let refPlayer = gameWorld.players.find(
+        player => !player.isSubstitute && player.side === PlayerSide.LEFT,
+    );
+    if (refPlayer === undefined) {
+        throw new Error("Ref player not found");
+    }
+    return [gameWorld, refPlayer];
+}
+
 export interface LearningRequest {
     action: string;
     inputs: Array<number>;
@@ -92,4 +122,5 @@ export interface LearningResponse {
     isFinished: boolean;
     hasErrors: boolean;
     reward: number;
+    info: Record<string, unknown>;
 }

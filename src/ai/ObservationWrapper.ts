@@ -1,3 +1,4 @@
+import { Player } from "../game/entities/Player";
 import { PlayerSide } from "../game/enums/PlayerSide";
 import { PlayerStatus } from "../game/enums/PlayerStatus";
 import { Point } from "../game/geometry/Point";
@@ -6,44 +7,66 @@ import { GameConfigs } from "../utils/GameConfigs";
 
 export class ObservationWrapper {
     private readonly gameConfigs: GameConfigs;
-    private readonly gameWorld: GameWorld;
 
-    public constructor(gameWorld: GameWorld, gameConfigs: GameConfigs) {
-        this.gameWorld = gameWorld;
+    public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
     }
 
-    public extractObservation(): Observation {
-        const player1 = this.gameWorld.players[0];
-        const player2 = this.gameWorld.players[1];
-        const ball = this.gameWorld.ball;
+    public extractObservation(gameWorld: GameWorld, refPlayer: Player): Observation {
+        const otherPlayer = gameWorld.players.find(
+            player => !player.isSubstitute && player !== refPlayer,
+        );
+        if (otherPlayer === undefined) {
+            throw new Error("Other player not found");
+        }
+        const ball = gameWorld.ball;
 
         return new Observation(
-            this.normalizeXCoordinate(player1.movementPosition.position.x, player1.side),
-            this.normalizeYCoordinate(player1.movementPosition.position.y),
-            this.normalizeSpeed(player1.movementPosition.velocity.x, player1.normalMaxSpeed),
-            this.normalizeSpeed(player1.movementPosition.velocity.y, player1.normalMaxSpeed),
-            player1.powerShotWrapper.getPowerShot() ? 1 : 0,
-            player1.playerStatus === PlayerStatus.STUNNED ? 1 : 0,
+            this.normalizeXCoordinate(refPlayer.movementPosition.position.x, refPlayer.side),
+            this.normalizeYCoordinate(refPlayer.movementPosition.position.y),
+            this.normalizeSpeed(
+                refPlayer.movementPosition.velocity.x,
+                refPlayer.normalMaxSpeed,
+                refPlayer.side,
+            ),
+            this.normalizeSpeed(
+                refPlayer.movementPosition.velocity.y,
+                refPlayer.normalMaxSpeed,
+                null,
+            ),
+            refPlayer.powerShotWrapper.getPowerShot() ? 1 : 0,
+            refPlayer.playerStatus === PlayerStatus.STUNNED ? 1 : 0,
 
-            this.normalizeXCoordinate(player2.movementPosition.position.x, player2.side),
-            this.normalizeYCoordinate(player2.movementPosition.position.y),
-            this.normalizeSpeed(player2.movementPosition.velocity.x, player2.normalMaxSpeed),
-            this.normalizeSpeed(player2.movementPosition.velocity.y, player2.normalMaxSpeed),
-            player2.powerShotWrapper.getPowerShot() ? 1 : 0,
-            player2.playerStatus === PlayerStatus.STUNNED ? 1 : 0,
+            this.normalizeXCoordinate(otherPlayer.movementPosition.position.x, otherPlayer.side),
+            this.normalizeYCoordinate(otherPlayer.movementPosition.position.y),
+            this.normalizeSpeed(
+                otherPlayer.movementPosition.velocity.x,
+                otherPlayer.normalMaxSpeed,
+                otherPlayer.side,
+            ),
+            this.normalizeSpeed(
+                otherPlayer.movementPosition.velocity.y,
+                otherPlayer.normalMaxSpeed,
+                null,
+            ),
+            otherPlayer.powerShotWrapper.getPowerShot() ? 1 : 0,
+            otherPlayer.playerStatus === PlayerStatus.STUNNED ? 1 : 0,
 
-            this.normalizeXCoordinate(ball.movementPosition.position.x, PlayerSide.LEFT),
+            this.normalizeXCoordinate(ball.movementPosition.position.x, refPlayer.side),
             this.normalizeYCoordinate(ball.movementPosition.position.y),
-            this.normalizeSpeed(ball.movementPosition.velocity.x, ball.maxSpeed * 2),
-            this.normalizeSpeed(ball.movementPosition.velocity.y, ball.maxSpeed * 2),
-            ball.attachedPlayer === null ? 0 : ball.attachedPlayer === player1 ? 1 : 2,
+            this.normalizeSpeed(
+                ball.movementPosition.velocity.x,
+                ball.maxSpeed * 2,
+                refPlayer.side,
+            ),
+            this.normalizeSpeed(ball.movementPosition.velocity.y, ball.maxSpeed * 2, null),
+            ball.attachedPlayer === null ? 0 : ball.attachedPlayer === refPlayer ? 1 : 2,
             ball.ballPowerShot.isPowerShot ? 1 : 0,
 
-            player1.colorIndex,
+            refPlayer.colorIndex,
 
-            this.gameWorld.score.leftScore,
-            this.gameWorld.score.rightScore,
+            gameWorld.score.leftScore,
+            gameWorld.score.rightScore,
         );
     }
 
@@ -62,16 +85,19 @@ export class ObservationWrapper {
             (currentStatus.scoreLeft - previousStatus.scoreLeft) * 100 -
             (currentStatus.scoreRight - previousStatus.scoreRight) * 100 +
             (currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer !== 1
-                ? 5
+                ? 10
                 : 0) +
             (currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer === 1
-                ? 1
+                ? 2
                 : 0) +
             (currentStatus.ballAttachedPlayer === 1 && currentStatus.ballX > previousStatus.ballX
-                ? 2
+                ? 5
                 : 0) +
             (currentStatus.ballAttachedPlayer !== 1 && currentBallDistance < previousBallDistance
                 ? 3
+                : 0) +
+            (previousStatus.ballAttachedPlayer !== 2 && currentStatus.ballAttachedPlayer === 2
+                ? -10
                 : 0)
         );
     }
@@ -88,8 +114,8 @@ export class ObservationWrapper {
         return y / this.gameConfigs.fieldHeight;
     }
 
-    private normalizeSpeed(speed: number, maxSpeed: number): number {
-        return speed / maxSpeed;
+    private normalizeSpeed(speed: number, maxSpeed: number, side: PlayerSide | null): number {
+        return (speed / maxSpeed) * (side !== null && side === PlayerSide.RIGHT ? -1 : 1);
     }
 }
 
@@ -145,9 +171,6 @@ export class Observation {
         "ballHasPowerShot",
 
         "player1Color",
-
-        "scoreLeft",
-        "scoreRight",
     ];
 
     public toArray(): Array<number> {

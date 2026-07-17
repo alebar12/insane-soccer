@@ -1,4 +1,6 @@
 import * as readline from "readline";
+import { AiToolsWrapper } from "./ai/AiToolsWrapper";
+import { InferenceWrapper } from "./ai/InferenceWrapper";
 import { ObservationWrapper } from "./ai/ObservationWrapper";
 import { Player } from "./game/entities/Player";
 import { GameStatus } from "./game/enums/GameStatus";
@@ -9,7 +11,11 @@ import { GameWorld } from "./game/world/GameWorld";
 import { GameConfigs } from "./utils/GameConfigs";
 
 const gameConfigs = new GameConfigs(800, 550);
-const mainSystem = new MainSystem(gameConfigs);
+const aiToolsWrapper = new AiToolsWrapper(
+    new InferenceWrapper(),
+    new ObservationWrapper(gameConfigs),
+);
+const mainSystem = new MainSystem(gameConfigs, aiToolsWrapper);
 const statusExtractor = new ObservationWrapper(gameConfigs);
 
 let [gameWorld, refPlayer] = initGameWorldAndRefPlayer();
@@ -19,9 +25,6 @@ const rl = readline.createInterface({
     output: process.stdout,
     terminal: false,
 });
-
-let finishedGames = 0;
-let gamesWon = 0;
 
 rl.on("line", async line => {
     let response: LearningResponse = {
@@ -51,15 +54,8 @@ rl.on("line", async line => {
     const reward = statusExtractor.calculateReward(previousStatus, currentStatus);
     response.status = currentStatus.toArray();
     if (gameWorld.score.isGameOver) {
-        finishedGames++;
-        if (gameWorld.score.getWinningPlayerSide() === PlayerSide.LEFT) {
-            gamesWon++;
-        }
         response.isFinished = true;
-        response.info = {
-            finishedGames: finishedGames,
-            gamesWon: gamesWon,
-        };
+        response.info["won"] = gameWorld.score.getWinningPlayerSide() === PlayerSide.LEFT;
     }
 
     response.reward = reward;

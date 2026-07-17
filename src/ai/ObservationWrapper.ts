@@ -80,25 +80,41 @@ export class ObservationWrapper {
             new Point(currentStatus.ballX, currentStatus.ballY),
         );
 
-        return (
-            -0.01 +
-            (currentStatus.scoreLeft - previousStatus.scoreLeft) * 100 -
-            (currentStatus.scoreRight - previousStatus.scoreRight) * 100 +
-            (currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer !== 1
+        const goalScored = (currentStatus.scoreLeft - previousStatus.scoreLeft) * 100;
+        const goalConceded = (currentStatus.scoreRight - previousStatus.scoreRight) * 100;
+
+        const possessionGained =
+            currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer !== 1
                 ? 10
-                : 0) +
-            (currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer === 1
-                ? 2
-                : 0) +
-            (currentStatus.ballAttachedPlayer === 1 && currentStatus.ballX > previousStatus.ballX
-                ? 5
-                : 0) +
-            (currentStatus.ballAttachedPlayer !== 1 && currentBallDistance < previousBallDistance
-                ? 3
-                : 0) +
-            (previousStatus.ballAttachedPlayer !== 2 && currentStatus.ballAttachedPlayer === 2
+                : 0;
+        const possessionHeld =
+            currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer === 1
+                ? 0.05
+                : 0;
+        const possessionLost =
+            previousStatus.ballAttachedPlayer !== 2 && currentStatus.ballAttachedPlayer === 2
                 ? -10
-                : 0)
+                : 0;
+
+        const approachShaping = (previousBallDistance - currentBallDistance) * 5;
+
+        const ballProgress = (currentStatus.ballX - previousStatus.ballX) * 8;
+
+        const farFromBallPenalty =
+            currentStatus.ballAttachedPlayer !== 1 ? -currentBallDistance * 0.1 : 0;
+
+        const stepPenalty = -0.01;
+
+        return (
+            stepPenalty +
+            goalScored -
+            goalConceded +
+            possessionGained +
+            possessionHeld +
+            possessionLost +
+            approachShaping +
+            ballProgress +
+            farFromBallPenalty
         );
     }
 

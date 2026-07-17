@@ -6,6 +6,14 @@ export default defineConfig({
   base: process.env['NODE_ENV'] === 'production'
     ? '/insane-soccer/'
     : '/',
+  server: {
+    watch: {
+      ignored: [
+        '**/node_modules/**',
+        '**/learning/**',
+      ],
+    },
+  },
   plugins: [
     checker({
       typescript: true,

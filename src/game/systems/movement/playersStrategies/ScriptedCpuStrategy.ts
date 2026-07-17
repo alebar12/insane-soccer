@@ -15,8 +15,10 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;
     private readonly centerFieldX: number;
     private readonly goalOffset: number;
+    private readonly maxRotatingTime = 3000;
     private rotateDirection = 0;
     private rotateAngle = 0;
+    private rotatingSeconds = 0;
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
@@ -74,6 +76,7 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
             this.rotateDirection = Math.random() < 0.5 ? -1 : 1;
             this.rotateAngle =
                 (Math.random() * (Math.PI / 50 - Math.PI / 100) + Math.PI / 100) * 0.07;
+            this.rotatingSeconds = 0;
         }
         let speed = player.movementPosition.getSpeed();
         let angle = player.movementPosition.getSpeedAngle();
@@ -81,6 +84,10 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
         angle = angle + this.rotateDirection * this.rotateAngle * deltaMs;
         player.movementPosition.setSpeed(speed, angle);
         player.movementPosition.adjustToMaxSpeed(player.currentMaxSpeed);
+        this.rotatingSeconds += deltaMs;
+        if (this.rotatingSeconds > this.maxRotatingTime) {
+            this.rotateDirection = 0;
+        }
     }
 
     private tryKick(player: Player, ball: Ball): void {

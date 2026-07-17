@@ -80,6 +80,14 @@ export class GameWorld {
         return new GameWorld(gameConfigs, 1, players);
     }
 
+    public static createWorldForNeuroevolution(gameConfigs: GameConfigs): GameWorld {
+        const players = [
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createAiCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+        ];
+        return new GameWorld(gameConfigs, 1, players);
+    }
+
     public increaseScore(playerSide: PlayerSide): void {
         this.score.increaseScore(playerSide);
         if (this.score.isSubstitutionTime()) {

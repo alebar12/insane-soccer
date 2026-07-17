@@ -1,3 +1,4 @@
+import { AiToolsWrapper } from "../../../ai/AiToolsWrapper";
 import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
@@ -24,12 +25,16 @@ export class MovementSystem implements SystemInterface {
     private playerStrategies: Array<PlayerStrategyInterface> = [];
     private ballStrategies: Array<BallStrategyInterface> = [];
 
-    public constructor(gameConfigs: GameConfigs, keyboardInputManager: KeyboardInputManager) {
+    public constructor(
+        gameConfigs: GameConfigs,
+        keyboardInputManager: KeyboardInputManager,
+        aiToolsWrapper: AiToolsWrapper,
+    ) {
         this.playerStrategies.push(new MenuStrategy(gameConfigs));
         this.playerStrategies.push(new WaitingBallPlayerStrategy());
         this.playerStrategies.push(new PlayerInputStrategy(keyboardInputManager));
         this.playerStrategies.push(new ScriptedCpuStrategy(gameConfigs));
-        this.playerStrategies.push(new AiCpuStrategy(gameConfigs));
+        this.playerStrategies.push(new AiCpuStrategy(aiToolsWrapper));
         this.playerStrategies.push(new StunnedPlayerStrategy(gameConfigs));
         this.playerStrategies.push(new WinningPlayerStrategy(gameConfigs));
         this.playerStrategies.push(new SubstitutePlayersStrategy(gameConfigs));

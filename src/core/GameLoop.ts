@@ -1,3 +1,6 @@
+import { AiToolsWrapper } from "../ai/AiToolsWrapper";
+import { InferenceWrapper } from "../ai/InferenceWrapper";
+import { ObservationWrapper } from "../ai/ObservationWrapper";
 import { AssetLoader } from "../assets/AssetLoader";
 import { GameStatus } from "../game/enums/GameStatus";
 import { MainSystem } from "../game/systems/MainSystem";
@@ -14,6 +17,9 @@ export class GameLoop {
     private mainRender: MainRender;
     private mainSystem: MainSystem;
     private uiInteractionSystem: UIInteractionSystem;
+    private aiToolsWrapper: AiToolsWrapper;
+    private history: Array<string> = [];
+    private historyIndex: number = 0;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
@@ -27,15 +33,45 @@ export class GameLoop {
             new MouseInputManager(domHandler.menuCanvas),
         );
 
-        this.mainSystem = new MainSystem(gameConfigs);
+        this.aiToolsWrapper = new AiToolsWrapper(
+            new InferenceWrapper(),
+            new ObservationWrapper(gameConfigs),
+        );
+
+        this.mainSystem = new MainSystem(gameConfigs, this.aiToolsWrapper);
+    }
+
+    public setHistory(history: string): void {
+        this.history = history.split("\n");
+        this.historyIndex = 0;
     }
 
     public main(): void {
         const tick = (time: number): void => {
             if (this.prevTime !== 0) {
                 const delta = time - this.prevTime;
-                this.updateInputs(delta);
-                this.update(delta);
+                if (this.history.length > 0) {
+                    this.gameWorld.gameStatusManager.changeStatus(GameStatus.PLAYING);
+                    const positions = this.history[this.historyIndex].split(" ");
+                    this.gameWorld.players[0].movementPosition.position.x = parseFloat(
+                        positions[0],
+                    );
+                    this.gameWorld.players[0].movementPosition.position.y = parseFloat(
+                        positions[1],
+                    );
+                    this.gameWorld.players[1].movementPosition.position.x = parseFloat(
+                        positions[2],
+                    );
+                    this.gameWorld.players[1].movementPosition.position.y = parseFloat(
+                        positions[3],
+                    );
+                    this.gameWorld.ball.movementPosition.position.x = parseFloat(positions[4]);
+                    this.gameWorld.ball.movementPosition.position.y = parseFloat(positions[5]);
+                    this.historyIndex++;
+                } else {
+                    this.updateInputs(delta);
+                    this.update(delta);
+                }
                 this.render();
             }
             this.prevTime = time;

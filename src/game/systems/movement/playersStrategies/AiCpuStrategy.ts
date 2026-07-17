@@ -1,20 +1,16 @@
-import { InferenceWrapper } from "../../../../ai/InferenceWrapper";
-import { ObservationWrapper } from "../../../../ai/ObservationWrapper";
-import { GameConfigs } from "../../../../utils/GameConfigs";
+import { AiToolsWrapper } from "../../../../ai/AiToolsWrapper";
 import { Player } from "../../../entities/Player";
 import { CpuType } from "../../../enums/CpuType";
 import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide } from "../../../enums/PlayerSide";
 import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
 
 export class AiCpuStrategy implements PlayerStrategyInterface {
-    private readonly inferenceWrapper: InferenceWrapper = new InferenceWrapper();
-    private readonly observationWrapper: ObservationWrapper;
+    private readonly aiToolsWrapper: AiToolsWrapper;
 
-    public constructor(gameConfigs: GameConfigs) {
-        this.observationWrapper = new ObservationWrapper(gameConfigs);
+    public constructor(aiToolsWrapper: AiToolsWrapper) {
+        this.aiToolsWrapper = aiToolsWrapper;
     }
 
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
@@ -28,13 +24,13 @@ export class AiCpuStrategy implements PlayerStrategyInterface {
     }
 
     public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
-        const status = this.observationWrapper.extractObservation(gameWorld, player);
-        const actions = this.inferenceWrapper.predict(status.toArray());
+        const status = this.aiToolsWrapper.observationWrapper.extractObservation(gameWorld, player);
+        const actions = this.aiToolsWrapper.inferenceWrapper.predict(status.toArray());
 
         let xAction = actions[0];
-        if (player.side === PlayerSide.RIGHT) {
+        /*if (player.side === PlayerSide.RIGHT) {
             xAction = 2 - xAction;
-        }
+        }*/
         player.movementPosition.velocity.x = this.applyAxisMovement(
             player.movementPosition.velocity.x,
             player.movementPosition.acceleration,

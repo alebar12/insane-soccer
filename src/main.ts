@@ -18,8 +18,10 @@ class Main {
         this.closeLoadingWindow();
         const gameLoop = new GameLoop(gameConfigs, domHandler, assetLoader);
 
-        //const history = await fetch("/history.txt").then(response => response.text());
-        //gameLoop.setHistory(history);
+        if (window.location.href.includes("showPositions")) {
+            const history = await fetch("/positions.txt").then(response => response.text());
+            gameLoop.setHistory(history);
+        }
         gameLoop.main();
     }
 

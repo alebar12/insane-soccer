@@ -12,6 +12,7 @@ export class Ball {
     private readonly gameConfigs: GameConfigs;
     public ballStatus: BallStatus = BallStatus.FREE;
     public attachedPlayer: Player | null = null;
+    public lastAttachedPlayer: Player | null = null;
     public angleWithPlayer: number = 0;
     public movementPosition: MovementPoint = new MovementPoint(
         new Point(0, 0),
@@ -81,8 +82,12 @@ export class Ball {
     }
 
     public kick(): void {
+        if (this.attachedPlayer === null) {
+            return;
+        }
+
         let speedFactor = 1;
-        if (this.attachedPlayer?.powerShotWrapper.getPowerShot()) {
+        if (this.attachedPlayer.powerShotWrapper.getPowerShot()) {
             this.ballPowerShot.enablePowerShot(this.attachedPlayer);
             speedFactor = PowerShotUtilities.getSpeedFactor(this.ballPowerShot.getPowerShotType());
         }
@@ -91,7 +96,29 @@ export class Ball {
         this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
     }
 
+    /*private isKickDirectedToGoal(player: Player): boolean {
+        const tolerance = Math.PI / 8;
+        const goalCenterY = this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight / 2;
+        const goalX =
+            player.side === PlayerSide.LEFT
+                ? this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth
+                : this.gameConfigs.fieldXOffset;
+
+        const angleToGoal = Point.getAngleBetweenPoints(
+            this.movementPosition.position,
+            new Point(goalX, goalCenterY),
+        );
+
+        const kickAngle = this.movementPosition.getSpeedAngle();
+        const angleDiff = Math.abs(
+            Math.atan2(Math.sin(kickAngle - angleToGoal), Math.cos(kickAngle - angleToGoal)),
+        );
+
+        return angleDiff <= tolerance;
+    }*/
+
     public releaseFromPlayer(): void {
+        this.lastAttachedPlayer = this.attachedPlayer;
         this.attachedPlayer = null;
         this.ballStatus = BallStatus.FREE;
     }
@@ -99,6 +126,7 @@ export class Ball {
     public resetOnGoal(): void {
         this.ballStatus = BallStatus.FREE;
         this.attachedPlayer = null;
+        this.lastAttachedPlayer = null;
         this.ballPowerShot.resetPowerShot();
     }
 }

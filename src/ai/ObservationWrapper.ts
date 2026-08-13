@@ -21,6 +21,16 @@ export class ObservationWrapper {
         }
         const ball = gameWorld.ball;
 
+        const scorePlayer =
+            refPlayer.side === PlayerSide.LEFT
+                ? gameWorld.score.leftScore
+                : gameWorld.score.rightScore;
+
+        const scoreOpponent =
+            refPlayer.side === PlayerSide.LEFT
+                ? gameWorld.score.rightScore
+                : gameWorld.score.leftScore;
+
         return new Observation(
             this.normalizeXCoordinate(refPlayer.movementPosition.position.x, refPlayer.side),
             this.normalizeYCoordinate(refPlayer.movementPosition.position.y),
@@ -65,43 +75,85 @@ export class ObservationWrapper {
 
             refPlayer.colorIndex,
 
-            gameWorld.score.leftScore,
-            gameWorld.score.rightScore,
+            scorePlayer / gameWorld.score.getMaxScore(),
+            scoreOpponent / gameWorld.score.getMaxScore(),
+
+            scorePlayer,
+            scoreOpponent,
         );
     }
 
-    public calculateReward(previousStatus: Observation, currentStatus: Observation): number {
+    public calculateReward(
+        previousStatus: Observation,
+        currentStatus: Observation,
+        kicked: boolean,
+    ): number {
+        const aspectRatio = this.gameConfigs.fieldHeight / this.gameConfigs.fieldWidth;
+
         const previousBallDistance = Point.getDistance(
-            new Point(previousStatus.player1X, previousStatus.player1Y),
-            new Point(previousStatus.ballX, previousStatus.ballY),
+            new Point(previousStatus.player1X, previousStatus.player1Y * aspectRatio),
+            new Point(previousStatus.ballX, previousStatus.ballY * aspectRatio),
         );
         const currentBallDistance = Point.getDistance(
-            new Point(currentStatus.player1X, currentStatus.player1Y),
-            new Point(currentStatus.ballX, currentStatus.ballY),
+            new Point(currentStatus.player1X, currentStatus.player1Y * aspectRatio),
+            new Point(currentStatus.ballX, currentStatus.ballY * aspectRatio),
         );
 
-        const goalScored = (currentStatus.scoreLeft - previousStatus.scoreLeft) * 100;
-        const goalConceded = (currentStatus.scoreRight - previousStatus.scoreRight) * 100;
+        const goalScored = (currentStatus.scorePlayer - previousStatus.scorePlayer) * 10;
+        const goalConceded = (currentStatus.scoreOpponent - previousStatus.scoreOpponent) * 10;
 
         const possessionGained =
             currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer !== 1
-                ? 10
+                ? 1
                 : 0;
         const possessionHeld =
             currentStatus.ballAttachedPlayer === 1 && previousStatus.ballAttachedPlayer === 1
-                ? 0.05
+                ? 0.005
                 : 0;
         const possessionLost =
-            previousStatus.ballAttachedPlayer !== 2 && currentStatus.ballAttachedPlayer === 2
-                ? -10
+            !kicked &&
+            previousStatus.ballAttachedPlayer === 1 &&
+            currentStatus.ballAttachedPlayer !== 1
+                ? -1
                 : 0;
 
-        const approachShaping = (previousBallDistance - currentBallDistance) * 5;
+        let kickToGoal = 0;
+        if (kicked) {
+            kickToGoal = currentStatus.ballSpeedX > 0 ? 1 : -0.5;
+        }
 
-        const ballProgress = (currentStatus.ballX - previousStatus.ballX) * 8;
+        let approachShaping = 0;
+        const ballSpeed = Math.sqrt(
+            Math.pow(currentStatus.ballSpeedX, 2) + Math.pow(currentStatus.ballSpeedY, 2),
+        );
+        if (
+            currentStatus.ballAttachedPlayer === 2 ||
+            (currentStatus.ballAttachedPlayer === 0 && ballSpeed < 0.25)
+        ) {
+            approachShaping = (previousBallDistance - currentBallDistance) * 5;
+        }
 
-        const farFromBallPenalty =
-            currentStatus.ballAttachedPlayer !== 1 ? -currentBallDistance * 0.1 : 0;
+        let samePositionPenalty = 0;
+        if (
+            Math.abs(previousStatus.player1X - currentStatus.player1X) < 0.001 &&
+            Math.abs(previousStatus.player1Y - currentStatus.player1Y) < 0.001
+        ) {
+            samePositionPenalty = -0.02;
+        }
+
+        let goalCampingPenalty = 0;
+        /*const goalCampingXFactor = 0.1;
+        const ballThreatZone = 0.35;
+        const goalCampingYFactor = 0.5;
+        const goalCampingYOffset = 0.1;
+        if (
+            currentStatus.player1X < goalCampingXFactor &&
+            currentStatus.player1Y > goalCampingYFactor - goalCampingYOffset &&
+            currentStatus.player1Y < goalCampingYFactor + goalCampingYOffset &&
+            currentStatus.ballX > ballThreatZone
+        ) {
+            goalCampingPenalty = -(goalCampingXFactor - currentStatus.player1X) * 2;
+        }*/
 
         const stepPenalty = -0.01;
 
@@ -113,8 +165,9 @@ export class ObservationWrapper {
             possessionHeld +
             possessionLost +
             approachShaping +
-            ballProgress +
-            farFromBallPenalty
+            kickToGoal +
+            samePositionPenalty +
+            goalCampingPenalty
         );
     }
 
@@ -160,8 +213,11 @@ export class Observation {
 
         public readonly player1Color: number,
 
-        public readonly scoreLeft: number,
-        public readonly scoreRight: number,
+        public readonly normalizedScorePlayer: number,
+        public readonly normalizedScoreOpponent: number,
+
+        public readonly scorePlayer: number,
+        public readonly scoreOpponent: number,
     ) {}
 
     static readonly fieldsOrder = [
@@ -187,6 +243,9 @@ export class Observation {
         "ballHasPowerShot",
 
         "player1Color",
+
+        "normalizedScorePlayer",
+        "normalizedScoreOpponent",
     ];
 
     public toArray(): Array<number> {

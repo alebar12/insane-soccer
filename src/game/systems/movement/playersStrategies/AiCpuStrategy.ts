@@ -2,6 +2,7 @@ import { AiToolsWrapper } from "../../../../ai/AiToolsWrapper";
 import { Player } from "../../../entities/Player";
 import { CpuType } from "../../../enums/CpuType";
 import { GameStatus } from "../../../enums/GameStatus";
+import { PlayerSide } from "../../../enums/PlayerSide";
 import { PlayerStatus } from "../../../enums/PlayerStatus";
 import { GameWorld } from "../../../world/GameWorld";
 import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
@@ -28,9 +29,9 @@ export class AiCpuStrategy implements PlayerStrategyInterface {
         const actions = this.aiToolsWrapper.inferenceWrapper.predict(status.toArray());
 
         let xAction = actions[0];
-        /*if (player.side === PlayerSide.RIGHT) {
+        if (player.side === PlayerSide.RIGHT) {
             xAction = 2 - xAction;
-        }*/
+        }
         player.movementPosition.velocity.x = this.applyAxisMovement(
             player.movementPosition.velocity.x,
             player.movementPosition.acceleration,

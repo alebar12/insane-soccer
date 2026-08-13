@@ -80,10 +80,24 @@ export class GameWorld {
         return new GameWorld(gameConfigs, 1, players);
     }
 
-    public static createWorldForNeuroevolution(gameConfigs: GameConfigs): GameWorld {
+    public static createWorldForNeuroevolution(
+        gameConfigs: GameConfigs,
+        speedFactor: number,
+    ): GameWorld {
         const players = [
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT, speedFactor),
             Player.createAiCpuPlayer(gameConfigs, PlayerSide.RIGHT),
+        ];
+        return new GameWorld(gameConfigs, 1, players);
+    }
+
+    public static createWorldForReinforcementLearning(
+        gameConfigs: GameConfigs,
+        speedFactor: number,
+    ): GameWorld {
+        const players = [
+            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
+            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT, speedFactor),
         ];
         return new GameWorld(gameConfigs, 1, players);
     }
@@ -135,7 +149,9 @@ export class GameWorld {
     }
 
     public resetEndGame(): void {
-        this.players.forEach(player => player.resetOnGoal());
+        this.players.forEach(player => {
+            player.resetOnGoal();
+        });
         this.ball.resetOnGoal();
         this.score.reset();
     }

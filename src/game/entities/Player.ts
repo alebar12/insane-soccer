@@ -48,11 +48,13 @@ export class Player {
         side: PlayerSide,
         colorIndex: number,
         cpuType: CpuType | null,
+        speedFactor: number = 1.0,
     ) {
         this.normalMaxSpeed = gameConfigs.fieldHeight / 700;
         if (isCpu) {
             this.normalMaxSpeed = this.normalMaxSpeed * 0.8;
         }
+        this.normalMaxSpeed *= speedFactor;
         this.reachedDistanceTolerance = gameConfigs.fieldWidth / 100;
         this.movementPosition.acceleration = this.normalMaxSpeed / 300;
         this.closeToPointDistance = gameConfigs.fieldWidth / 10;
@@ -75,8 +77,9 @@ export class Player {
     public static createScriptedCpuPlayer(
         gameConfigs: GameConfigs,
         playerSide: PlayerSide,
+        speedFactor: number = 1.0,
     ): Player {
-        return new Player(gameConfigs, true, false, playerSide, 0, CpuType.SCRIPTED);
+        return new Player(gameConfigs, true, false, playerSide, 0, CpuType.SCRIPTED, speedFactor);
     }
 
     public static createAiCpuPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {

@@ -1,25 +1,17 @@
-import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
 import { Ball } from "../../../entities/Ball";
 import { Player } from "../../../entities/Player";
 import { BallStatus } from "../../../enums/BallStatus";
 import { GameStatus } from "../../../enums/GameStatus";
-import { Keys } from "../../../enums/Keys";
 import { GameWorld } from "../../../world/GameWorld";
 import { BallStrategyInterface } from "./BallStrategyInterface";
 
-export class BallAttachedWithoutKeyPressedStrategy implements BallStrategyInterface {
+export class BallAttachedStrategy implements BallStrategyInterface {
     private readonly angleTollerance: number = Math.PI / 30;
-    private readonly keyboardInputManager: KeyboardInputManager;
-
-    public constructor(keyboardInputManager: KeyboardInputManager) {
-        this.keyboardInputManager = keyboardInputManager;
-    }
 
     public canBeApplied(ball: Ball, gameWorld: GameWorld): boolean {
         return (
             ball.ballStatus === BallStatus.ATTACHED &&
-            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING &&
-            !this.keyboardInputManager.isKeyPressed(Keys.SPACE)
+            gameWorld.gameStatusManager.gameStatus === GameStatus.PLAYING
         );
     }
 

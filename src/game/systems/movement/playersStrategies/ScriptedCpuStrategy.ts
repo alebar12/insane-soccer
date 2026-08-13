@@ -16,6 +16,7 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
     private readonly centerFieldX: number;
     private readonly goalOffset: number;
     private readonly maxRotatingTime = 3000;
+    private readonly centerFieldPosition: MovementPoint;
     private rotateDirection = 0;
     private rotateAngle = 0;
     private rotatingSeconds = 0;
@@ -24,6 +25,12 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
         this.gameConfigs = gameConfigs;
         this.centerFieldX = gameConfigs.fieldXOffset + gameConfigs.fieldWidth / 2;
         this.goalOffset = this.gameConfigs.goalHeight * 0.5;
+        this.centerFieldPosition = new MovementPoint(
+            new Point(this.centerFieldX, this.gameConfigs.fieldHeight / 2),
+            new Point(0, 0),
+            0,
+            0,
+        );
     }
 
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
@@ -59,7 +66,11 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
                         0,
                     );
                 } else {
-                    this.rotateCpu(player, deltaMs);
+                    if (this.isPlayerStuckInCorner(player)) {
+                        destinationPosition = this.centerFieldPosition;
+                    } else {
+                        this.rotateCpu(player, deltaMs);
+                    }
                 }
                 this.tryKick(player, ball);
             }
@@ -69,6 +80,23 @@ export class ScriptedCpuStrategy implements PlayerStrategyInterface {
             player.destinationPosition = destinationPosition;
             player.adjustSpeedToDestinationPoint(deltaMs);
         }
+    }
+
+    private isPlayerStuckInCorner(player: Player): boolean {
+        const lenghtOffset = this.gameConfigs.playerSizeWithBorder * 2;
+
+        const isInCornerX =
+            (player.side === PlayerSide.LEFT &&
+                player.movementPosition.position.x >=
+                    this.gameConfigs.fieldXOffset + (this.gameConfigs.fieldWidth - lenghtOffset)) ||
+            (player.side === PlayerSide.RIGHT &&
+                player.movementPosition.position.x <= this.gameConfigs.fieldXOffset + lenghtOffset);
+
+        const isInCornerY =
+            player.movementPosition.position.y >= this.gameConfigs.fieldHeight - lenghtOffset ||
+            player.movementPosition.position.y <= lenghtOffset;
+
+        return isInCornerX && isInCornerY;
     }
 
     private rotateCpu(player: Player, deltaMs: number): void {

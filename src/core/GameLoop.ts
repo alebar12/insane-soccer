@@ -29,6 +29,12 @@ export class GameLoop {
             gameConfigs,
             menuButtonImageRatio,
         );
+        if (window.location.href.includes("ai")) {
+            this.gameWorld = GameWorld.createPlayingGameWorldWithAiCpu(
+                gameConfigs,
+                menuButtonImageRatio,
+            );
+        }
         this.uiInteractionSystem = new UIInteractionSystem(
             new MouseInputManager(domHandler.menuCanvas),
         );

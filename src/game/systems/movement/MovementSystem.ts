@@ -3,8 +3,8 @@ import { KeyboardInputManager } from "../../../input/KeyboardInputManager";
 import { GameConfigs } from "../../../utils/GameConfigs";
 import { GameWorld } from "../../world/GameWorld";
 import { SystemInterface } from "../SystemInterface";
+import { BallAttachedStrategy } from "./ballStrategies/BallAttachedStrategy";
 import { BallAttachedWithKeyPressedStrategy } from "./ballStrategies/BallAttachedWithKeyPressedStrategy";
-import { BallAttachedWithoutKeyPressedStrategy } from "./ballStrategies/BallAttachedWithoutKeyPressedStrategy";
 import { BallStrategyInterface } from "./ballStrategies/BallStrategyInterface";
 import { FreeBallStrategy } from "./ballStrategies/FreeBallStrategy";
 import { MoveToGoalPowerShotStrategy } from "./ballStrategies/MoveToGoalPowerShotStrategy";
@@ -43,7 +43,7 @@ export class MovementSystem implements SystemInterface {
 
         this.ballStrategies.push(new WaitingBallStrategy());
         this.ballStrategies.push(new FreeBallStrategy());
-        this.ballStrategies.push(new BallAttachedWithoutKeyPressedStrategy(keyboardInputManager));
+        this.ballStrategies.push(new BallAttachedStrategy());
         this.ballStrategies.push(new BallAttachedWithKeyPressedStrategy(keyboardInputManager));
         this.ballStrategies.push(new MoveToGoalPowerShotStrategy(gameConfigs));
     }

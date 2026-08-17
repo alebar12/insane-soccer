@@ -1,19 +1,20 @@
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { Keys } from "@/game/enums/Keys";
+import { CheckerSystem } from "@/game/systems/checkers/CheckerSystem";
+import { CollisionSystem } from "@/game/systems/collision/CollisionSystem";
+import { GateSystem } from "@/game/systems/GateSystem";
+import { MainSystem } from "@/game/systems/MainSystem";
+import { MovementSystem } from "@/game/systems/movement/MovementSystem";
+import { GameWorld } from "@/game/world/GameWorld";
+import { KeyboardInputManager } from "@/input/KeyboardInputManager";
+import { GameConfigs } from "@/utils/GameConfigs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AiToolsWrapper } from "../../src/ai/AiToolsWrapper";
-import { Keys } from "../../src/game/enums/Keys";
-import { CheckerSystem } from "../../src/game/systems/checkers/CheckerSystem";
-import { CollisionSystem } from "../../src/game/systems/collision/CollisionSystem";
-import { GateSystem } from "../../src/game/systems/GateSystem";
-import { MainSystem } from "../../src/game/systems/MainSystem";
-import { MovementSystem } from "../../src/game/systems/movement/MovementSystem";
-import { GameWorld } from "../../src/game/world/GameWorld";
-import { KeyboardInputManager } from "../../src/input/KeyboardInputManager";
-import { GameConfigs } from "../../src/utils/GameConfigs";
-vi.mock(import("../../src/game/systems/movement/MovementSystem"));
-vi.mock(import("../../src/game/systems/collision/CollisionSystem"));
-vi.mock(import("../../src/game/systems/GateSystem"));
-vi.mock(import("../../src/game/systems/checkers/CheckerSystem"));
-vi.mock(import("../../src/input/KeyboardInputManager"));
+
+vi.mock(import("@/game/systems/movement/MovementSystem"));
+vi.mock(import("@/game/systems/collision/CollisionSystem"));
+vi.mock(import("@/game/systems/GateSystem"));
+vi.mock(import("@/game/systems/checkers/CheckerSystem"));
+vi.mock(import("@/input/KeyboardInputManager"));
 
 describe("MainSystem", () => {
     let gameConfigs: GameConfigs;

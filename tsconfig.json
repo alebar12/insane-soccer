@@ -2,6 +2,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./public/js",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "module": "commonjs",
     "target": "ES2020",
     "noImplicitReturns": true,

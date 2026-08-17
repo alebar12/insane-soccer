@@ -10,8 +10,10 @@
 ![Tests](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/tests-badge.json)
 ![Tests coverage](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/testscoverage-badge.json)
 
-<img src="public/favicon.png" alt="nsane Soccer icon" height="100"/> 
-<img src="public/images/title.png" alt="nsane Soccer title" height="100"/>
+<p>
+  <img src="public/favicon.png" alt="Insane Soccer icon" height="100"/>
+  <img src="public/images/title.png" alt="Insane Soccer title" height="100"/>
+</p>
 
 ## Screenshot
 

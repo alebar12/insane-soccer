@@ -1,14 +1,14 @@
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { InferenceWrapper } from "@/ai/InferenceWrapper";
+import { ObservationWrapper } from "@/ai/ObservationWrapper";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { Keys } from "@/game/enums/Keys";
+import { MainSystem } from "@/game/systems/MainSystem";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 import * as fs from "fs";
 import * as readline from "readline";
-import { AiToolsWrapper } from "./ai/AiToolsWrapper";
-import { InferenceWrapper } from "./ai/InferenceWrapper";
-import { ObservationWrapper } from "./ai/ObservationWrapper";
-import { Player } from "./game/entities/Player";
-import { GameStatus } from "./game/enums/GameStatus";
-import { Keys } from "./game/enums/Keys";
-import { MainSystem } from "./game/systems/MainSystem";
-import { GameWorld } from "./game/world/GameWorld";
-import { GameConfigs } from "./utils/GameConfigs";
 
 const gameConfigs = new GameConfigs(800, 550);
 const aiToolsWrapper = new AiToolsWrapper(

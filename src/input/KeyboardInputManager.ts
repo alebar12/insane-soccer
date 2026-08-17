@@ -1,4 +1,4 @@
-import { Keys, KeysDirection, KeysUtilities } from "../game/enums/Keys";
+import { Keys, KeysDirection, KeysUtilities } from "@/game/enums/Keys";
 
 export class KeyboardInputManager {
     private pressedKeys: Set<Keys> = new Set();

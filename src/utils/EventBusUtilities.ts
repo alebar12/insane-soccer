@@ -1,5 +1,5 @@
+import { GameStatus } from "@/game/enums/GameStatus";
 import { createEventDefinition } from "ts-bus";
-import { GameStatus } from "../game/enums/GameStatus";
 
 export class EventBusUtilities {
     public static readonly statusChangedEvent =

@@ -1,8 +1,8 @@
-import { AssetLoader } from "./assets/AssetLoader";
-import { GameLoop } from "./core/GameLoop";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { GameLoop } from "@/core/GameLoop";
+import { DomHandler } from "@/ui/DomHandler";
+import { GameConfigs } from "@/utils/GameConfigs";
 import "./style.css";
-import { DomHandler } from "./ui/DomHandler";
-import { GameConfigs } from "./utils/GameConfigs";
 
 class Main {
     public async init(): Promise<void> {

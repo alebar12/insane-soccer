@@ -1,9 +1,9 @@
-import { Player } from "../game/entities/Player";
-import { PlayerSide } from "../game/enums/PlayerSide";
-import { PlayerStatus } from "../game/enums/PlayerStatus";
-import { Point } from "../game/geometry/Point";
-import { GameWorld } from "../game/world/GameWorld";
-import { GameConfigs } from "../utils/GameConfigs";
+import { Player } from "@/game/entities/Player";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { Point } from "@/game/geometry/Point";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class ObservationWrapper {
     private readonly gameConfigs: GameConfigs;

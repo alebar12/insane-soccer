@@ -1,9 +1,3 @@
-/**
- * Integration test: GameStatusManager + ts-bus EventBus
- *
- * Exercises the real wiring between the status manager and the event bus —
- * no mocks, both components run as-is in production.
- */
 import { EventBus } from "ts-bus";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GameStatus } from "../../src/game/enums/GameStatus";

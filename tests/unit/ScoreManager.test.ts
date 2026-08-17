@@ -13,6 +13,7 @@ describe("ScoreManager", () => {
         it("should start with zero scores", () => {
             expect(score.leftScore).toBe(0);
             expect(score.rightScore).toBe(0);
+            expect(score.getMaxScore()).toBe(10);
         });
 
         it("should not be game over at start", () => {
@@ -122,6 +123,22 @@ describe("ScoreManager", () => {
             for (let i = 0; i < 10; i++) score.increaseScore(PlayerSide.LEFT);
             score.reset();
             expect(score.isGameOver).toBe(false);
+        });
+    });
+
+    describe("update and read last update duration", () => {
+        it("should change last update duration", () => {
+            expect(score.getLastUpdateDuration()).toBe(0);
+            const delta = 16;
+            score.update(delta);
+            expect(score.getLastUpdateDuration()).toBe(delta);
+        });
+    });
+
+    describe("forceMaxScore", () => {
+        it("should change max score", () => {
+            score.forceMaxScore(5);
+            expect(score.getMaxScore()).toBe(5);
         });
     });
 });

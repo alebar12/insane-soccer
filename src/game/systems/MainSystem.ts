@@ -1,13 +1,13 @@
-import { AiToolsWrapper } from "../../ai/AiToolsWrapper";
-import { KeyboardInputManager } from "../../input/KeyboardInputManager";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { Keys } from "../enums/Keys";
-import { GameWorld } from "../world/GameWorld";
-import { CheckerSystem } from "./checkers/CheckerSystem";
-import { CollisionSystem } from "./collision/CollisionSystem";
-import { GateSystem } from "./GateSystem";
-import { MovementSystem } from "./movement/MovementSystem";
-import { SystemInterface } from "./SystemInterface";
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { Keys } from "@/game/enums/Keys";
+import { CheckerSystem } from "@/game/systems/checkers/CheckerSystem";
+import { CollisionSystem } from "@/game/systems/collision/CollisionSystem";
+import { GateSystem } from "@/game/systems/GateSystem";
+import { MovementSystem } from "@/game/systems/movement/MovementSystem";
+import { SystemInterface } from "@/game/systems/SystemInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { KeyboardInputManager } from "@/input/KeyboardInputManager";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class MainSystem {
     private readonly systems = new Array<SystemInterface>();

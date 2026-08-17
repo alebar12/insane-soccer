@@ -10,7 +10,8 @@
 ![Tests](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/tests-badge.json)
 ![Tests coverage](https://img.shields.io/endpoint?url=https://alebar12.github.io/insane-soccer/badges/testscoverage-badge.json)
 
-![Insane Soccer title](public/images/title.png)
+<img src="public/favicon.png" alt="nsane Soccer icon" height="100"/> 
+<img src="public/images/title.png" alt="nsane Soccer title" height="100"/>
 
 ## Screenshot
 
@@ -26,9 +27,30 @@
 
 The game features:
 - Fast-paced 1v1 soccer gameplay (player vs. CPU)
+- A CPU opponent controlled by a neural network trained with reinforcement learning
 - Power Shots
 - Substitute players
 - Goal celebrations with fireworks and explosions
+
+## CPU AI
+
+The CPU opponent it's a **neural network policy trained with reinforcement learning**, using a Python training pipeline that plays real games against the TypeScript game engine.
+
+- **Algorithm**: PPO (Proximal Policy Optimization) via [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3), built on [PyTorch](https://pytorch.org/) and [Gymnasium](https://gymnasium.farama.org/).
+- **Training environment**: [`learning/ReinforcementLearningMain.py`](learning/ReinforcementLearningMain.py) launches the actual game (`src/SimulationWithInputMain.ts`) as a headless subprocess, training directly against the real game logic.
+- **Reward shaping**: goals scored/conceded, gaining/holding/losing ball possession, closing the distance to the ball, kicks aimed at the opponent's goal, and small penalties for idling/standing still.
+- **Network architecture**: a compact MLP policy (two hidden layers of 32 units each).
+- **Deployment**: once trained, the actor network's weights are exported to JSON and used to run pure client-side inference in the browser via [`src/ai/InferenceWrapper.ts`](src/ai/InferenceWrapper.ts).
+
+### Retraining the AI
+
+```bash
+cd learning
+pip install -r requirements.txt
+python ReinforcementLearningMain.py
+```
+
+Training resumes from `network.zip` if present, plays games live against the TypeScript engine, and periodically saves the updated policy to `network.json` / `network.zip`.
 
 ## Tech Stack
 
@@ -36,6 +58,8 @@ The game features:
 |---|---|
 | Language | TypeScript 6.x |
 | Bundler | Vite |
+| CPU AI training | Python, PyTorch, Gymnasium, Stable-Baselines3 (PPO) |
+| CPU AI inference | Hand-rolled TypeScript MLP forward pass (no runtime ML dependency) |
 
 ## How do I build and run this?
 
@@ -101,7 +125,3 @@ Serves the `dist/` folder locally so you can verify the production build before 
 | `npm run lint:fix` | ESLint auto-fix |
 | `npm run format` | Prettier format `src/**/*.ts` |
 | `npm run format:check` | Prettier format check |
-
-## Contributing
-
-Contributions are welcome! Feel free to open issues or pull requests.

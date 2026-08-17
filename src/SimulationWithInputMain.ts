@@ -64,7 +64,13 @@ rl.on("line", async line => {
     }
 
     const currentStatus = statusExtractor.extractObservation(gameWorld, refPlayer);
-    const reward = statusExtractor.calculateReward(previousStatus, currentStatus, kicked);
+    const reward = statusExtractor.calculateReward(
+        previousStatus,
+        currentStatus,
+        kicked,
+        gameWorld,
+        refPlayer,
+    );
 
     response.status = currentStatus.toArray();
     response.info = {

@@ -1,5 +1,6 @@
 import { GameConfigs } from "../../utils/GameConfigs";
 import { BallStatus } from "../enums/BallStatus";
+import { PlayerSide } from "../enums/PlayerSide";
 import { PowerShotUtilities } from "../enums/PowerShotType";
 import { MovementPoint } from "../geometry/MovementPoint";
 import { Point } from "../geometry/Point";
@@ -96,11 +97,11 @@ export class Ball {
         this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
     }
 
-    /*private isKickDirectedToGoal(player: Player): boolean {
+    public isKickDirectedToGoal(playerSide: PlayerSide): boolean {
         const tolerance = Math.PI / 8;
         const goalCenterY = this.gameConfigs.goalYOffset + this.gameConfigs.goalHeight / 2;
         const goalX =
-            player.side === PlayerSide.LEFT
+            playerSide === PlayerSide.LEFT
                 ? this.gameConfigs.fieldXOffset + this.gameConfigs.fieldWidth
                 : this.gameConfigs.fieldXOffset;
 
@@ -115,7 +116,7 @@ export class Ball {
         );
 
         return angleDiff <= tolerance;
-    }*/
+    }
 
     public releaseFromPlayer(): void {
         this.lastAttachedPlayer = this.attachedPlayer;

@@ -1,10 +1,10 @@
-import { AiToolsWrapper } from "./ai/AiToolsWrapper";
-import { InferenceWrapper } from "./ai/InferenceWrapper";
-import { ObservationWrapper } from "./ai/ObservationWrapper";
-import { GameStatus } from "./game/enums/GameStatus";
-import { MainSystem } from "./game/systems/MainSystem";
-import { GameWorld } from "./game/world/GameWorld";
-import { GameConfigs } from "./utils/GameConfigs";
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { InferenceWrapper } from "@/ai/InferenceWrapper";
+import { ObservationWrapper } from "@/ai/ObservationWrapper";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { MainSystem } from "@/game/systems/MainSystem";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 const gameConfigs = new GameConfigs(800, 550);
 let gameWorld = GameWorld.createSimulatedGameWorldWithScriptedCpu(gameConfigs);

@@ -1,5 +1,5 @@
-import { HoverableEntity } from "../game/entities/HoverableEntity";
-import { MouseInputManager } from "../input/MouseInputManager";
+import { HoverableEntity } from "@/game/entities/HoverableEntity";
+import { MouseInputManager } from "@/input/MouseInputManager";
 
 export class UIInteractionSystem {
     public constructor(public input: MouseInputManager) {}

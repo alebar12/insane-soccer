@@ -1,15 +1,15 @@
-import { AiToolsWrapper } from "../ai/AiToolsWrapper";
-import { InferenceWrapper } from "../ai/InferenceWrapper";
-import { ObservationWrapper } from "../ai/ObservationWrapper";
-import { AssetLoader } from "../assets/AssetLoader";
-import { GameStatus } from "../game/enums/GameStatus";
-import { MainSystem } from "../game/systems/MainSystem";
-import { GameWorld } from "../game/world/GameWorld";
-import { MouseInputManager } from "../input/MouseInputManager";
-import { MainRender } from "../rendering/MainRender";
-import { DomHandler } from "../ui/DomHandler";
-import { UIInteractionSystem } from "../ui/UIInteractionSystem";
-import { GameConfigs } from "../utils/GameConfigs";
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { InferenceWrapper } from "@/ai/InferenceWrapper";
+import { ObservationWrapper } from "@/ai/ObservationWrapper";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { MainSystem } from "@/game/systems/MainSystem";
+import { GameWorld } from "@/game/world/GameWorld";
+import { MouseInputManager } from "@/input/MouseInputManager";
+import { MainRender } from "@/rendering/MainRender";
+import { DomHandler } from "@/ui/DomHandler";
+import { UIInteractionSystem } from "@/ui/UIInteractionSystem";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class GameLoop {
     private prevTime: number = 0;

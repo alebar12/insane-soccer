@@ -9,7 +9,7 @@ type Model = {
     nvec: number[];
 };
 
-import modelData from "./weights.json";
+import modelData from "@/ai/weights.json";
 
 export class InferenceWrapper {
     private model: Model | null = null;

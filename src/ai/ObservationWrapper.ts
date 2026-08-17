@@ -87,6 +87,8 @@ export class ObservationWrapper {
         previousStatus: Observation,
         currentStatus: Observation,
         kicked: boolean,
+        gameWorld: GameWorld,
+        refPlayer: Player,
     ): number {
         const aspectRatio = this.gameConfigs.fieldHeight / this.gameConfigs.fieldWidth;
 
@@ -119,7 +121,14 @@ export class ObservationWrapper {
 
         let kickToGoal = 0;
         if (kicked) {
-            kickToGoal = currentStatus.ballSpeedX > 0 ? 1 : -0.5;
+            const ball = gameWorld.ball;
+            if (ball.isKickDirectedToGoal(refPlayer.side)) {
+                kickToGoal = 2;
+            } else if (currentStatus.ballSpeedX > 0) {
+                kickToGoal = 0.5;
+            } else if (currentStatus.ballSpeedX < 0) {
+                kickToGoal = -0.5;
+            }
         }
 
         let approachShaping = 0;
@@ -141,20 +150,6 @@ export class ObservationWrapper {
             samePositionPenalty = -0.02;
         }
 
-        let goalCampingPenalty = 0;
-        /*const goalCampingXFactor = 0.1;
-        const ballThreatZone = 0.35;
-        const goalCampingYFactor = 0.5;
-        const goalCampingYOffset = 0.1;
-        if (
-            currentStatus.player1X < goalCampingXFactor &&
-            currentStatus.player1Y > goalCampingYFactor - goalCampingYOffset &&
-            currentStatus.player1Y < goalCampingYFactor + goalCampingYOffset &&
-            currentStatus.ballX > ballThreatZone
-        ) {
-            goalCampingPenalty = -(goalCampingXFactor - currentStatus.player1X) * 2;
-        }*/
-
         const stepPenalty = -0.01;
 
         return (
@@ -166,8 +161,7 @@ export class ObservationWrapper {
             possessionLost +
             approachShaping +
             kickToGoal +
-            samePositionPenalty +
-            goalCampingPenalty
+            samePositionPenalty
         );
     }
 

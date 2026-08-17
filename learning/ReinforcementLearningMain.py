@@ -15,9 +15,9 @@ from stable_baselines3.common.env_checker import check_env
 MODEL_PATH = "network"
 TIMESTEPS_THIS_RUN = 1_000_000
 FRAME_TIME = 16
-FRAME_SKIP = 4
+FRAME_SKIP = 5
 MAX_STEPS = (5 * 60 * 1000) / (FRAME_TIME * FRAME_SKIP)
-OPPONENT_SPEED_FACTOR = 0.3
+OPPONENT_SPEED_FACTOR = 1
 MAX_SCORE = 10
 SAVE_POSITIONS = False
 
@@ -166,18 +166,10 @@ class MyEnv(gym.Env):
         print(f"STATS - Total resets: {self.totalReset}, total games: {self.totalGames}, total wins: {self.totalWins}")
 
 
-# =====================================================
-# Creazione ambiente
-# =====================================================
 
 env = MyEnv()
 
 check_env(env)
-
-# =====================================================
-# Architettura della rete neurale
-# 19 -> 32 -> 32 -> Policy(8)
-# =====================================================
 
 policy_kwargs = dict(
     net_arch=dict(
@@ -185,10 +177,6 @@ policy_kwargs = dict(
         vf=[32, 32]    # critic
     )
 )
-
-# =====================================================
-# PPO
-# =====================================================
 
 if os.path.exists(MODEL_PATH + ".zip"):
     print("Loading existing model...")

@@ -14,7 +14,7 @@ export class SubstitutionTrainingStrategy implements PlayerStrategyInterface {
 
     public constructor(gameConfigs: GameConfigs) {
         this.gameConfigs = gameConfigs;
-        this.initTraniningPoints();
+        this.initTrainingPoints();
     }
 
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {
@@ -28,7 +28,7 @@ export class SubstitutionTrainingStrategy implements PlayerStrategyInterface {
     public apply(player: Player, gameWorld: GameWorld, deltaMs: number): void {
         let positionStatusMachine = this.positionStatusMachines.get(player);
         if (positionStatusMachine === undefined) {
-            const destinationList = this.getRandomTrainingDestionations(player);
+            const destinationList = this.getRandomTrainingDestinations(player);
             positionStatusMachine = new PositionStatusMachine(destinationList, player, gameWorld);
             this.positionStatusMachines.set(player, positionStatusMachine);
         }
@@ -38,7 +38,7 @@ export class SubstitutionTrainingStrategy implements PlayerStrategyInterface {
         }
     }
 
-    private getRandomTrainingDestionations(player: Player): Array<PositionStatus> {
+    private getRandomTrainingDestinations(player: Player): Array<PositionStatus> {
         const heightForTraining = this.gameConfigs.athleticTrackHeight / 2;
         const yOffset =
             this.gameConfigs.fieldHeight +
@@ -64,7 +64,7 @@ export class SubstitutionTrainingStrategy implements PlayerStrategyInterface {
         );
     }
 
-    private initTraniningPoints(): void {
+    private initTrainingPoints(): void {
         this.trainingPoints.push([
             new RelativePosition(0, 1 / 2, 1 / 6),
             new RelativePosition(1, 1 / 2, 1 / 6),

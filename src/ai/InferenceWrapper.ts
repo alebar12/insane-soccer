@@ -12,7 +12,7 @@ type Model = {
 import modelData from "@/ai/weights.json";
 
 export class InferenceWrapper {
-    private model: Model | null = null;
+    private model: Model;
 
     public constructor() {
         this.model = modelData as unknown as Model;
@@ -24,8 +24,6 @@ export class InferenceWrapper {
     }
 
     public predict(obs: number[]): number[] {
-        if (!this.model) throw new Error("Model not loaded. Call load() first.");
-
         let x = obs;
         for (const layer of this.model.layers) {
             x = this.linear(x, layer.weights, layer.biases);

@@ -43,7 +43,6 @@ export class GameStatusManager {
         for (const e of this.scheduledEvents) {
             if (this.time >= e.time) {
                 this.changeStatus(e.gameStatus);
-                this.publishStatusChange();
             }
         }
         this.scheduledEvents = this.scheduledEvents.filter(e => this.time < e.time);

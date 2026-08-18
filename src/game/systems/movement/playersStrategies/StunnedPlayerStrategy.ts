@@ -17,7 +17,7 @@ export class StunnedPlayerStrategy implements PlayerStrategyInterface {
         return (
             !player.isSubstitute &&
             (this.isPlayerStunnedDuringPlay(player, gameWorld) ||
-                this.hasPlayerLosedGame(player, gameWorld))
+                this.hasPlayerLostGame(player, gameWorld))
         );
     }
 
@@ -48,7 +48,7 @@ export class StunnedPlayerStrategy implements PlayerStrategyInterface {
         );
     }
 
-    private hasPlayerLosedGame(player: Player, gameWorld: GameWorld): boolean {
+    private hasPlayerLostGame(player: Player, gameWorld: GameWorld): boolean {
         const winningPlayerSide = gameWorld.score.getWinningPlayerSide();
         return (
             gameWorld.gameStatusManager.gameStatus === GameStatus.END_GAME &&

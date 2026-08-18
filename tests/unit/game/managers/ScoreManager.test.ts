@@ -1,6 +1,6 @@
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { ScoreManager } from "@/game/managers/ScoreManager";
 import { beforeEach, describe, expect, it } from "vitest";
-import { PlayerSide } from "../../src/game/enums/PlayerSide";
-import { ScoreManager } from "../../src/game/managers/ScoreManager";
 
 describe("ScoreManager", () => {
     let score: ScoreManager;

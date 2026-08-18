@@ -1,5 +1,5 @@
-import { GameWorld } from "../../game/world/GameWorld";
-import { RenderInterface } from "../RenderInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
 
 export class ExplosionRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;

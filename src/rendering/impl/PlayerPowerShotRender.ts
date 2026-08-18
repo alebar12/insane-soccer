@@ -1,10 +1,10 @@
-import { AssetLoader } from "../../assets/AssetLoader";
-import { Player } from "../../game/entities/Player";
-import { ElectricPowerShot } from "../../game/entities/powerShots/ElectricPowerShot";
-import { FirePowerShot } from "../../game/entities/powerShots/FirePowerShot";
-import { GameWorld } from "../../game/world/GameWorld";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { RenderInterface } from "../RenderInterface";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { Player } from "@/game/entities/Player";
+import { ElectricPowerShot } from "@/game/entities/powerShots/ElectricPowerShot";
+import { FirePowerShot } from "@/game/entities/powerShots/FirePowerShot";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class PlayerPowerShotRender implements RenderInterface {
     private readonly gameConfigs: GameConfigs;

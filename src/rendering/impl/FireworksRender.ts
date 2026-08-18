@@ -1,6 +1,6 @@
-import { FireworkDto } from "../../game/entities/Fireworks";
-import { GameWorld } from "../../game/world/GameWorld";
-import { RenderInterface } from "../RenderInterface";
+import { FireworkDto } from "@/game/entities/Fireworks";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
 
 export class FireworksRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;

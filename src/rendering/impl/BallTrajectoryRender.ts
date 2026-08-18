@@ -1,7 +1,7 @@
-import { Point } from "../../game/geometry/Point";
-import { GameWorld } from "../../game/world/GameWorld";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { RenderInterface } from "../RenderInterface";
+import { Point } from "@/game/geometry/Point";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class BallTrajectoryRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;

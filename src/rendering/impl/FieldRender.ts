@@ -1,7 +1,7 @@
-import { AssetLoader } from "../../assets/AssetLoader";
-import { GameWorld } from "../../game/world/GameWorld";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { RenderInterface } from "../RenderInterface";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class FieldRender implements RenderInterface {
     private readonly fieldImage: HTMLImageElement;

@@ -1,6 +1,6 @@
-import { GameConfigs } from "../../utils/GameConfigs";
-import { PowerShotType } from "../enums/PowerShotType";
-import { Point } from "../geometry/Point";
+import { PowerShotType } from "@/game/enums/PowerShotType";
+import { Point } from "@/game/geometry/Point";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class Explosion {
     private readonly maxComponents: number = 40;

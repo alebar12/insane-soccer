@@ -1,4 +1,4 @@
-import { Point } from "./Point";
+import { Point } from "@/game/geometry/Point";
 
 export class PositionHistory {
     public positions: Array<HistoryPoint> = [];

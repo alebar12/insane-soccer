@@ -1,9 +1,9 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { BallStatus } from "../../../enums/BallStatus";
-import { GameStatus } from "../../../enums/GameStatus";
-import { MovementPoint } from "../../../geometry/MovementPoint";
-import { GameWorld } from "../../../world/GameWorld";
-import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { AbstractCollisionStrategy } from "@/game/systems/collision/strategies/AbstractCollisionStrategy";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class BallPlayerCollisionStrategy extends AbstractCollisionStrategy {
     public constructor(gameConfigs: GameConfigs) {

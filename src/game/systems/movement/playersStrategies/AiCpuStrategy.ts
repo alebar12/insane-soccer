@@ -1,11 +1,11 @@
-import { AiToolsWrapper } from "../../../../ai/AiToolsWrapper";
-import { Player } from "../../../entities/Player";
-import { CpuType } from "../../../enums/CpuType";
-import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide } from "../../../enums/PlayerSide";
-import { PlayerStatus } from "../../../enums/PlayerStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
+import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
+import { Player } from "@/game/entities/Player";
+import { CpuType } from "@/game/enums/CpuType";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { PlayerStrategyInterface } from "@/game/systems/movement/playersStrategies/PlayerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class AiCpuStrategy implements PlayerStrategyInterface {
     private readonly aiToolsWrapper: AiToolsWrapper;

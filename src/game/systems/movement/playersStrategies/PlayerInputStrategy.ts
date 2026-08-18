@@ -1,10 +1,10 @@
-import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
-import { Player } from "../../../entities/Player";
-import { GameStatus } from "../../../enums/GameStatus";
-import { Keys, KeysDirection } from "../../../enums/Keys";
-import { PlayerStatus } from "../../../enums/PlayerStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { Keys, KeysDirection } from "@/game/enums/Keys";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { PlayerStrategyInterface } from "@/game/systems/movement/playersStrategies/PlayerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { KeyboardInputManager } from "@/input/KeyboardInputManager";
 
 export class PlayerInputStrategy implements PlayerStrategyInterface {
     private keyboardInputManager: KeyboardInputManager;

@@ -1,6 +1,6 @@
-import { GameStatus } from "../../../enums/GameStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { CheckerStrategyInterface } from "./CheckerStrategyInterface";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { CheckerStrategyInterface } from "@/game/systems/checkers/strategies/CheckerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class WaitingBallCheckerStrategy implements CheckerStrategyInterface {
     public canBeApplied(gameWorld: GameWorld): boolean {

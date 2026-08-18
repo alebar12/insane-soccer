@@ -1,12 +1,12 @@
-import { GameConfigs } from "../../utils/GameConfigs";
-import { CpuType } from "../enums/CpuType";
-import { PlayerSide } from "../enums/PlayerSide";
-import { PlayerStatus } from "../enums/PlayerStatus";
-import { MovementPoint } from "../geometry/MovementPoint";
-import { Point } from "../geometry/Point";
-import { BounceWrapper } from "./bounce/BounceWrapper";
-import { PowerShotWrapper } from "./powerShots/PowerShotWrapper";
-import { StunnedWrapper } from "./stunned/StunnedWrapper";
+import { BounceWrapper } from "@/game/entities/bounce/BounceWrapper";
+import { PowerShotWrapper } from "@/game/entities/powerShots/PowerShotWrapper";
+import { StunnedWrapper } from "@/game/entities/stunned/StunnedWrapper";
+import { CpuType } from "@/game/enums/CpuType";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { Point } from "@/game/geometry/Point";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class Player {
     public readonly isCpu: boolean;

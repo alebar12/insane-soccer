@@ -1,12 +1,12 @@
-import { GameConfigs } from "../../utils/GameConfigs";
-import { BallStatus } from "../enums/BallStatus";
-import { PlayerSide } from "../enums/PlayerSide";
-import { PowerShotUtilities } from "../enums/PowerShotType";
-import { MovementPoint } from "../geometry/MovementPoint";
-import { Point } from "../geometry/Point";
-import { PositionHistory } from "../geometry/PositionHistory";
-import { Player } from "./Player";
-import { BallPowerShot } from "./powerShots/BallPowerShot";
+import { Player } from "@/game/entities/Player";
+import { BallPowerShot } from "@/game/entities/powerShots/BallPowerShot";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PowerShotUtilities } from "@/game/enums/PowerShotType";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { Point } from "@/game/geometry/Point";
+import { PositionHistory } from "@/game/geometry/PositionHistory";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class Ball {
     public readonly maxSpeed: number;

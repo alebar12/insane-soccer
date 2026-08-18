@@ -1,8 +1,8 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { PlayerSide } from "../../../enums/PlayerSide";
-import { BorderLimits } from "../../../geometry/BorderLimits";
-import { MovementPoint } from "../../../geometry/MovementPoint";
-import { GameWorld } from "../../../world/GameWorld";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { BorderLimits } from "@/game/geometry/BorderLimits";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export abstract class AbstractCollisionStrategy {
     protected constructor(protected gameConfigs: GameConfigs) {}

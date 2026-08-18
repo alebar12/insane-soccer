@@ -1,9 +1,9 @@
-import { GameConfigs } from "../../../utils/GameConfigs";
-import { PlayerSide } from "../../enums/PlayerSide";
-import { Player } from "../Player";
-import { ElectricPowerShot } from "./ElectricPowerShot";
-import { FirePowerShot } from "./FirePowerShot";
-import { PowerShotInterface } from "./PowerShotInterface";
+import { Player } from "@/game/entities/Player";
+import { ElectricPowerShot } from "@/game/entities/powerShots/ElectricPowerShot";
+import { FirePowerShot } from "@/game/entities/powerShots/FirePowerShot";
+import { PowerShotInterface } from "@/game/entities/powerShots/PowerShotInterface";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class PowerShotWrapper {
     private powerShot: boolean = false;

@@ -1,4 +1,4 @@
-import { GameWorld } from "../../../world/GameWorld";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export interface CheckerStrategyInterface {
     canBeApplied(gameWorld: GameWorld): boolean;

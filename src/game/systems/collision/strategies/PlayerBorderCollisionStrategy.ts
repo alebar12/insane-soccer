@@ -1,7 +1,7 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { GameStatus } from "../../../enums/GameStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { AbstractCollisionStrategy } from "./AbstractCollisionStrategy";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { AbstractCollisionStrategy } from "@/game/systems/collision/strategies/AbstractCollisionStrategy";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class PlayerBorderCollisionStrategy extends AbstractCollisionStrategy {
     public constructor(gameConfigs: GameConfigs) {

@@ -1,10 +1,10 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { Player } from "../../../entities/Player";
-import { GameStatus } from "../../../enums/GameStatus";
-import { MovementPoint } from "../../../geometry/MovementPoint";
-import { Point } from "../../../geometry/Point";
-import { GameWorld } from "../../../world/GameWorld";
-import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { Point } from "@/game/geometry/Point";
+import { PlayerStrategyInterface } from "@/game/systems/movement/playersStrategies/PlayerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class WinningPlayerStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;

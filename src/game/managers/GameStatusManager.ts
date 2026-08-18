@@ -1,6 +1,6 @@
+import { GameStatus } from "@/game/enums/GameStatus";
+import { EventBusUtilities } from "@/utils/EventBusUtilities";
 import { EventBus } from "ts-bus";
-import { EventBusUtilities } from "../../utils/EventBusUtilities";
-import { GameStatus } from "../enums/GameStatus";
 
 export class GameStatusManager {
     private _gameStatus: GameStatus = GameStatus.MENU;

@@ -1,4 +1,4 @@
-import { Point } from "./Point";
+import { Point } from "@/game/geometry/Point";
 
 export class BorderLimits {
     public constructor(

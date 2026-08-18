@@ -1,14 +1,14 @@
-import { GameConfigs } from "../../../utils/GameConfigs";
-import { GameWorld } from "../../world/GameWorld";
-import { SystemInterface } from "../SystemInterface";
-import { AbstractCollisionStrategy } from "./strategies/AbstractCollisionStrategy";
-import { BallBorderCollisionStrategy } from "./strategies/BallBorderCollisionStrategy";
-import { BallGoalCollisionStrategy } from "./strategies/BallGoalCollisionStrategy";
-import { BallGoalStakesCollisionStrategy } from "./strategies/BallGoalStakesCollisionStrategy";
-import { BallPlayerCollisionStrategy } from "./strategies/BallPlayerCollisionStrategy";
-import { BouncingPowerShotCollisionStrategy } from "./strategies/BouncingPowerShotCollisionStrategy";
-import { PlayerBorderCollisionStrategy } from "./strategies/PlayerBorderCollisionStrategy";
-import { PlayerCollisionStrategy } from "./strategies/PlayerCollisionStrategy";
+import { SystemInterface } from "@/game/systems/SystemInterface";
+import { AbstractCollisionStrategy } from "@/game/systems/collision/strategies/AbstractCollisionStrategy";
+import { BallBorderCollisionStrategy } from "@/game/systems/collision/strategies/BallBorderCollisionStrategy";
+import { BallGoalCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalCollisionStrategy";
+import { BallGoalStakesCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalStakesCollisionStrategy";
+import { BallPlayerCollisionStrategy } from "@/game/systems/collision/strategies/BallPlayerCollisionStrategy";
+import { BouncingPowerShotCollisionStrategy } from "@/game/systems/collision/strategies/BouncingPowerShotCollisionStrategy";
+import { PlayerBorderCollisionStrategy } from "@/game/systems/collision/strategies/PlayerBorderCollisionStrategy";
+import { PlayerCollisionStrategy } from "@/game/systems/collision/strategies/PlayerCollisionStrategy";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class CollisionSystem implements SystemInterface {
     private strategies: AbstractCollisionStrategy[] = [];

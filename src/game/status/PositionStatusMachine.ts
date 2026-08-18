@@ -1,7 +1,7 @@
-import { Player } from "../entities/Player";
-import { MovementPoint } from "../geometry/MovementPoint";
-import { Point } from "../geometry/Point";
-import { GameWorld } from "../world/GameWorld";
+import { Player } from "@/game/entities/Player";
+import { MovementPoint } from "@/game/geometry/MovementPoint";
+import { Point } from "@/game/geometry/Point";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class PositionStatusMachine {
     private readonly positionStatuses: Array<PositionStatus>;

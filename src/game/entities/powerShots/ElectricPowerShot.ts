@@ -1,8 +1,8 @@
-import { GameConfigs } from "../../../utils/GameConfigs";
-import { PlayerStatus } from "../../enums/PlayerStatus";
-import { Point } from "../../geometry/Point";
-import { Player } from "../Player";
-import { PowerShotInterface } from "./PowerShotInterface";
+import { Player } from "@/game/entities/Player";
+import { PowerShotInterface } from "@/game/entities/powerShots/PowerShotInterface";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { Point } from "@/game/geometry/Point";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class ElectricPowerShot implements PowerShotInterface {
     public readonly width: number;

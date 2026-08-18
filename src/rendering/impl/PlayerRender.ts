@@ -1,9 +1,9 @@
-import { AssetLoader } from "../../assets/AssetLoader";
-import { Player } from "../../game/entities/Player";
-import { PlayerStatus } from "../../game/enums/PlayerStatus";
-import { GameWorld } from "../../game/world/GameWorld";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { RenderInterface } from "../RenderInterface";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { Player } from "@/game/entities/Player";
+import { PlayerStatus } from "@/game/enums/PlayerStatus";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class PlayerRender implements RenderInterface {
     private readonly gameContext: CanvasRenderingContext2D;

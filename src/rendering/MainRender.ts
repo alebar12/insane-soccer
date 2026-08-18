@@ -1,18 +1,18 @@
-import { AssetLoader } from "../assets/AssetLoader";
-import { GameWorld } from "../game/world/GameWorld";
-import { DomHandler } from "../ui/DomHandler";
-import { GameConfigs } from "../utils/GameConfigs";
-import { BallRender } from "./impl/BallRender";
-import { BallTrajectoryRender } from "./impl/BallTrajectoryRender";
-import { ExplosionRender } from "./impl/ExplosionRender";
-import { FieldRender } from "./impl/FieldRender";
-import { FireworksRender } from "./impl/FireworksRender";
-import { GatesRender } from "./impl/GatesRender";
-import { MenuRender } from "./impl/MenuRender";
-import { PlayerPowerShotRender } from "./impl/PlayerPowerShotRender";
-import { PlayerRender } from "./impl/PlayerRender";
-import { ScoreRender } from "./impl/ScoreRender";
-import { RenderInterface } from "./RenderInterface";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { GameWorld } from "@/game/world/GameWorld";
+import { BallRender } from "@/rendering/impl/BallRender";
+import { BallTrajectoryRender } from "@/rendering/impl/BallTrajectoryRender";
+import { ExplosionRender } from "@/rendering/impl/ExplosionRender";
+import { FieldRender } from "@/rendering/impl/FieldRender";
+import { FireworksRender } from "@/rendering/impl/FireworksRender";
+import { GatesRender } from "@/rendering/impl/GatesRender";
+import { MenuRender } from "@/rendering/impl/MenuRender";
+import { PlayerPowerShotRender } from "@/rendering/impl/PlayerPowerShotRender";
+import { PlayerRender } from "@/rendering/impl/PlayerRender";
+import { ScoreRender } from "@/rendering/impl/ScoreRender";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { DomHandler } from "@/ui/DomHandler";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class MainRender {
     private domHandler: DomHandler;

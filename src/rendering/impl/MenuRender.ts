@@ -1,7 +1,7 @@
-import { AssetLoader } from "../../assets/AssetLoader";
-import { GameStatus } from "../../game/enums/GameStatus";
-import { GameWorld } from "../../game/world/GameWorld";
-import { RenderInterface } from "../RenderInterface";
+import { AssetLoader } from "@/assets/AssetLoader";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
 
 export class MenuRender implements RenderInterface {
     private readonly menuContext: CanvasRenderingContext2D;

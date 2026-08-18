@@ -1,8 +1,8 @@
-import { BallStatus } from "../../game/enums/BallStatus";
-import { GameStatus } from "../../game/enums/GameStatus";
-import { GameWorld } from "../../game/world/GameWorld";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { RenderInterface } from "../RenderInterface";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { GameWorld } from "@/game/world/GameWorld";
+import { RenderInterface } from "@/rendering/RenderInterface";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class BallRender implements RenderInterface {
     private readonly maxResizeFactor: number = 2;

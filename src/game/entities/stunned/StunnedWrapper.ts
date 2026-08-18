@@ -1,5 +1,5 @@
-import { Point } from "../../geometry/Point";
-import { StunnedStars } from "./StunnedStars";
+import { StunnedStars } from "@/game/entities/stunned/StunnedStars";
+import { Point } from "@/game/geometry/Point";
 
 export class StunnedWrapper {
     private readonly stunnedMaxValue: number = 2000;

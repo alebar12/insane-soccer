@@ -1,6 +1,6 @@
-import { PlayerSide, PlayerSideUtilities } from "../../enums/PlayerSide";
-import { PowerShotType, PowerShotUtilities } from "../../enums/PowerShotType";
-import { Player } from "../Player";
+import { Player } from "@/game/entities/Player";
+import { PlayerSide, PlayerSideUtilities } from "@/game/enums/PlayerSide";
+import { PowerShotType, PowerShotUtilities } from "@/game/enums/PowerShotType";
 
 export class BallPowerShot {
     private powerShot: boolean = false;

@@ -1,11 +1,11 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { Player } from "../../../entities/Player";
-import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide } from "../../../enums/PlayerSide";
-import { Point } from "../../../geometry/Point";
-import { PositionStatus, PositionStatusMachine } from "../../../status/PositionStatusMachine";
-import { GameWorld } from "../../../world/GameWorld";
-import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { Point } from "@/game/geometry/Point";
+import { PositionStatus, PositionStatusMachine } from "@/game/status/PositionStatusMachine";
+import { PlayerStrategyInterface } from "@/game/systems/movement/playersStrategies/PlayerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class SubstitutePlayersStrategy implements PlayerStrategyInterface {
     private readonly gameConfigs: GameConfigs;

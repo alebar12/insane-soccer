@@ -1,8 +1,8 @@
-import { Ball } from "../../../entities/Ball";
-import { BallStatus } from "../../../enums/BallStatus";
-import { GameStatus } from "../../../enums/GameStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { BallStrategyInterface } from "./BallStrategyInterface";
+import { Ball } from "@/game/entities/Ball";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { BallStrategyInterface } from "@/game/systems/movement/ballStrategies/BallStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class FreeBallStrategy implements BallStrategyInterface {
     public canBeApplied(ball: Ball, gameWorld: GameWorld): boolean {

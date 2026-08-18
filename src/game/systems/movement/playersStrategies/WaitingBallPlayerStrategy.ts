@@ -1,7 +1,7 @@
-import { Player } from "../../../entities/Player";
-import { GameStatus } from "../../../enums/GameStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { PlayerStrategyInterface } from "./PlayerStrategyInterface";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { PlayerStrategyInterface } from "@/game/systems/movement/playersStrategies/PlayerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class WaitingBallPlayerStrategy implements PlayerStrategyInterface {
     public canBeApplied(player: Player, gameWorld: GameWorld): boolean {

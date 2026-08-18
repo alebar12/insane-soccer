@@ -1,10 +1,10 @@
-import { KeyboardInputManager } from "../../../../input/KeyboardInputManager";
-import { Ball } from "../../../entities/Ball";
-import { BallStatus } from "../../../enums/BallStatus";
-import { GameStatus } from "../../../enums/GameStatus";
-import { Keys } from "../../../enums/Keys";
-import { GameWorld } from "../../../world/GameWorld";
-import { BallStrategyInterface } from "./BallStrategyInterface";
+import { Ball } from "@/game/entities/Ball";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { Keys } from "@/game/enums/Keys";
+import { BallStrategyInterface } from "@/game/systems/movement/ballStrategies/BallStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { KeyboardInputManager } from "@/input/KeyboardInputManager";
 
 export class BallAttachedWithKeyPressedStrategy implements BallStrategyInterface {
     private readonly keyboardInputManager: KeyboardInputManager;

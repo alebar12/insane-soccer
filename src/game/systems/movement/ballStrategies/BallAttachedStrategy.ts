@@ -1,9 +1,9 @@
-import { Ball } from "../../../entities/Ball";
-import { Player } from "../../../entities/Player";
-import { BallStatus } from "../../../enums/BallStatus";
-import { GameStatus } from "../../../enums/GameStatus";
-import { GameWorld } from "../../../world/GameWorld";
-import { BallStrategyInterface } from "./BallStrategyInterface";
+import { Ball } from "@/game/entities/Ball";
+import { Player } from "@/game/entities/Player";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { BallStrategyInterface } from "@/game/systems/movement/ballStrategies/BallStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class BallAttachedStrategy implements BallStrategyInterface {
     private readonly angleTollerance: number = Math.PI / 30;

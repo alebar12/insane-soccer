@@ -1,4 +1,4 @@
-import { Player } from "../Player";
+import { Player } from "@/game/entities/Player";
 
 export interface PowerShotInterface {
     update(deltaMs: number, player: Player): void;

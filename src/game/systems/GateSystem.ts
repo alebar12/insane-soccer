@@ -1,6 +1,6 @@
-import { GameStatus } from "../enums/GameStatus";
-import { GameWorld } from "../world/GameWorld";
-import { SystemInterface } from "./SystemInterface";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { SystemInterface } from "@/game/systems/SystemInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class GateSystem implements SystemInterface {
     public update(gameWorld: GameWorld, deltaMs: number): void {

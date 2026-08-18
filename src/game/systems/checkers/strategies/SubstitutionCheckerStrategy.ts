@@ -1,7 +1,7 @@
-import { GameStatus } from "../../../enums/GameStatus";
-import { Point } from "../../../geometry/Point";
-import { GameWorld } from "../../../world/GameWorld";
-import { CheckerStrategyInterface } from "./CheckerStrategyInterface";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { Point } from "@/game/geometry/Point";
+import { CheckerStrategyInterface } from "@/game/systems/checkers/strategies/CheckerStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class SubstitutionCheckerStrategy implements CheckerStrategyInterface {
     public canBeApplied(gameWorld: GameWorld): boolean {

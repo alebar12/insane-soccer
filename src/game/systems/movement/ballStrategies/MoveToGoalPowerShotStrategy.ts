@@ -1,12 +1,12 @@
-import { GameConfigs } from "../../../../utils/GameConfigs";
-import { Ball } from "../../../entities/Ball";
-import { BallStatus } from "../../../enums/BallStatus";
-import { GameStatus } from "../../../enums/GameStatus";
-import { PlayerSide } from "../../../enums/PlayerSide";
-import { PowerShotUtilities } from "../../../enums/PowerShotType";
-import { Point } from "../../../geometry/Point";
-import { GameWorld } from "../../../world/GameWorld";
-import { BallStrategyInterface } from "./BallStrategyInterface";
+import { Ball } from "@/game/entities/Ball";
+import { BallStatus } from "@/game/enums/BallStatus";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PowerShotUtilities } from "@/game/enums/PowerShotType";
+import { Point } from "@/game/geometry/Point";
+import { BallStrategyInterface } from "@/game/systems/movement/ballStrategies/BallStrategyInterface";
+import { GameWorld } from "@/game/world/GameWorld";
+import { GameConfigs } from "@/utils/GameConfigs";
 
 export class MoveToGoalPowerShotStrategy implements BallStrategyInterface {
     private readonly gameConfigs: GameConfigs;

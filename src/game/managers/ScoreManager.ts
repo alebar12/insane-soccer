@@ -1,4 +1,4 @@
-import { PlayerSide } from "../enums/PlayerSide";
+import { PlayerSide } from "@/game/enums/PlayerSide";
 
 export class ScoreManager {
     public leftScore: number = 0;

@@ -1,5 +1,5 @@
-import { Ball } from "../../../entities/Ball";
-import { GameWorld } from "../../../world/GameWorld";
+import { Ball } from "@/game/entities/Ball";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export interface BallStrategyInterface {
     canBeApplied(ball: Ball, gameWorld: GameWorld): boolean;

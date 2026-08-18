@@ -1,18 +1,18 @@
+import { Ball } from "@/game/entities/Ball";
+import { Explosion } from "@/game/entities/Explosion";
+import { Fireworks } from "@/game/entities/Fireworks";
+import { Gate } from "@/game/entities/Gate";
+import { GoalPosts } from "@/game/entities/GoalPosts";
+import { MenuButton } from "@/game/entities/MenuButton";
+import { Player } from "@/game/entities/Player";
+import { GameStatus } from "@/game/enums/GameStatus";
+import { PlayerSide } from "@/game/enums/PlayerSide";
+import { PowerShotType } from "@/game/enums/PowerShotType";
+import { GameStatusManager } from "@/game/managers/GameStatusManager";
+import { ScoreManager } from "@/game/managers/ScoreManager";
+import { EventBusUtilities } from "@/utils/EventBusUtilities";
+import { GameConfigs } from "@/utils/GameConfigs";
 import { EventBus } from "ts-bus";
-import { EventBusUtilities } from "../../utils/EventBusUtilities";
-import { GameConfigs } from "../../utils/GameConfigs";
-import { Ball } from "../entities/Ball";
-import { Explosion } from "../entities/Explosion";
-import { Fireworks } from "../entities/Fireworks";
-import { Gate } from "../entities/Gate";
-import { GoalPosts } from "../entities/GoalPosts";
-import { MenuButton } from "../entities/MenuButton";
-import { Player } from "../entities/Player";
-import { GameStatus } from "../enums/GameStatus";
-import { PlayerSide } from "../enums/PlayerSide";
-import { PowerShotType } from "../enums/PowerShotType";
-import { GameStatusManager } from "../managers/GameStatusManager";
-import { ScoreManager } from "../managers/ScoreManager";
 
 export class GameWorld {
     public readonly goalPosts: GoalPosts;

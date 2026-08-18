@@ -1,8 +1,8 @@
-import { GameWorld } from "../../world/GameWorld";
-import { SystemInterface } from "../SystemInterface";
-import { CheckerStrategyInterface } from "./strategies/CheckerStrategyInterface";
-import { SubstitutionCheckerStrategy } from "./strategies/SubstitutionCheckerStrategy";
-import { WaitingBallCheckerStrategy } from "./strategies/WaitingBallCheckerStrategy";
+import { SystemInterface } from "@/game/systems/SystemInterface";
+import { CheckerStrategyInterface } from "@/game/systems/checkers/strategies/CheckerStrategyInterface";
+import { SubstitutionCheckerStrategy } from "@/game/systems/checkers/strategies/SubstitutionCheckerStrategy";
+import { WaitingBallCheckerStrategy } from "@/game/systems/checkers/strategies/WaitingBallCheckerStrategy";
+import { GameWorld } from "@/game/world/GameWorld";
 
 export class CheckerSystem implements SystemInterface {
     private strategies: CheckerStrategyInterface[] = [];

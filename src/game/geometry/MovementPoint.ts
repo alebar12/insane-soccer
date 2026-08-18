@@ -1,4 +1,4 @@
-import { Point } from "./Point";
+import { Point } from "@/game/geometry/Point";
 
 export class MovementPoint {
     public static areTouching(point1: MovementPoint, point2: MovementPoint): boolean {

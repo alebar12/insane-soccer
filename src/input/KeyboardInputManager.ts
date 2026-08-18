@@ -4,14 +4,14 @@ export class KeyboardInputManager {
     private pressedKeys: Set<Keys> = new Set();
 
     public constructor() {
-        if (typeof window !== "undefined") {
+        if (typeof document !== "undefined") {
             document.addEventListener("keydown", this.onKeyDown);
             document.addEventListener("keyup", this.onKeyUp);
         }
     }
 
     public dispose(): void {
-        if (typeof window !== "undefined") {
+        if (typeof document !== "undefined") {
             document.removeEventListener("keydown", this.onKeyDown);
             document.removeEventListener("keyup", this.onKeyUp);
         }

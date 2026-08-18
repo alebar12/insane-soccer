@@ -25,15 +25,15 @@ export class Fireworks {
 
     public initFireworks(): void {
         this.fireworks = [];
-        for (var i = 0; i < this.numberOfFireworks; i++) {
+        for (let i = 0; i < this.numberOfFireworks; i++) {
             const red = this.getRandomColorValue();
             const green = this.getRandomColorValue();
             const blue = this.getRandomColorValue();
-            const components_number =
+            const componentsNumber =
                 Math.random() * (this.maxComponents - this.minComponents) + this.minComponents;
             let components = [];
 
-            for (var j = 0; j < components_number; j++) {
+            for (let j = 0; j < componentsNumber; j++) {
                 const r = this.getColorValueWithOffset(red);
                 const g = this.getColorValueWithOffset(green);
                 const b = this.getColorValueWithOffset(blue);
@@ -82,10 +82,10 @@ export class Fireworks {
         return Math.round(Math.random() * 255);
     }
 
-    private getColorValueWithOffset(coloValue: number): number {
+    private getColorValueWithOffset(colorValue: number): number {
         return Math.min(
             Math.max(
-                coloValue +
+                colorValue +
                     Math.round(Math.random() * (this.colorOffset / 2) - this.colorOffset / 2),
                 0,
             ),
@@ -108,7 +108,7 @@ export class FireworkDto {
         return this.startTime >= 0 && this.startTime <= this.singleDuration;
     }
 
-    public getLenght(): number {
+    public getLength(): number {
         const factor =
             this.startTime >= this.singleDuration / 2
                 ? (this.singleDuration - this.startTime) / (this.singleDuration / 2)

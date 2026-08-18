@@ -92,7 +92,7 @@ export class Ball {
             this.ballPowerShot.enablePowerShot(this.attachedPlayer);
             speedFactor = PowerShotUtilities.getSpeedFactor(this.ballPowerShot.getPowerShotType());
         }
-        this.attachedPlayer?.powerShotWrapper.resetPowerShot();
+        this.attachedPlayer.powerShotWrapper.resetPowerShot();
         this.releaseFromPlayer();
         this.movementPosition.setSpeed(this.maxSpeed * speedFactor, this.angleWithPlayer);
     }

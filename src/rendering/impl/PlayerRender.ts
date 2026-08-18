@@ -18,7 +18,7 @@ export class PlayerRender implements RenderInterface {
     private readonly borderColor: string = "#003300";
     private readonly starImage: HTMLImageElement;
     private readonly starMaxSize: number;
-    private readonly startMaxDistance: number;
+    private readonly starMaxDistance: number;
 
     public constructor(
         gameContext: CanvasRenderingContext2D,
@@ -29,7 +29,7 @@ export class PlayerRender implements RenderInterface {
         this.gameConfigs = gameConfigs;
         this.starImage = assetLoader.getImage("star.png");
         this.starMaxSize = this.gameConfigs.playerSizeWithoutBorder;
-        this.startMaxDistance = this.starMaxSize * 5;
+        this.starMaxDistance = this.starMaxSize * 5;
     }
 
     public render(gameWorld: GameWorld): void {
@@ -77,8 +77,8 @@ export class PlayerRender implements RenderInterface {
         player.stunnedWrapper.stunnedStars.stars.forEach(star => {
             this.gameContext.save();
             const factor = star.getFactor();
-            const x = star.position.x + Math.cos(star.direction) * (factor * this.startMaxDistance);
-            const y = star.position.y + Math.sin(star.direction) * (factor * this.startMaxDistance);
+            const x = star.position.x + Math.cos(star.direction) * (factor * this.starMaxDistance);
+            const y = star.position.y + Math.sin(star.direction) * (factor * this.starMaxDistance);
             this.gameContext.translate(x, y);
             this.gameContext.rotate(star.angle);
             this.gameContext.globalAlpha = 1 - factor;

@@ -158,8 +158,8 @@ describe("GameLoop", () => {
                 rafCallback?.(32);
 
                 const delta = 16;
-                const uiInteractionSystemInstance = vi.mocked(UIInteractionSystem).mock
-                    .instances[0];
+                const uiInteractionSystemInstance =
+                    vi.mocked(UIInteractionSystem).mock.instances[0];
                 const mainSystemInstance = vi.mocked(MainSystem).mock.instances[0];
                 const mainRenderInstance = vi.mocked(MainRender).mock.instances[0];
 
@@ -180,8 +180,8 @@ describe("GameLoop", () => {
                 rafCallback?.(16);
                 rafCallback?.(32);
 
-                const uiInteractionSystemInstance = vi.mocked(UIInteractionSystem).mock
-                    .instances[0];
+                const uiInteractionSystemInstance =
+                    vi.mocked(UIInteractionSystem).mock.instances[0];
                 const mouseInputManagerInstance = vi.mocked(MouseInputManager).mock.instances[0];
                 uiInteractionSystemInstance.input = mouseInputManagerInstance;
                 const onClick = vi.mocked(uiInteractionSystemInstance.update).mock.calls[0][1];
@@ -201,8 +201,8 @@ describe("GameLoop", () => {
                 rafCallback?.(16);
                 rafCallback?.(32);
 
-                const uiInteractionSystemInstance = vi.mocked(UIInteractionSystem).mock
-                    .instances[0];
+                const uiInteractionSystemInstance =
+                    vi.mocked(UIInteractionSystem).mock.instances[0];
                 const onClick = vi.mocked(uiInteractionSystemInstance.update).mock.calls[0][1];
                 onClick();
 

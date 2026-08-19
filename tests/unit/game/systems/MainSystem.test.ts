@@ -31,8 +31,7 @@ describe("MainSystem", () => {
             new MainSystem(gameConfigs, aiToolsWrapper);
 
             expect(KeyboardInputManager).toHaveBeenCalledTimes(1);
-            const keyboardInputManagerInstance = vi.mocked(KeyboardInputManager).mock
-                .instances[0];
+            const keyboardInputManagerInstance = vi.mocked(KeyboardInputManager).mock.instances[0];
             expect(MovementSystem).toHaveBeenCalledWith(
                 gameConfigs,
                 keyboardInputManagerInstance,
@@ -79,8 +78,7 @@ describe("MainSystem", () => {
 
             mainSystem.forceKeyboardInput(keys);
 
-            const keyboardInputManagerInstance = vi.mocked(KeyboardInputManager).mock
-                .instances[0];
+            const keyboardInputManagerInstance = vi.mocked(KeyboardInputManager).mock.instances[0];
             expect(keyboardInputManagerInstance.setPressedKeys).toHaveBeenCalledWith(keys);
         });
     });

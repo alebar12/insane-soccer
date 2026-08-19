@@ -36,6 +36,4 @@ describe("AssetLoader", () => {
         const assetLoader = new AssetLoader();
         expect(() => assetLoader.getImage("nonexistent.png")).toThrow();
     });
-
-    
-})
+});

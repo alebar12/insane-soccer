@@ -4,7 +4,9 @@ import { ObservationWrapper } from "@/ai/ObservationWrapper";
 import { AssetLoader } from "@/assets/AssetLoader";
 import { GameStatus } from "@/game/enums/GameStatus";
 import { MainSystem } from "@/game/systems/MainSystem";
+import { MainSystemFactory } from "@/game/systems/MainSystemFactory";
 import { GameWorld } from "@/game/world/GameWorld";
+import { GameWorldFactory } from "@/game/world/GameWorldFactory";
 import { MouseInputManager } from "@/input/MouseInputManager";
 import { MainRender } from "@/rendering/MainRender";
 import { DomHandler } from "@/ui/DomHandler";
@@ -25,7 +27,7 @@ export class GameLoop {
         this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
         const playImg = assetLoader.getImage("play.png");
         const menuButtonImageRatio = playImg.width / playImg.height;
-        this.gameWorld = GameWorld.createPlayingGameWorldWithAiCpu(
+        this.gameWorld = GameWorldFactory.createPlayingGameWorldWithAiCpu(
             gameConfigs,
             menuButtonImageRatio,
         );
@@ -38,7 +40,7 @@ export class GameLoop {
             new ObservationWrapper(gameConfigs),
         );
 
-        this.mainSystem = new MainSystem(gameConfigs, this.aiToolsWrapper);
+        this.mainSystem = MainSystemFactory.create(gameConfigs, this.aiToolsWrapper);
     }
 
     public setHistory(history: string): void {

@@ -11,7 +11,7 @@ describe("ObservationWrapper", () => {
     let observationWrapper: ObservationWrapper;
 
     beforeEach(() => {
-        gameConfigs = { fieldHeight: 800, fieldWidth: 400 } as GameConfigs;
+        gameConfigs = { fieldHeight: 800, fieldWidth: 400, fieldXOffset: 0 } as GameConfigs;
         observationWrapper = new ObservationWrapper(gameConfigs);
     });
 

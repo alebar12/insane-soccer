@@ -9,7 +9,8 @@ describe("InferenceWrapper", () => {
     describe("predict", () => {
         it("should return an array of actions", () => {
             inferenceWrapper = new InferenceWrapper();
-            const actions = inferenceWrapper.predict([1, 2, 3]);
+            const actions = inferenceWrapper.predict([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            ]);
             expect(actions).toBeInstanceOf(Array);
             expect(actions).toHaveLength(3);
         });

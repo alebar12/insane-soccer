@@ -1,11 +1,11 @@
-import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-import prettierPlugin from "eslint-plugin-prettier";
+import tsParser from "@typescript-eslint/parser";
 import prettierConfig from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
 
 export default [
   {
-    files: ["src/**/*.ts"],
+    files: ["src/**/*.ts", "tests/**/*.ts"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -17,7 +17,6 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
-      // TypeScript
       ...tsPlugin.configs.recommended.rules,
       "@typescript-eslint/explicit-function-return-type": "error",
       "@typescript-eslint/no-explicit-any": "error",
@@ -25,7 +24,6 @@ export default [
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       "eqeqeq": ["error", "always"],
 
-      // Prettier (formattazione come errore ESLint)
       ...prettierConfig.rules,
       "prettier/prettier": "error",
     },

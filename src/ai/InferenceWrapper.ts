@@ -18,11 +18,6 @@ export class InferenceWrapper {
         this.model = modelData as unknown as Model;
     }
 
-    public overrideModel(base64Model: string): void {
-        const jsonModel = JSON.parse(atob(base64Model));
-        this.model = jsonModel as Model;
-    }
-
     public predict(obs: number[]): number[] {
         let x = obs;
         for (const layer of this.model.layers) {

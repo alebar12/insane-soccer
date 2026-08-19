@@ -4,18 +4,19 @@ import { ObservationWrapper } from "@/ai/ObservationWrapper";
 import { Player } from "@/game/entities/Player";
 import { GameStatus } from "@/game/enums/GameStatus";
 import { Keys } from "@/game/enums/Keys";
-import { MainSystem } from "@/game/systems/MainSystem";
 import { GameWorld } from "@/game/world/GameWorld";
+import { GameWorldFactory } from "@/game/world/GameWorldFactory";
 import { GameConfigs } from "@/utils/GameConfigs";
 import * as fs from "fs";
 import * as readline from "readline";
+import { MainSystemFactory } from "./game/systems/MainSystemFactory";
 
 const gameConfigs = new GameConfigs(800, 550);
 const aiToolsWrapper = new AiToolsWrapper(
     new InferenceWrapper(),
     new ObservationWrapper(gameConfigs),
 );
-const mainSystem = new MainSystem(gameConfigs, aiToolsWrapper);
+const mainSystem = MainSystemFactory.create(gameConfigs, aiToolsWrapper);
 const statusExtractor = new ObservationWrapper(gameConfigs);
 let positionsFileName = "positions-" + Date.now() + ".txt";
 let savePositions = false;
@@ -149,7 +150,7 @@ function updateWorld(delta: number): void {
 }
 
 function initGameWorldAndRefPlayer(speedFactor: number): [GameWorld, Player] {
-    let gameWorld = GameWorld.createWorldForReinforcementLearning(gameConfigs, speedFactor);
+    let gameWorld = GameWorldFactory.createWorldForReinforcementLearning(gameConfigs, speedFactor);
     gameWorld.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
     gameWorld.fireworks.reset();
     let refPlayer = gameWorld.players.find(player => !player.isSubstitute && !player.isCpu);

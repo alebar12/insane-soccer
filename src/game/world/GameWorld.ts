@@ -11,95 +11,26 @@ import { PowerShotType } from "@/game/enums/PowerShotType";
 import { GameStatusManager } from "@/game/managers/GameStatusManager";
 import { ScoreManager } from "@/game/managers/ScoreManager";
 import { EventBusUtilities } from "@/utils/EventBusUtilities";
-import { GameConfigs } from "@/utils/GameConfigs";
 import { EventBus } from "ts-bus";
 
 export class GameWorld {
-    public readonly goalPosts: GoalPosts;
-    public readonly players: Array<Player> = [];
-    public readonly ball: Ball;
-    public readonly fireworks: Fireworks;
-    public readonly gates: Gate;
-    public readonly explosion: Explosion;
-    public readonly menuButton: MenuButton;
-    public readonly gameStatusManager: GameStatusManager;
-    public readonly score: ScoreManager;
-
-    private constructor(
-        gameConfigs: GameConfigs,
-        menuButtonImageRatio: number,
-        players: Array<Player>,
+    public constructor(
+        public readonly goalPosts: GoalPosts,
+        public readonly players: Array<Player>,
+        public readonly ball: Ball,
+        public readonly fireworks: Fireworks,
+        public readonly gates: Gate,
+        public readonly explosion: Explosion,
+        public readonly menuButton: MenuButton,
+        public readonly gameStatusManager: GameStatusManager,
+        public readonly score: ScoreManager,
+        bus: EventBus,
     ) {
-        this.goalPosts = new GoalPosts(gameConfigs);
-        this.players.push(...players);
-        this.players.push(Player.createLeftSubstitutePlayer(gameConfigs));
-        this.players.push(Player.createRightSubstitutePlayer(gameConfigs));
-        this.ball = new Ball(gameConfigs);
-        this.fireworks = new Fireworks(gameConfigs);
-        this.explosion = new Explosion(gameConfigs);
-        this.gates = new Gate();
-        const bus = new EventBus();
-        this.score = new ScoreManager();
-        this.menuButton = new MenuButton(gameConfigs, menuButtonImageRatio);
-        this.gameStatusManager = new GameStatusManager(bus);
-
         bus.subscribe(EventBusUtilities.statusChangedEvent, event => {
             if (event.payload === GameStatus.MENU) {
                 this.resetEndGame();
             }
         });
-    }
-
-    public static createPlayingGameWorldWithScriptedCpu(
-        gameConfigs: GameConfigs,
-        menuButtonImageRatio: number,
-    ): GameWorld {
-        const players = [
-            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT),
-        ];
-        return new GameWorld(gameConfigs, menuButtonImageRatio, players);
-    }
-
-    public static createPlayingGameWorldWithAiCpu(
-        gameConfigs: GameConfigs,
-        menuButtonImageRatio: number,
-    ): GameWorld {
-        const players = [
-            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createAiCpuPlayer(gameConfigs, PlayerSide.RIGHT),
-        ];
-        return new GameWorld(gameConfigs, menuButtonImageRatio, players);
-    }
-
-    public static createSimulatedGameWorldWithScriptedCpu(gameConfigs: GameConfigs): GameWorld {
-        const players = [
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT),
-        ];
-        return new GameWorld(gameConfigs, 1, players);
-    }
-
-    public static createWorldForNeuroevolution(
-        gameConfigs: GameConfigs,
-        speedFactor: number,
-    ): GameWorld {
-        const players = [
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.LEFT, speedFactor),
-            Player.createAiCpuPlayer(gameConfigs, PlayerSide.RIGHT),
-        ];
-        return new GameWorld(gameConfigs, 1, players);
-    }
-
-    public static createWorldForReinforcementLearning(
-        gameConfigs: GameConfigs,
-        speedFactor: number,
-    ): GameWorld {
-        const players = [
-            Player.createHumanPlayer(gameConfigs, PlayerSide.LEFT),
-            Player.createScriptedCpuPlayer(gameConfigs, PlayerSide.RIGHT, speedFactor),
-        ];
-        return new GameWorld(gameConfigs, 1, players);
     }
 
     public increaseScore(playerSide: PlayerSide): void {

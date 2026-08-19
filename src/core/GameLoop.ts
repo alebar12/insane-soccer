@@ -9,6 +9,7 @@ import { GameWorld } from "@/game/world/GameWorld";
 import { GameWorldFactory } from "@/game/world/GameWorldFactory";
 import { MouseInputManager } from "@/input/MouseInputManager";
 import { MainRender } from "@/rendering/MainRender";
+import { MainRenderFactory } from "@/rendering/MainRenderFactory";
 import { DomHandler } from "@/ui/DomHandler";
 import { UIInteractionSystem } from "@/ui/UIInteractionSystem";
 import { GameConfigs } from "@/utils/GameConfigs";
@@ -24,7 +25,7 @@ export class GameLoop {
     private historyIndex: number = 0;
 
     public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
-        this.mainRender = new MainRender(gameConfigs, domHandler, assetLoader);
+        this.mainRender = MainRenderFactory.create(gameConfigs, domHandler, assetLoader);
         const playImg = assetLoader.getImage("play.png");
         const menuButtonImageRatio = playImg.width / playImg.height;
         this.gameWorld = GameWorldFactory.createPlayingGameWorldWithAiCpu(

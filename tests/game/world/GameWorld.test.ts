@@ -178,6 +178,26 @@ describe("GameWorld", () => {
         harness = createGameWorldHarness();
     });
 
+    function expectActivePlayersToHandleGoal(
+        playerSide: PlayerSide,
+        shouldResetPowerShots = false,
+    ): void {
+        expect(harness.leftPlayer.resetOnGoal).toHaveBeenCalledOnce();
+        expect(harness.rightPlayer.resetOnGoal).toHaveBeenCalledOnce();
+        expect(harness.leftPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(playerSide);
+        expect(harness.rightPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(playerSide);
+
+        if (shouldResetPowerShots) {
+            expect(harness.leftPowerShotWrapper.resetPowerShot).toHaveBeenCalledOnce();
+            expect(harness.rightPowerShotWrapper.resetPowerShot).toHaveBeenCalledOnce();
+        } else {
+            expect(harness.leftPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
+            expect(harness.rightPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
+        }
+
+        expect(harness.ball.resetOnGoal).toHaveBeenCalledOnce();
+    }
+
     describe("init", () => {
         it("should subscribe to status changed event", () => {
             expect(harness.bus.subscribe).toHaveBeenCalledWith(
@@ -216,17 +236,7 @@ describe("GameWorld", () => {
             expect(harness.gameStatusManager.changeStatus).toHaveBeenCalledWith(
                 GameStatus.WAITING_BALL,
             );
-            expect(harness.leftPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.rightPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.leftPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.LEFT,
-            );
-            expect(harness.rightPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.LEFT,
-            );
-            expect(harness.leftPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-            expect(harness.rightPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-            expect(harness.ball.resetOnGoal).toHaveBeenCalledOnce();
+            expectActivePlayersToHandleGoal(PlayerSide.LEFT);
 
             expect(harness.explosion.addExplosion).not.toHaveBeenCalled();
             expect(harness.gameStatusManager.changeStatus).not.toHaveBeenCalledWith(
@@ -243,17 +253,7 @@ describe("GameWorld", () => {
             expect(harness.gameStatusManager.changeStatus).toHaveBeenCalledWith(
                 GameStatus.SUBSTITUTION,
             );
-            expect(harness.leftPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.rightPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.leftPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.LEFT,
-            );
-            expect(harness.rightPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.LEFT,
-            );
-            expect(harness.leftPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-            expect(harness.rightPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-            expect(harness.ball.resetOnGoal).toHaveBeenCalledOnce();
+            expectActivePlayersToHandleGoal(PlayerSide.LEFT);
 
             expect(harness.explosion.addExplosion).not.toHaveBeenCalled();
             expect(harness.gameStatusManager.changeStatus).not.toHaveBeenCalledWith(
@@ -277,17 +277,7 @@ describe("GameWorld", () => {
                 expect(harness.gameStatusManager.changeStatus).toHaveBeenCalledWith(
                     GameStatus.WAITING_BALL,
                 );
-                expect(harness.leftPlayer.resetOnGoal).toHaveBeenCalledOnce();
-                expect(harness.rightPlayer.resetOnGoal).toHaveBeenCalledOnce();
-                expect(harness.leftPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                    PlayerSide.LEFT,
-                );
-                expect(harness.rightPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                    PlayerSide.LEFT,
-                );
-                expect(harness.leftPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-                expect(harness.rightPowerShotWrapper.resetPowerShot).not.toHaveBeenCalled();
-                expect(harness.ball.resetOnGoal).toHaveBeenCalledOnce();
+                expectActivePlayersToHandleGoal(PlayerSide.LEFT);
 
                 expect(harness.explosion.addExplosion).toHaveBeenCalledWith(
                     harness.ball.movementPosition.position,
@@ -308,17 +298,7 @@ describe("GameWorld", () => {
             expect(harness.gameStatusManager.changeStatus).toHaveBeenCalledWith(
                 GameStatus.WAITING_BALL,
             );
-            expect(harness.leftPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.rightPlayer.resetOnGoal).toHaveBeenCalledOnce();
-            expect(harness.leftPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.RIGHT,
-            );
-            expect(harness.rightPowerShotWrapper.updateScoredGoal).toHaveBeenCalledWith(
-                PlayerSide.RIGHT,
-            );
-            expect(harness.leftPowerShotWrapper.resetPowerShot).toHaveBeenCalledOnce();
-            expect(harness.rightPowerShotWrapper.resetPowerShot).toHaveBeenCalledOnce();
-            expect(harness.ball.resetOnGoal).toHaveBeenCalledOnce();
+            expectActivePlayersToHandleGoal(PlayerSide.RIGHT, true);
             expect(harness.explosion.addExplosion).not.toHaveBeenCalled();
 
             expect(harness.gameStatusManager.changeStatus).toHaveBeenCalledWith(

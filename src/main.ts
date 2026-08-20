@@ -1,8 +1,8 @@
 import { AssetLoader } from "@/assets/AssetLoader";
-import { GameLoop } from "@/core/GameLoop";
 import { DomHandler } from "@/ui/DomHandler";
 import { GameConfigs } from "@/utils/GameConfigs";
 import "./style.css";
+import { GameLoopFactory } from "./core/GameLoopFactory";
 
 class Main {
     public async init(): Promise<void> {
@@ -16,7 +16,7 @@ class Main {
         );
 
         this.closeLoadingWindow();
-        const gameLoop = new GameLoop(gameConfigs, domHandler, assetLoader);
+        const gameLoop = GameLoopFactory.create(gameConfigs, domHandler, assetLoader);
 
         if (window.location.href.includes("showPositions")) {
             const history = await fetch("/positions.txt").then(response => response.text());

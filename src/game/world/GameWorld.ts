@@ -40,29 +40,12 @@ export class GameWorld {
         } else {
             this.gameStatusManager.changeStatus(GameStatus.WAITING_BALL);
         }
-        this.players
-            .filter(player => !player.isSubstitute)
-            .forEach(player => {
-                player.resetOnGoal();
-                player.powerShotWrapper.updateScoredGoal(playerSide);
-            });
-        if (this.ball.ballPowerShot.isPowerShot) {
-            this.explosion.addExplosion(
-                this.ball.movementPosition.position,
-                this.ball.ballPowerShot.getPowerShotType() ?? PowerShotType.FIRE,
-            );
-        }
-        this.ball.resetOnGoal();
+
+        const activePlayers = this.getActivePlayers();
+        this.handleGoal(activePlayers, playerSide)
 
         if (this.score.isGameOver) {
-            this.gameStatusManager.changeStatus(GameStatus.END_GAME);
-            this.fireworks.initFireworks();
-            this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
-            this.players
-                .filter(player => !player.isSubstitute)
-                .forEach(player => {
-                    player.powerShotWrapper.resetPowerShot();
-                });
+            this.handleGameOver(activePlayers);
         }
     }
 
@@ -87,5 +70,33 @@ export class GameWorld {
         });
         this.ball.resetOnGoal();
         this.score.reset();
+    }
+
+    private getActivePlayers(): Array<Player> {
+        return this.players.filter(player => !player.isSubstitute);
+    }
+
+    private handleGoal(activePlayers: Array<Player>, playerSide: PlayerSide): void {
+        activePlayers.forEach(player => {
+                player.resetOnGoal();
+                player.powerShotWrapper.updateScoredGoal(playerSide);
+            });
+        if (this.ball.ballPowerShot.isPowerShot) {
+            this.explosion.addExplosion(
+                this.ball.movementPosition.position,
+                this.ball.ballPowerShot.getPowerShotType() ?? PowerShotType.FIRE,
+            );
+        }
+        this.ball.resetOnGoal();
+    }
+
+    private handleGameOver(activePlayers: Array<Player>): void {
+        this.gameStatusManager.changeStatus(GameStatus.END_GAME);
+            this.fireworks.initFireworks();
+            this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
+            activePlayers
+                .forEach(player => {
+                    player.powerShotWrapper.resetPowerShot();
+                });
     }
 }

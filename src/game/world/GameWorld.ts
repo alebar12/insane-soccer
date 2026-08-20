@@ -42,7 +42,7 @@ export class GameWorld {
         }
 
         const activePlayers = this.getActivePlayers();
-        this.handleGoal(activePlayers, playerSide)
+        this.handleGoal(activePlayers, playerSide);
 
         if (this.score.isGameOver) {
             this.handleGameOver(activePlayers);
@@ -78,9 +78,9 @@ export class GameWorld {
 
     private handleGoal(activePlayers: Array<Player>, playerSide: PlayerSide): void {
         activePlayers.forEach(player => {
-                player.resetOnGoal();
-                player.powerShotWrapper.updateScoredGoal(playerSide);
-            });
+            player.resetOnGoal();
+            player.powerShotWrapper.updateScoredGoal(playerSide);
+        });
         if (this.ball.ballPowerShot.isPowerShot) {
             this.explosion.addExplosion(
                 this.ball.movementPosition.position,
@@ -92,11 +92,10 @@ export class GameWorld {
 
     private handleGameOver(activePlayers: Array<Player>): void {
         this.gameStatusManager.changeStatus(GameStatus.END_GAME);
-            this.fireworks.initFireworks();
-            this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
-            activePlayers
-                .forEach(player => {
-                    player.powerShotWrapper.resetPowerShot();
-                });
+        this.fireworks.initFireworks();
+        this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
+        activePlayers.forEach(player => {
+            player.powerShotWrapper.resetPowerShot();
+        });
     }
 }

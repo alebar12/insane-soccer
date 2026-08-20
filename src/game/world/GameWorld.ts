@@ -16,7 +16,7 @@ import { EventBus } from "ts-bus";
 export class GameWorld {
     public constructor(
         public readonly goalPosts: GoalPosts,
-        public readonly players: Array<Player>,
+        public readonly players: ReadonlyArray<Player>,
         public readonly ball: Ball,
         public readonly fireworks: Fireworks,
         public readonly gates: Gate,
@@ -58,9 +58,11 @@ export class GameWorld {
             this.gameStatusManager.changeStatus(GameStatus.END_GAME);
             this.fireworks.initFireworks();
             this.gameStatusManager.scheduleStatusChange(Fireworks.animationTime, GameStatus.MENU);
-            this.players.forEach(player => {
-                player.powerShotWrapper.resetPowerShot();
-            });
+            this.players
+                .filter(player => !player.isSubstitute)
+                .forEach(player => {
+                    player.powerShotWrapper.resetPowerShot();
+                });
         }
     }
 

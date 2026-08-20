@@ -1,48 +1,20 @@
-import { AiToolsWrapper } from "@/ai/AiToolsWrapper";
-import { InferenceWrapper } from "@/ai/InferenceWrapper";
-import { ObservationWrapper } from "@/ai/ObservationWrapper";
-import { AssetLoader } from "@/assets/AssetLoader";
 import { GameStatus } from "@/game/enums/GameStatus";
 import { MainSystem } from "@/game/systems/MainSystem";
-import { MainSystemFactory } from "@/game/systems/MainSystemFactory";
 import { GameWorld } from "@/game/world/GameWorld";
-import { GameWorldFactory } from "@/game/world/GameWorldFactory";
-import { MouseInputManager } from "@/input/MouseInputManager";
 import { MainRender } from "@/rendering/MainRender";
-import { MainRenderFactory } from "@/rendering/MainRenderFactory";
-import { DomHandler } from "@/ui/DomHandler";
 import { UIInteractionSystem } from "@/ui/UIInteractionSystem";
-import { GameConfigs } from "@/utils/GameConfigs";
 
 export class GameLoop {
     private prevTime: number = 0;
-    private gameWorld: GameWorld;
-    private mainRender: MainRender;
-    private mainSystem: MainSystem;
-    private uiInteractionSystem: UIInteractionSystem;
-    private aiToolsWrapper: AiToolsWrapper;
     private history: Array<string> = [];
     private historyIndex: number = 0;
 
-    public constructor(gameConfigs: GameConfigs, domHandler: DomHandler, assetLoader: AssetLoader) {
-        this.mainRender = MainRenderFactory.create(gameConfigs, domHandler, assetLoader);
-        const playImg = assetLoader.getImage("play.png");
-        const menuButtonImageRatio = playImg.width / playImg.height;
-        this.gameWorld = GameWorldFactory.createPlayingGameWorldWithAiCpu(
-            gameConfigs,
-            menuButtonImageRatio,
-        );
-        this.uiInteractionSystem = new UIInteractionSystem(
-            new MouseInputManager(domHandler.menuCanvas),
-        );
-
-        this.aiToolsWrapper = new AiToolsWrapper(
-            new InferenceWrapper(),
-            new ObservationWrapper(gameConfigs),
-        );
-
-        this.mainSystem = MainSystemFactory.create(gameConfigs, this.aiToolsWrapper);
-    }
+    public constructor(
+        private gameWorld: GameWorld,
+        private mainRender: MainRender,
+        private mainSystem: MainSystem,
+        private uiInteractionSystem: UIInteractionSystem,
+    ) {}
 
     public setHistory(history: string): void {
         this.history = history.split("\n");
@@ -54,23 +26,7 @@ export class GameLoop {
             if (this.prevTime !== 0) {
                 const delta = time - this.prevTime;
                 if (this.history.length > 0) {
-                    this.gameWorld.gameStatusManager.changeStatus(GameStatus.PLAYING);
-                    const positions = this.history[this.historyIndex].split(" ");
-                    this.gameWorld.players[0].movementPosition.position.x = parseFloat(
-                        positions[0],
-                    );
-                    this.gameWorld.players[0].movementPosition.position.y = parseFloat(
-                        positions[1],
-                    );
-                    this.gameWorld.players[1].movementPosition.position.x = parseFloat(
-                        positions[2],
-                    );
-                    this.gameWorld.players[1].movementPosition.position.y = parseFloat(
-                        positions[3],
-                    );
-                    this.gameWorld.ball.movementPosition.position.x = parseFloat(positions[4]);
-                    this.gameWorld.ball.movementPosition.position.y = parseFloat(positions[5]);
-                    this.historyIndex++;
+                    this.updateStatusFromHistory();
                 } else {
                     this.updateInputs(delta);
                     this.update(delta);
@@ -104,5 +60,17 @@ export class GameLoop {
 
     private render(): void {
         this.mainRender.render(this.gameWorld);
+    }
+
+    private updateStatusFromHistory(): void {
+        this.gameWorld.gameStatusManager.changeStatus(GameStatus.PLAYING);
+        const positions = this.history[this.historyIndex].split(" ");
+        this.gameWorld.players[0].movementPosition.position.x = parseFloat(positions[0]);
+        this.gameWorld.players[0].movementPosition.position.y = parseFloat(positions[1]);
+        this.gameWorld.players[1].movementPosition.position.x = parseFloat(positions[2]);
+        this.gameWorld.players[1].movementPosition.position.y = parseFloat(positions[3]);
+        this.gameWorld.ball.movementPosition.position.x = parseFloat(positions[4]);
+        this.gameWorld.ball.movementPosition.position.y = parseFloat(positions[5]);
+        this.historyIndex++;
     }
 }

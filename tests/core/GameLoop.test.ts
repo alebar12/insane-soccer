@@ -14,28 +14,30 @@ import { MainRender } from "@/rendering/MainRender";
 import { UIInteractionSystem } from "@/ui/UIInteractionSystem";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-
 describe("GameLoop", () => {
     let gameStatus = GameStatus.MENU;
-    const gameStatusManager: Pick<GameStatusManager, 'gameStatus' | 'changeStatus'> = {
+    const gameStatusManager: Pick<GameStatusManager, "gameStatus" | "changeStatus"> = {
         get gameStatus() {
             return gameStatus;
         },
         changeStatus: vi.fn(),
     };
-    const player1: Pick<Player, 'movementPosition'> = {
+    const player1: Pick<Player, "movementPosition"> = {
         movementPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 0),
     };
-    const player2: Pick<Player, 'movementPosition'> = {
+    const player2: Pick<Player, "movementPosition"> = {
         movementPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 0),
     };
-    const ball: Pick<Ball, 'movementPosition'> = {
+    const ball: Pick<Ball, "movementPosition"> = {
         movementPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 0),
     };
     const fireworks: Pick<Fireworks, "reset"> = { reset: vi.fn() };
     const mouseInput: Pick<MouseInputManager, "reset"> = { reset: vi.fn() };
 
-    const gameWorld: Pick<GameWorld, 'update' | 'gameStatusManager' | 'players' | 'ball' | 'menuButton' | 'fireworks'> = {
+    const gameWorld: Pick<
+        GameWorld,
+        "update" | "gameStatusManager" | "players" | "ball" | "menuButton" | "fireworks"
+    > = {
         update: vi.fn(),
         gameStatusManager: gameStatusManager as GameStatusManager,
         players: [player1 as Player, player2 as Player],
@@ -43,14 +45,14 @@ describe("GameLoop", () => {
         menuButton: {} as MenuButton,
         fireworks: fireworks as Fireworks,
     };
-    const mainRender: Pick<MainRender, 'render'> = {
+    const mainRender: Pick<MainRender, "render"> = {
         render: vi.fn(),
     };
-    const mainSystem: Pick<MainSystem, 'update'> = {
+    const mainSystem: Pick<MainSystem, "update"> = {
         update: vi.fn(),
     };
     let capturedOnClick: () => void = () => {};
-    
+
     const uiInteractionSystem: Pick<UIInteractionSystem, "update" | "input"> = {
         update: vi.fn((_menuButton, onClick) => {
             capturedOnClick = onClick;
@@ -98,28 +100,30 @@ describe("GameLoop", () => {
             expect(uiInteractionSystem.update).not.toHaveBeenCalled();
         });
 
-        it.each([
-            GameStatus.MENU,
-            GameStatus.WAITING_BALL
-        ])("should update and render on subsequent frames when starting from %s", (initialGameStatus) => {
-            gameLoop.main();
-            gameStatus = initialGameStatus;
+        it.each([GameStatus.MENU, GameStatus.WAITING_BALL])(
+            "should update and render on subsequent frames when starting from %s",
+            initialGameStatus => {
+                gameLoop.main();
+                gameStatus = initialGameStatus;
 
-            rafCallback(16);  
-            rafCallback(32);  
-            capturedOnClick();
+                rafCallback(16);
+                rafCallback(32);
+                capturedOnClick();
 
-            expect(mainRender.render).toHaveBeenCalledTimes(1);
-            expect(gameWorld.update).toHaveBeenCalledTimes(1);
-            expect(mainSystem.update).toHaveBeenCalledTimes(1);
-            expect(uiInteractionSystem.update).toHaveBeenCalledTimes(1);
+                expect(mainRender.render).toHaveBeenCalledTimes(1);
+                expect(gameWorld.update).toHaveBeenCalledTimes(1);
+                expect(mainSystem.update).toHaveBeenCalledTimes(1);
+                expect(uiInteractionSystem.update).toHaveBeenCalledTimes(1);
 
-            if (initialGameStatus === GameStatus.MENU) {
-                expect(gameStatusManager.changeStatus).toHaveBeenCalledWith(GameStatus.WAITING_BALL);
-                expect(fireworks.reset).toHaveBeenCalledTimes(1);
-                expect(mouseInput.reset).toHaveBeenCalledTimes(1);
-            }
-        });
+                if (initialGameStatus === GameStatus.MENU) {
+                    expect(gameStatusManager.changeStatus).toHaveBeenCalledWith(
+                        GameStatus.WAITING_BALL,
+                    );
+                    expect(fireworks.reset).toHaveBeenCalledTimes(1);
+                    expect(mouseInput.reset).toHaveBeenCalledTimes(1);
+                }
+            },
+        );
     });
 
     describe("set and show history", () => {
@@ -128,11 +132,13 @@ describe("GameLoop", () => {
             expect(gameLoop["history"]).toStrictEqual(["1 2 3 4 5 6", "7 8 9 10 11 12"]);
 
             gameLoop.main();
-            rafCallback(16);  
-            rafCallback(32);  
+            rafCallback(16);
+            rafCallback(32);
 
             expect(gameWorld.gameStatusManager.changeStatus).toHaveBeenCalledTimes(1);
-            expect(gameWorld.gameStatusManager.changeStatus).toHaveBeenCalledWith(GameStatus.PLAYING);
+            expect(gameWorld.gameStatusManager.changeStatus).toHaveBeenCalledWith(
+                GameStatus.PLAYING,
+            );
             expect(gameWorld.players[0].movementPosition.position.x).toBe(1);
             expect(gameWorld.players[0].movementPosition.position.y).toBe(2);
             expect(gameWorld.players[1].movementPosition.position.x).toBe(3);

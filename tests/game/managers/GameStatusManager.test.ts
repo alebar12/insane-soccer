@@ -30,8 +30,10 @@ describe("GameStatusManager", () => {
         });
     });
 
-    describe("schedule status change", () => {
+    describe("schedule status change twice", () => {
         it("should schedule status change", () => {
+            gameStatusManager.scheduleStatusChange(1000, GameStatus.WAITING_BALL);
+            gameStatusManager.update(100);
             gameStatusManager.scheduleStatusChange(1000, GameStatus.WAITING_BALL);
             expect(gameStatusManager.gameStatus).toBe(GameStatus.MENU);
             gameStatusManager.update(500);

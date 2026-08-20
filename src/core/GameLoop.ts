@@ -71,6 +71,9 @@ export class GameLoop {
         this.gameWorld.players[1].movementPosition.position.y = parseFloat(positions[3]);
         this.gameWorld.ball.movementPosition.position.x = parseFloat(positions[4]);
         this.gameWorld.ball.movementPosition.position.y = parseFloat(positions[5]);
-        this.historyIndex++;
+
+        if (this.historyIndex < this.history.length - 1) {
+            this.historyIndex++;
+        }
     }
 }

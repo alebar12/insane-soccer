@@ -6,7 +6,7 @@ export class Fireworks {
     public readonly lineWidth: number;
     private readonly colorOffset: number = 100;
     private readonly maxComponents: number = 20;
-    private readonly minComponents: number = 20;
+    private readonly minComponents: number = 10;
     private readonly interval: number = 100;
     private readonly numberOfFireworks: number = Math.round(
         Fireworks.animationTime / this.interval,

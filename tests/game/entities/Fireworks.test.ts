@@ -1,7 +1,7 @@
 import { FireworkDto, Fireworks } from "@/game/entities/Fireworks";
 import { Point } from "@/game/geometry/Point";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Fireworks", () => {
     let gameConfigs: GameConfigs;
@@ -12,20 +12,23 @@ describe("Fireworks", () => {
         fireworks = new Fireworks(gameConfigs);
     });
 
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     describe("initFireworks", () => {
         it("should init fireworks", () => {
+            mockRandomFunction();
+
             expect(fireworks.fireworks).toHaveLength(0);
             fireworks.initFireworks();
             expect(fireworks.fireworks).toHaveLength(50);
 
             fireworks.fireworks.forEach(firework => {
-                expect(firework.components.length).toBeGreaterThan(10);
-                expect(firework.components.length).toBeLessThan(21);
+                expect(firework.components.length).toBe(10);
                 firework.components.forEach(component => {
                     expect(component.color).toMatch(/^#[0-9A-Fa-f]{6}$/);
-                    firework.components.forEach(otherComponent => {
-                        expect(isCloseToColor(component.color, otherComponent.color)).toBe(true);
-                    });
+                    expect(isCloseToColor(component.color, "#FFFFFF")).toBe(true);
                 });
 
                 const index = fireworks.fireworks.indexOf(firework);
@@ -99,5 +102,33 @@ describe("Fireworks", () => {
         const distance = Math.sqrt((r - r2) ** 2 + (g - g2) ** 2 + (b - b2) ** 2);
 
         return distance <= threshold;
+    }
+
+    function mockRandomFunction(): void {
+        for (let i = 0; i < 50; i++) {
+            vi.spyOn(Math, "random")
+                // colors
+                .mockReturnValueOnce(1)
+                .mockReturnValueOnce(1)
+                .mockReturnValueOnce(1)
+                // components number
+                .mockReturnValueOnce(0);
+
+            for (let j = 0; j < 10; j++) {
+                vi.spyOn(Math, "random")
+                    // component colors
+                    .mockReturnValueOnce(0)
+                    .mockReturnValueOnce(0)
+                    .mockReturnValueOnce(0)
+                    // component distance
+                    .mockReturnValueOnce(0)
+                    .mockReturnValueOnce(1);
+            }
+
+            vi.spyOn(Math, "random")
+                // firework position
+                .mockReturnValueOnce(0)
+                .mockReturnValueOnce(0);
+        }
     }
 });

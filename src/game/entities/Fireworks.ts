@@ -85,8 +85,7 @@ export class Fireworks {
     private getColorValueWithOffset(colorValue: number): number {
         return Math.min(
             Math.max(
-                colorValue +
-                    Math.round(Math.random() * (this.colorOffset / 2) - this.colorOffset / 2),
+                colorValue + Math.round(Math.random() * this.colorOffset - this.colorOffset / 2),
                 0,
             ),
             255,

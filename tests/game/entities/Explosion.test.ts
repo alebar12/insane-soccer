@@ -2,7 +2,7 @@ import { Explosion } from "@/game/entities/Explosion";
 import { PowerShotType } from "@/game/enums/PowerShotType";
 import { Point } from "@/game/geometry/Point";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Explosion", () => {
     let gameConfigs: GameConfigs;
@@ -11,6 +11,10 @@ describe("Explosion", () => {
     beforeEach(() => {
         gameConfigs = new GameConfigs(600, 800);
         explosion = new Explosion(gameConfigs);
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     describe("addExplosion", () => {
@@ -23,12 +27,12 @@ describe("Explosion", () => {
             explosion.addExplosion(new Point(0, 0), powerShotType);
             expect(explosion.components).toHaveLength(40);
             expect(explosion.position).toEqual(new Point(0, 0));
-            expect(explosion.components.some(component => component.duration == 1000)).toBe(true);
-            expect(explosion.components.every(component => component.angle == Math.PI * 2)).toBe(
+            expect(explosion.components.some(component => component.duration === 1000)).toBe(true);
+            expect(explosion.components.every(component => component.angle === Math.PI * 2)).toBe(
                 true,
             );
-            expect(explosion.components.every(component => component.getFactor() == 0)).toBe(true);
-            expect(explosion.components.every(component => component.isFinished() == false)).toBe(
+            expect(explosion.components.every(component => component.getFactor() === 0)).toBe(true);
+            expect(explosion.components.every(component => component.isFinished() === false)).toBe(
                 true,
             );
             expect(

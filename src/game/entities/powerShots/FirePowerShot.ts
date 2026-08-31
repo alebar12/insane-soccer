@@ -18,12 +18,13 @@ export class FirePowerShot implements PowerShotInterface {
     }
 
     public update(deltaMs: number, player: Player): void {
-        this.flames.forEach(flame => {
+        for (let index = this.flames.length - 1; index >= 0; index--) {
+            const flame = this.flames[index];
             flame.update(deltaMs);
             if (flame.isFinished()) {
                 this.flames.splice(this.flames.indexOf(flame), 1);
             }
-        });
+        }
 
         this.lastAddedDeltaTime += deltaMs;
         if (

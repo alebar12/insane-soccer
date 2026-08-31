@@ -16,7 +16,13 @@ describe("Ball", () => {
     });
 
     describe("setForStartGame", () => {
-        it("should set ball for start game", () => {
+        it.each([
+            [0, 3.33, Math.PI / 2 - Math.PI / 9],
+            [1, 1, Math.PI / 2 + Math.PI / 4.5 - Math.PI / 9],
+        ])("should set ball for start game", (randomValue, speedFactor, speedAngle) => {
+            vi.spyOn(Math, "random")
+                .mockReturnValueOnce(randomValue)
+                .mockReturnValueOnce(randomValue);
             ball.setForStartGame();
 
             expect(ball.movementPosition.position).toEqual(
@@ -25,10 +31,8 @@ describe("Ball", () => {
                     gameConfigs.fieldBorderSize + gameConfigs.ballSizeWithBorder,
                 ),
             );
-            expect(ball.movementPosition.getSpeed()).toBeGreaterThan(0);
-            const prevSpeed = ball.movementPosition.getSpeed();
-            ball.setForStartGame();
-            expect(ball.movementPosition.getSpeed()).toBe(prevSpeed);
+            expect(ball.movementPosition.getSpeed()).toBe(ball.maxSpeed / speedFactor);
+            expect(ball.movementPosition.getSpeedAngle()).toBeCloseTo(speedAngle);
         });
     });
 

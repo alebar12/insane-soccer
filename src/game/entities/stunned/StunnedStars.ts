@@ -16,13 +16,14 @@ export class StunnedStars {
             this.starDelta = 0;
         }
 
-        this.stars.forEach((star, _index) => {
+        for (let index = this.stars.length - 1; index >= 0; index--) {
+            const star = this.stars[index];
             star.update(delta);
             star.angle += this.angleStep * delta;
             if (star.getFactor() >= 1) {
-                this.stars.splice(this.stars.indexOf(star), 1);
+                this.stars.splice(index, 1);
             }
-        });
+        }
     }
 }
 

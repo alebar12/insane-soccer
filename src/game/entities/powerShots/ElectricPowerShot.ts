@@ -43,7 +43,7 @@ export class ElectricPowerShot implements PowerShotInterface {
     }
 
     private regenerateLightningBoltPoints(): void {
-        this.lightningBoltPointArray = [];
+        this.lightningBoltPointArray.splice(0, this.lightningBoltPointArray.length);
         for (let i = 0; i < this.lightningBoltSize; i++) {
             this.lightningBoltPointArray.push(
                 new Point(

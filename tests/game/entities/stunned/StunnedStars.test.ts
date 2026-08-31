@@ -18,9 +18,7 @@ describe("StunnedStars", () => {
         expect(stunnedStars.stars).toHaveLength(1);
         expect(stunnedStars.stars[0].position).toEqual(new Point(0, 0));
 
-        const updateSpies = stunnedStars.stars.map(star =>
-            vi.spyOn(star, "update"),
-        );
+        const updateSpies = stunnedStars.stars.map(star => vi.spyOn(star, "update"));
         stunnedStars.update(300, new Point(0, 0));
         expect(stunnedStars.stars).toHaveLength(2);
         updateSpies.forEach(spy => expect(spy).toHaveBeenCalledWith(300));

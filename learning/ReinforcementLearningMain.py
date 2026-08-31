@@ -2,7 +2,6 @@ import json
 import os
 import subprocess
 import torch
-from datetime import datetime
 
 import numpy as np
 import gymnasium as gym
@@ -48,12 +47,15 @@ class MyEnv(gym.Env):
 
         self.step_count = 0
 
-        self.proc = subprocess.Popen(["npx", 
-            "ts-node", 
-            "../src/SimulationWithInputMain.ts"], 
-            stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        self.proc = subprocess.Popen(
+            ["npx", "ts-node", "-r", "tsconfig-paths/register", "../src/SimulationWithInputMain.ts"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
 
     def reset(self, seed=None, options=None):
+        del options
         super().reset(seed=seed)
 
         if self.step_count > 0 and not self.lastGameTerminated:

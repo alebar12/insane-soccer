@@ -38,7 +38,7 @@ describe("GameLoop", () => {
         gameStatus = GameStatus.MENU;
 
         gameStatusManager = {
-            get gameStatus() {
+            get gameStatus(): GameStatus {
                 return gameStatus;
             },
             changeStatus: vi.fn(),
@@ -70,7 +70,7 @@ describe("GameLoop", () => {
         mainSystem = {
             update: vi.fn(),
         };
-        capturedOnClick = () => {};
+        capturedOnClick = (): void => {};
 
         uiInteractionSystem = {
             update: vi.fn((_menuButton, onClick) => {

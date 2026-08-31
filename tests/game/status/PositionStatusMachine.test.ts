@@ -32,7 +32,7 @@ describe("PositionStatusMachine", () => {
             destinationPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 0),
             currentMaxSpeed: 0,
             adjustSpeedToDestinationPoint: vi.fn(),
-            reachedDestinationPosition() {
+            reachedDestinationPosition(): boolean {
                 return destinationPosition;
             },
         };

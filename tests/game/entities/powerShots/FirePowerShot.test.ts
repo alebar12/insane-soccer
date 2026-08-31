@@ -27,7 +27,7 @@ describe("FirePowerShot", () => {
         const updateSpies = firePowerShot.flames.map(flame => vi.spyOn(flame, "update"));
         firePowerShot.update(10, createPlayer(0, true, PlayerStatus.NORMAL));
         updateSpies.forEach(spy => expect(spy).toHaveBeenCalledWith(10));
-        expect(firePowerShot.flames[0].getDurationFactor()).toBeGreaterThan(0)
+        expect(firePowerShot.flames[0].getDurationFactor()).toBeGreaterThan(0);
         expect(firePowerShot.flames[0].isFinished()).toBe(false);
 
         firePowerShot.update(1000, createPlayer(0, true, PlayerStatus.NORMAL));
@@ -35,11 +35,13 @@ describe("FirePowerShot", () => {
     });
 
     function createPlayer(
-            colorIndex: number,
-            powerShot: boolean,
-            playerStatus: PlayerStatus,
+        colorIndex: number,
+        powerShot: boolean,
+        playerStatus: PlayerStatus,
     ): Player {
-        let player: Pick<Player, "colorIndex" | "playerStatus" | "powerShotWrapper" | "movementPosition"
+        let player: Pick<
+            Player,
+            "colorIndex" | "playerStatus" | "powerShotWrapper" | "movementPosition"
         >;
         player = {
             colorIndex: colorIndex,

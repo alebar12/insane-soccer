@@ -13,7 +13,10 @@ describe("PowerShotWrapper", () => {
     beforeEach(() => {
         powerShot1 = { update: vi.fn() };
         powerShot2 = { update: vi.fn() };
-        powerShotWrapper = new PowerShotWrapper(side, [powerShot1 as PowerShotInterface, powerShot2 as PowerShotInterface]);
+        powerShotWrapper = new PowerShotWrapper(side, [
+            powerShot1 as PowerShotInterface,
+            powerShot2 as PowerShotInterface,
+        ]);
     });
 
     it("should update power shots", () => {
@@ -50,5 +53,4 @@ describe("PowerShotWrapper", () => {
         powerShotWrapper.resetPowerShot();
         expect(powerShotWrapper.getPowerShot()).toBe(false);
     });
-
 });

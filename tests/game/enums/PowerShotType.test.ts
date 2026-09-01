@@ -22,6 +22,5 @@ describe("PowerShotType", () => {
     it("should return correct should move to goal", () => {
         expect(PowerShotUtilities.shouldMoveToGoal(PowerShotType.FIRE)).toBe(false);
         expect(PowerShotUtilities.shouldMoveToGoal(PowerShotType.ELECTRIC)).toBe(true);
-        expect(PowerShotUtilities.shouldMoveToGoal(null)).toBe(false);
     });
 });

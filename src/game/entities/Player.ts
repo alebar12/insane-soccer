@@ -7,6 +7,7 @@ import { PlayerStatus } from "@/game/enums/PlayerStatus";
 import { MovementPoint } from "@/game/geometry/MovementPoint";
 import { Point } from "@/game/geometry/Point";
 import { GameConfigs } from "@/utils/GameConfigs";
+import { PowerShotWrapperFactory } from "./powerShots/PowerShotWrapperFactory";
 
 export class Player {
     public readonly isCpu: boolean;
@@ -67,7 +68,7 @@ export class Player {
         this.colorIndex = colorIndex;
         this.initPositions(gameConfigs);
 
-        this.powerShotWrapper = new PowerShotWrapper(gameConfigs, side);
+        this.powerShotWrapper = PowerShotWrapperFactory.createPowerShotWrapper(gameConfigs, side);
     }
 
     public static createHumanPlayer(gameConfigs: GameConfigs, playerSide: PlayerSide): Player {

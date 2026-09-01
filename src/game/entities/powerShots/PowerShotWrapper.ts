@@ -1,9 +1,6 @@
 import { Player } from "@/game/entities/Player";
-import { ElectricPowerShot } from "@/game/entities/powerShots/ElectricPowerShot";
-import { FirePowerShot } from "@/game/entities/powerShots/FirePowerShot";
 import { PowerShotInterface } from "@/game/entities/powerShots/PowerShotInterface";
 import { PlayerSide } from "@/game/enums/PlayerSide";
-import { GameConfigs } from "@/utils/GameConfigs";
 
 export class PowerShotWrapper {
     private powerShot: boolean = false;
@@ -12,9 +9,8 @@ export class PowerShotWrapper {
     private readonly side: PlayerSide;
     private powerShots: Array<PowerShotInterface> = [];
 
-    constructor(gameConfigs: GameConfigs, side: PlayerSide) {
-        this.powerShots.push(new ElectricPowerShot(gameConfigs));
-        this.powerShots.push(new FirePowerShot(gameConfigs));
+    constructor(side: PlayerSide, powerShotEntities: Array<PowerShotInterface>) {
+        this.powerShots = powerShotEntities;
         this.side = side;
     }
 

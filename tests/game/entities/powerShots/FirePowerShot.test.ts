@@ -34,6 +34,10 @@ describe("FirePowerShot", () => {
         expect(firePowerShot.flames).toHaveLength(1);
     });
 
+    it("should render", () => {
+        expect(firePowerShot.shouldRender(createPlayer(0, true, PlayerStatus.NORMAL))).toBe(true);
+    });
+
     function createPlayer(
         colorIndex: number,
         powerShot: boolean,

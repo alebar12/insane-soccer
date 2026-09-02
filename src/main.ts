@@ -1,8 +1,8 @@
 import { AssetLoader } from "@/assets/AssetLoader";
 import { DomHandler } from "@/ui/DomHandler";
 import { GameConfigs } from "@/utils/GameConfigs";
-import "./style.css";
 import { GameLoopFactory } from "./core/GameLoopFactory";
+import "./style.css";
 
 class Main {
     public async init(): Promise<void> {
@@ -37,7 +37,6 @@ class Main {
             function onTransitionEnd() {
                 element.style.display = "none";
                 element.removeEventListener("transitionend", onTransitionEnd);
-                //domHandler.menuCanvas.style.display = "block";
             },
             { once: true },
         );

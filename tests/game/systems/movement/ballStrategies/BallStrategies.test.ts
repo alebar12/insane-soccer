@@ -61,6 +61,30 @@ describe("BallAttachedStrategy", () => {
         expect(ball.angleWithPlayer).toBeGreaterThan(1);
         expect(ball.angleWithPlayer).toBeLessThanOrEqual(Math.PI);
     });
+
+    it("should snap to the player direction and normalize out-of-range angles", () => {
+        const strategy = new BallAttachedStrategy();
+        const ball = {
+            attachedPlayer: {
+                movementPosition: {
+                    position: new Point(10, 20),
+                    size: 5,
+                    getSpeed: (): number => 1,
+                    getSpeedAngle: (): number => 0,
+                },
+                normalMaxSpeed: 1,
+            },
+            angleWithPlayer: Math.PI - 0.01,
+            movementPosition: { position: new Point(0, 0), size: 2 },
+        };
+        const internals = strategy as unknown as { normalizeAngle: (angle: number) => number };
+
+        strategy.apply(ball as never, playingWorld, 16);
+
+        expect(ball.angleWithPlayer).toBe(Math.PI);
+        expect(internals.normalizeAngle(2 * Math.PI)).toBe(0);
+        expect(internals.normalizeAngle(-2 * Math.PI)).toBe(0);
+    });
 });
 
 describe("BallAttachedWithKeyPressedStrategy", () => {

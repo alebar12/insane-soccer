@@ -82,6 +82,30 @@ describe("AiCpuStrategy", () => {
         expect(player.movementPosition.velocity.x).toBeGreaterThan(0);
         expect(kick).toHaveBeenCalled();
     });
+
+    it("should mirror the horizontal AI action for a right-side player", () => {
+        const player = normalPlayer({
+            isCpu: true,
+            cpuType: CpuType.AI,
+            side: PlayerSide.RIGHT,
+        });
+        const gameWorld = {
+            ...world(GameStatus.PLAYING),
+            ball: { attachedPlayer: null, kick: vi.fn() },
+        } as unknown as GameWorld;
+        const strategy = new AiCpuStrategy({
+            observationWrapper: {
+                extractObservation: (): { toArray: () => number[] } => ({
+                    toArray: (): number[] => [],
+                }),
+            },
+            inferenceWrapper: { predict: (): number[] => [2, 1, 0] },
+        } as never);
+
+        strategy.apply(player as never, gameWorld, 10);
+
+        expect(player.movementPosition.velocity.x).toBeLessThan(0);
+    });
 });
 
 describe("MenuStrategy", () => {
@@ -104,6 +128,7 @@ describe("MenuStrategy", () => {
         const player = normalPlayer({
             reachedDestinationPosition: (): boolean => true,
             adjustSpeedToDestinationPoint: vi.fn(),
+            side: PlayerSide.RIGHT,
         });
 
         new MenuStrategy(gameConfigs).apply(player as never, world(GameStatus.MENU), 16);
@@ -129,6 +154,21 @@ describe("PlayerInputStrategy", () => {
 
         expect(player.movementPosition.velocity.x).toBeGreaterThan(0);
         expect(player.movementPosition.velocity.y).toBeLessThan(0);
+    });
+
+    it("should decelerate an eligible player when no direction is pressed", () => {
+        const player = normalPlayer({
+            movementPosition: new MovementPoint(new Point(0, 0), new Point(1, 1), 0.1, 5),
+        });
+        const keyboard = { getDirectionPressed: vi.fn().mockReturnValue(null) };
+
+        new PlayerInputStrategy(keyboard as unknown as KeyboardInputManager).apply(
+            player as never,
+            world(GameStatus.PLAYING),
+            5,
+        );
+
+        expect(player.movementPosition.getSpeed()).toBeLessThan(Math.sqrt(2));
     });
 });
 
@@ -174,7 +214,7 @@ describe("ScriptedCpuStrategy", () => {
 
         strategy.apply(player as never, gameWorld, 16);
         player.movementPosition.position = new Point(gameConfigs.fieldWidth / 2 + 50, 200);
-        strategy.apply(player as never, gameWorld, 16);
+        strategy.apply(player as never, gameWorld, 3001);
         player.movementPosition.position = new Point(
             gameConfigs.fieldXOffset + gameConfigs.fieldWidth - 10,
             gameConfigs.fieldHeight - 20,
@@ -186,6 +226,26 @@ describe("ScriptedCpuStrategy", () => {
         expect(player.destinationPosition?.position.x).toBe(
             gameConfigs.fieldXOffset + gameConfigs.fieldWidth / 2,
         );
+    });
+
+    it("should chase the opposing player when that player holds the ball", () => {
+        const player = normalPlayer({
+            isCpu: true,
+            cpuType: CpuType.SCRIPTED,
+            adjustSpeedToDestinationPoint: vi.fn(),
+        });
+        const opponent = {
+            movementPosition: new MovementPoint(new Point(50, 50), new Point(1, 1), 1, 5),
+        };
+        const gameWorld = {
+            ...world(GameStatus.PLAYING),
+            ball: { ballStatus: BallStatus.ATTACHED, attachedPlayer: opponent },
+        } as unknown as GameWorld;
+
+        new ScriptedCpuStrategy(gameConfigs).apply(player as never, gameWorld, 16);
+
+        expect(player.destinationPosition?.position).toMatchObject({ x: 50, y: 50 });
+        expect(player.destinationPosition?.acceleration).toBe(0);
     });
 });
 
@@ -248,15 +308,23 @@ describe("SubstitutePlayersStrategy", () => {
             reachedDestinationPosition: (): boolean => false,
             initialPosition: new Point(50, 50),
         });
+        const gameStatusManager = {
+            gameStatus: GameStatus.SUBSTITUTION,
+            isStatusChangedRecently: (): boolean => false,
+        };
         const gameWorld = {
             ...world(GameStatus.SUBSTITUTION),
+            gameStatusManager,
             switchPlayerColor: vi.fn(),
         } as unknown as GameWorld;
+        const strategy = new SubstitutePlayersStrategy(gameConfigs);
 
-        new SubstitutePlayersStrategy(gameConfigs).apply(player as never, gameWorld, 16);
+        strategy.apply(player as never, gameWorld, 16);
+        gameStatusManager.isStatusChangedRecently = (): boolean => true;
+        strategy.apply(player as never, gameWorld, 16);
 
         expect(player.destinationPosition).toBeInstanceOf(MovementPoint);
-        expect(adjustSpeedToDestinationPoint).toHaveBeenCalledWith(16);
+        expect(adjustSpeedToDestinationPoint).toHaveBeenCalledTimes(2);
     });
 
     it("should execute every substitution destination action", () => {

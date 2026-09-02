@@ -91,6 +91,20 @@ describe("AbstractCollisionStrategy", () => {
         expect(strategy.goalLimits(5, PlayerSide.LEFT)).toMatchObject({ left: 5, right: 33 });
         expect(strategy.goalLimits(5, PlayerSide.RIGHT)).toMatchObject({ left: 567, right: 595 });
     });
+
+    it("should stop, rather than invert, velocities at every border", () => {
+        const strategy = new TestCollisionStrategy(gameConfigs);
+        const limits = new BorderLimits(10, 20, 30, 40);
+        const movement = new MovementPoint(new Point(30, 50), new Point(1, 1), 0, 0);
+
+        strategy.handleCollision(movement, limits, false);
+
+        movement.position = new Point(15, 0);
+        movement.velocity = new Point(0, -1);
+        strategy.handleCollision(movement, limits, false);
+
+        expect(movement.velocity).toMatchObject({ x: 0, y: 0 });
+    });
 });
 
 describe("BallBorderCollisionStrategy", () => {

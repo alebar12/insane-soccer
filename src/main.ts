@@ -4,7 +4,7 @@ import { GameConfigs } from "@/utils/GameConfigs";
 import { GameLoopFactory } from "./core/GameLoopFactory";
 import "./style.css";
 
-class Main {
+export class Main {
     public async init(): Promise<void> {
         const assetLoader = new AssetLoader();
         await assetLoader.init();

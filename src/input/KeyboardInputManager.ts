@@ -7,6 +7,8 @@ export class KeyboardInputManager {
         if (typeof document !== "undefined") {
             document.addEventListener("keydown", this.onKeyDown);
             document.addEventListener("keyup", this.onKeyUp);
+            document.addEventListener("visibilitychange", this.onVisibilityChange);
+            window.addEventListener("blur", this.clearPressedKeys);
         }
     }
 
@@ -14,6 +16,9 @@ export class KeyboardInputManager {
         if (typeof document !== "undefined") {
             document.removeEventListener("keydown", this.onKeyDown);
             document.removeEventListener("keyup", this.onKeyUp);
+            document.removeEventListener("visibilitychange", this.onVisibilityChange);
+            window.removeEventListener("blur", this.clearPressedKeys);
+            this.clearPressedKeys();
         }
     }
 
@@ -36,10 +41,30 @@ export class KeyboardInputManager {
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
-        this.pressedKeys.add(event.key as Keys);
+        if (this.isGameKey(event.key)) {
+            event.preventDefault();
+            this.pressedKeys.add(event.key);
+        }
     };
 
     private onKeyUp = (event: KeyboardEvent): void => {
-        this.pressedKeys.delete(event.key as Keys);
+        if (this.isGameKey(event.key)) {
+            event.preventDefault();
+            this.pressedKeys.delete(event.key);
+        }
     };
+
+    private onVisibilityChange = (): void => {
+        if (document.visibilityState === "hidden") {
+            this.clearPressedKeys();
+        }
+    };
+
+    private clearPressedKeys = (): void => {
+        this.pressedKeys.clear();
+    };
+
+    private isGameKey(key: string): key is Keys {
+        return Object.values(Keys).includes(key as Keys);
+    }
 }

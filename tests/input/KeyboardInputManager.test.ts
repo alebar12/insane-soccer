@@ -14,11 +14,37 @@ describe("KeyboardInputManager", () => {
     });
 
     it("should track keys pressed and released through document events", () => {
-        document.dispatchEvent(new KeyboardEvent("keydown", { key: Keys.ARROW_UP }));
+        const keyDownEvent = new KeyboardEvent("keydown", {
+            key: Keys.ARROW_UP,
+            cancelable: true,
+        });
+        document.dispatchEvent(keyDownEvent);
         expect(keyboardInputManager.isKeyPressed(Keys.ARROW_UP)).toBe(true);
+        expect(keyDownEvent.defaultPrevented).toBe(true);
 
-        document.dispatchEvent(new KeyboardEvent("keyup", { key: Keys.ARROW_UP }));
+        const keyUpEvent = new KeyboardEvent("keyup", {
+            key: Keys.ARROW_UP,
+            cancelable: true,
+        });
+        document.dispatchEvent(keyUpEvent);
         expect(keyboardInputManager.isKeyPressed(Keys.ARROW_UP)).toBe(false);
+        expect(keyUpEvent.defaultPrevented).toBe(true);
+    });
+
+    it("should ignore unsupported keys without preventing their default behavior", () => {
+        const event = new KeyboardEvent("keydown", { key: "a", cancelable: true });
+
+        document.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(false);
+        expect(keyboardInputManager.isKeyPressed("a" as Keys)).toBe(false);
+    });
+
+    it("should clear held keys when the window loses focus", () => {
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: Keys.ARROW_LEFT }));
+        window.dispatchEvent(new Event("blur"));
+
+        expect(keyboardInputManager.isKeyPressed(Keys.ARROW_LEFT)).toBe(false);
     });
 
     describe("getDirectionPressed", () => {

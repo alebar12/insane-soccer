@@ -152,6 +152,15 @@ describe("GameLoop", () => {
                 }
             },
         );
+
+        it("should cap a delayed animation frame delta", () => {
+            gameLoop.main();
+            rafCallback(16);
+            rafCallback(1016);
+
+            expect(gameWorld.update).toHaveBeenCalledWith(100);
+            expect(mainSystem.update).toHaveBeenCalledWith(gameWorld, 100);
+        });
     });
 
     describe("set and show history", () => {

@@ -37,6 +37,7 @@ export class GatesRender implements RenderInterface {
             this.gameConfigs.fieldHeight + this.gameConfigs.fieldBorderSize / 2,
         );
         this.gameContext.rotate(angle);
+        this.gameContext.beginPath();
         this.gameContext.rect(
             -this.gameConfigs.fieldBorderSize / 2,
             -this.gameConfigs.fieldBorderSize / 2,
@@ -45,6 +46,7 @@ export class GatesRender implements RenderInterface {
         );
         this.gameContext.fill();
         this.gameContext.stroke();
+        this.gameContext.closePath();
         this.gameContext.restore();
     }
 }

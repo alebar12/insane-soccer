@@ -219,6 +219,7 @@ describe("GatesRender", () => {
 
         expect(context.rotate).toHaveBeenNthCalledWith(1, angle);
         expect(context.rotate).toHaveBeenNthCalledWith(2, Math.PI - angle);
+        expect(context.beginPath).toHaveBeenCalledTimes(2);
         expect(context.rect).toHaveBeenCalledTimes(2);
     });
 });
@@ -338,6 +339,34 @@ describe("PlayerPowerShotRender", () => {
         expect(context.drawImage).toHaveBeenCalledOnce();
         expect(context.createRadialGradient).toHaveBeenCalledOnce();
         expect(context.stroke).toHaveBeenCalledTimes((electricPowerShot.lightningBoltSize - 1) * 3);
+    });
+
+    it("should select fire sprites using column then row coordinates", () => {
+        const context = createContext();
+        const image = { width: 80, height: 80 } as HTMLImageElement;
+        const firePowerShot = new FirePowerShot(gameConfigs);
+        firePowerShot.flames.push(new FlameDto(new Point(20, 30), 1));
+        const gameWorld = {
+            players: [
+                {
+                    powerShotWrapper: { powerShotEntities: [firePowerShot] },
+                },
+            ],
+        } as unknown as GameWorld;
+
+        new PlayerPowerShotRender(context, createAssetLoader(image), gameConfigs).render(gameWorld);
+
+        expect(context.drawImage).toHaveBeenCalledWith(
+            image,
+            20,
+            0,
+            20,
+            20,
+            expect.any(Number),
+            expect.any(Number),
+            expect.any(Number),
+            expect.any(Number),
+        );
     });
 
     it("should render white inner strokes when electric lightning is visible", () => {

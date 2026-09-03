@@ -56,48 +56,14 @@ body
 	z-index: 0;
 }
 
-#playerCanvas
+#gameCanvas
 {
 	z-index: 1;
 }
 
-#effectsCanvas
-{
-	z-index: 2;
-}
-
 #menuCanvas
 {
-	z-index: 3;
-}
-
-#formDiv
-{
-	z-index: 4;
-	/*border: 2px solid red;*/
-	position:absolute;
-	font-family: "zorque" ,Serif,Georgia;
-	font-size:30px;
-	color: white;
-	display: none;
-	width: 100%;
-}
-
-#goalForm
-{
-	position: absolute;
-    top: 40%;
-	left: 0;
-	right: 0;
-	margin: auto;
-}
-
-input{ 
-    text-align:right; 
-}
-
-button{
-	font-family: "zorque" ,Serif,Georgia;
+	z-index: 2;
 }
 
 #loadingDiv
@@ -124,12 +90,6 @@ button{
     height: 80px;
 }
 
-#logDiv
-{
-	display:none;
-	color: white;
-}
-
 a:link {
     color: #FFFF00;
 }
@@ -144,14 +104,6 @@ a:hover {
 
 a:active {
     color: #FFFF00;
-}
-
-#indiedbImage
-{
-	/*margin: auto;*/
-   	vertical-align: middle;
-   	/*display: inline-block;*/
-    height: 20px;
 }
 
 .fade-element {

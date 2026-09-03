@@ -25,9 +25,6 @@ export class PositionStatusMachine {
         }
 
         const positionToReach = this.positionStatuses[this.index];
-        if (positionToReach === undefined) {
-            return;
-        }
         this.player.currentMaxSpeed = positionToReach.speedToSet;
         this.player.destinationPosition = new MovementPoint(
             positionToReach.point,

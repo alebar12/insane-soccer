@@ -1,21 +1,21 @@
-type Layer = {
+export type InferenceLayer = {
     weights: number[][];
     biases: number[];
     activation: "relu" | "tanh" | "sigmoid" | "linear";
 };
 
-type Model = {
-    layers: Layer[];
+export type InferenceModel = {
+    layers: InferenceLayer[];
     nvec: number[];
 };
 
 import modelData from "@/ai/weights.json";
 
 export class InferenceWrapper {
-    private model: Model;
+    private readonly model: InferenceModel;
 
-    public constructor() {
-        this.model = modelData as unknown as Model;
+    public constructor(model: InferenceModel = modelData as unknown as InferenceModel) {
+        this.model = model;
     }
 
     public predict(obs: number[]): number[] {

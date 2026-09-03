@@ -3,14 +3,19 @@ import { ElectricPowerShot } from "@/game/entities/powerShots/ElectricPowerShot"
 import { PowerShotWrapper } from "@/game/entities/powerShots/PowerShotWrapper";
 import { PlayerStatus } from "@/game/enums/PlayerStatus";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("ElectricPowerShot", () => {
     const gameConfigs = new GameConfigs(600, 800);
     let electricPowerShot: ElectricPowerShot;
 
     beforeEach(() => {
+        vi.spyOn(Math, "random").mockReturnValue(0.25);
         electricPowerShot = new ElectricPowerShot(gameConfigs);
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it("should create electric power shot", () => {
@@ -26,6 +31,9 @@ describe("ElectricPowerShot", () => {
         expect(electricPowerShot.angleOffset).toBeGreaterThan(0);
         expect(electricPowerShot.whiteLineVisible).toBe(false);
         expect(spliceSpy).toHaveBeenCalledOnce();
+        expect(electricPowerShot.lightningBoltPointArray[0].y).toBe(
+            Math.round(electricPowerShot.height * 0.25) - electricPowerShot.height / 2,
+        );
 
         spliceSpy.mockClear();
         electricPowerShot.update(10);

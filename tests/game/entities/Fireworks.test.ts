@@ -8,6 +8,7 @@ describe("Fireworks", () => {
     let fireworks: Fireworks;
 
     beforeEach(() => {
+        vi.spyOn(Math, "random").mockReturnValue(0.5);
         gameConfigs = new GameConfigs(600, 800);
         fireworks = new Fireworks(gameConfigs);
     });

@@ -46,13 +46,18 @@ The CPU opponent it's a **neural network policy trained with reinforcement learn
 
 ### Retraining the AI
 
+Retraining requires the project's Node.js dependencies to be installed from the repository root, plus Python 3 and `pip`. On Unix-like systems:
+
 ```bash
+# From the repository root, after running npm ci
 cd learning
-pip install -r requirements.txt
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 python ReinforcementLearningMain.py
 ```
 
-Training resumes from `network.zip` if present, plays games live against the TypeScript engine, and periodically saves the updated policy to `network.json` / `network.zip`.
+The training process starts the TypeScript simulator through `npx ts-node`. It resumes from `network.zip` if present, plays games live against the TypeScript engine, and periodically saves the updated policy to `network.json` / `network.zip`.
 
 ## Tech Stack
 
@@ -67,14 +72,19 @@ Training resumes from `network.zip` if present, plays games live against the Typ
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or newer recommended) with `npm`
+- [Node.js](https://nodejs.org/) 22 with `npm` (the version used in CI)
 
 ### 1. Clone the repository
+
+```bash
+git clone https://github.com/alebar12/insane-soccer.git
+cd insane-soccer
+```
 
 ### 2. Install dependencies
 
 ```bash
-npm install
+npm ci
 ```
 
 ### 3. Start the development server
@@ -127,3 +137,21 @@ Serves the `dist/` folder locally so you can verify the production build before 
 | `npm run lint:fix` | ESLint auto-fix |
 | `npm run format` | Prettier format `src/**/*.ts` |
 | `npm run format:check` | Prettier format check |
+| `npm run test` | Run the Vitest test suite once |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests and generate a coverage report |
+| `npm run lintOnFile` | Write a JSON ESLint report to `dist/reports/` (used by CI) |
+
+## Testing
+
+Run the test suite before submitting changes:
+
+```bash
+npm run test
+```
+
+To keep tests running while you develop, use `npm run test:watch`. To generate the coverage report used by CI, run `npm run test:coverage`.
+
+## License
+
+This project is licensed under the [ISC License](LICENSE).

@@ -5,14 +5,19 @@ import { PlayerStatus } from "@/game/enums/PlayerStatus";
 import { MovementPoint } from "@/game/geometry/MovementPoint";
 import { Point } from "@/game/geometry/Point";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("FirePowerShot", () => {
     const gameConfigs = new GameConfigs(600, 800);
     let firePowerShot: FirePowerShot;
 
     beforeEach(() => {
+        vi.spyOn(Math, "random").mockReturnValue(0.5);
         firePowerShot = new FirePowerShot(gameConfigs);
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it("should update fire power shot", () => {
@@ -21,6 +26,7 @@ describe("FirePowerShot", () => {
         firePowerShot.update(10, createPlayer(0, true, PlayerStatus.NORMAL));
         expect(firePowerShot.flames).toHaveLength(1);
         expect(firePowerShot.flames[0].position).toEqual(new Point(0, 0));
+        expect(firePowerShot.flames[0].index).toBe(8);
         expect(firePowerShot.flames[0].getDurationFactor()).toBe(0);
         expect(firePowerShot.flames[0].isFinished()).toBe(false);
 

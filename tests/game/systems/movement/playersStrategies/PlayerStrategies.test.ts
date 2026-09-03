@@ -19,7 +19,7 @@ import { WinningPlayerStrategy } from "@/game/systems/movement/playersStrategies
 import { GameWorld } from "@/game/world/GameWorld";
 import { KeyboardInputManager } from "@/input/KeyboardInputManager";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const gameConfigs = new GameConfigs(600, 800);
 type TestPlayer = {
@@ -54,6 +54,14 @@ const world = (gameStatus: GameStatus): GameWorld =>
             isGoalBeforeSubstitution: (): boolean => false,
         },
     }) as unknown as GameWorld;
+
+beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+});
+
+afterEach(() => {
+    vi.restoreAllMocks();
+});
 
 describe("AiCpuStrategy", () => {
     it("should recognize eligible AI players and use the predicted actions", () => {
@@ -394,19 +402,23 @@ describe("SubstitutionTrainingStrategy", () => {
 
     it("should create and update a randomized training sequence", () => {
         const adjustSpeedToDestinationPoint = vi.fn();
+        let hasReachedDestination = true;
         const player = normalPlayer({
             isSubstitute: true,
             adjustSpeedToDestinationPoint,
-            reachedDestinationPosition: (): boolean => true,
+            reachedDestinationPosition: (): boolean => hasReachedDestination,
         });
         const strategy = new SubstitutionTrainingStrategy(gameConfigs);
+        vi.spyOn(Math, "random").mockReturnValue(0);
 
         for (let index = 0; index < 5; index++) {
             strategy.apply(player as never, world(GameStatus.PLAYING), 16);
         }
+        hasReachedDestination = false;
+        strategy.apply(player as never, world(GameStatus.PLAYING), 16);
 
         expect(player.destinationPosition).toBeInstanceOf(MovementPoint);
-        expect(adjustSpeedToDestinationPoint).toHaveBeenCalledTimes(5);
+        expect(adjustSpeedToDestinationPoint).toHaveBeenCalledTimes(6);
     });
 });
 

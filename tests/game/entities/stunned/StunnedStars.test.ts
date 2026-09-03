@@ -1,12 +1,17 @@
 import { StunnedStars } from "@/game/entities/stunned/StunnedStars";
 import { Point } from "@/game/geometry/Point";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("StunnedStars", () => {
     let stunnedStars: StunnedStars;
 
     beforeEach(() => {
+        vi.spyOn(Math, "random").mockReturnValue(0.25);
         stunnedStars = new StunnedStars();
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it("should create, move, update, and remove stars", () => {
@@ -17,6 +22,7 @@ describe("StunnedStars", () => {
         stunnedStars.update(1, new Point(0, 0));
         expect(stunnedStars.stars).toHaveLength(1);
         expect(stunnedStars.stars[0].position).toEqual(new Point(0, 0));
+        expect(stunnedStars.stars[0].direction).toBe(Math.PI / 2);
 
         const updateSpies = stunnedStars.stars.map(star => vi.spyOn(star, "update"));
         stunnedStars.update(300, new Point(0, 0));

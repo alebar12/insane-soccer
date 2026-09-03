@@ -1,6 +1,6 @@
 import { Keys, KeysDirection } from "@/game/enums/Keys";
 import { KeyboardInputManager } from "@/input/KeyboardInputManager";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("KeyboardInputManager", () => {
     let keyboardInputManager: KeyboardInputManager;
@@ -11,6 +11,7 @@ describe("KeyboardInputManager", () => {
 
     afterEach(() => {
         keyboardInputManager.dispose();
+        vi.restoreAllMocks();
     });
 
     it("should track keys pressed and released through document events", () => {
@@ -43,6 +44,14 @@ describe("KeyboardInputManager", () => {
     it("should clear held keys when the window loses focus", () => {
         document.dispatchEvent(new KeyboardEvent("keydown", { key: Keys.ARROW_LEFT }));
         window.dispatchEvent(new Event("blur"));
+
+        expect(keyboardInputManager.isKeyPressed(Keys.ARROW_LEFT)).toBe(false);
+    });
+
+    it("should clear held keys when the document becomes hidden", () => {
+        document.dispatchEvent(new KeyboardEvent("keydown", { key: Keys.ARROW_LEFT }));
+        vi.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
+        document.dispatchEvent(new Event("visibilitychange"));
 
         expect(keyboardInputManager.isKeyPressed(Keys.ARROW_LEFT)).toBe(false);
     });

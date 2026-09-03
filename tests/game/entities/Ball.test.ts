@@ -4,15 +4,20 @@ import { BallStatus } from "@/game/enums/BallStatus";
 import { PlayerSide } from "@/game/enums/PlayerSide";
 import { Point } from "@/game/geometry/Point";
 import { GameConfigs } from "@/utils/GameConfigs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("Ball", () => {
     let gameConfigs: GameConfigs;
     let ball: Ball;
 
     beforeEach(() => {
+        vi.spyOn(Math, "random").mockReturnValue(0.5);
         gameConfigs = new GameConfigs(600, 800);
         ball = new Ball(gameConfigs);
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     describe("setForStartGame", () => {

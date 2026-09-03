@@ -56,8 +56,8 @@ export class PlayerPowerShotRender implements RenderInterface {
             this.gameContext.globalAlpha = alpha;
             this.gameContext.drawImage(
                 this.flameImage,
-                this.cellWidth * rowIndex,
-                this.cellHeight * columnIndex,
+                this.cellWidth * columnIndex,
+                this.cellHeight * rowIndex,
                 this.cellWidth,
                 this.cellHeight,
                 Math.round(flame.position.x - size / 2),

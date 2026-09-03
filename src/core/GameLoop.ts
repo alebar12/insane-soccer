@@ -5,6 +5,7 @@ import { MainRender } from "@/rendering/MainRender";
 import { UIInteractionSystem } from "@/ui/UIInteractionSystem";
 
 export class GameLoop {
+    private readonly maxDeltaMs: number = 100;
     private prevTime: number = 0;
     private history: Array<string> = [];
     private historyIndex: number = 0;
@@ -24,7 +25,7 @@ export class GameLoop {
     public main(): void {
         const tick = (time: number): void => {
             if (this.prevTime !== 0) {
-                const delta = time - this.prevTime;
+                const delta = Math.min(Math.max(time - this.prevTime, 0), this.maxDeltaMs);
                 if (this.history.length > 0) {
                     this.updateStatusFromHistory();
                 } else {

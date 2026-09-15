@@ -308,8 +308,11 @@ describe("AttachedBallOppositePlayerCollisionStrategy", () => {
     });
 
     it("should be eligible only for an attached ball while playing", () => {
+        const gameStatusManager: { gameStatus: GameStatus } = {
+            gameStatus: GameStatus.PLAYING,
+        };
         const gameWorld = {
-            gameStatusManager: { gameStatus: GameStatus.PLAYING },
+            gameStatusManager,
             ball: { ballStatus: BallStatus.ATTACHED },
         } as unknown as GameWorld;
         const strategy = new AttachedBallOppositePlayerCollisionStrategy(gameConfigs);
@@ -320,7 +323,7 @@ describe("AttachedBallOppositePlayerCollisionStrategy", () => {
         expect(strategy.canBeApplied(gameWorld)).toBe(false);
 
         gameWorld.ball.ballStatus = BallStatus.ATTACHED;
-        gameWorld.gameStatusManager.gameStatus = GameStatus.MENU;
+        gameStatusManager.gameStatus = GameStatus.MENU;
         expect(strategy.canBeApplied(gameWorld)).toBe(false);
     });
 });

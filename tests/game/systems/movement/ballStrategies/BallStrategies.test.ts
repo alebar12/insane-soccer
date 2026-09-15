@@ -21,7 +21,7 @@ describe("BallAttachedStrategy", () => {
             ballStatus: BallStatus.ATTACHED,
             attachedPlayer: {
                 movementPosition: {
-                    position: new Point(10, 20),
+                    position: new Point(100, 100),
                     size: 5,
                     getSpeed: (): number => 0,
                 },
@@ -30,21 +30,21 @@ describe("BallAttachedStrategy", () => {
             angleWithPlayer: 0,
             movementPosition: { position: new Point(0, 0), size: 2 },
         };
-        const strategy = new BallAttachedStrategy();
+        const strategy = new BallAttachedStrategy(gameConfigs);
 
         expect(strategy.canBeApplied(ball as never, playingWorld)).toBe(true);
         strategy.apply(ball as never, playingWorld, 16);
 
-        expect(ball.movementPosition.position).toMatchObject({ x: 17, y: 20 });
+        expect(ball.movementPosition.position).toMatchObject({ x: 107, y: 100 });
     });
 
     it("should safely ignore an attached ball without a player and rotate around a moving player", () => {
-        const strategy = new BallAttachedStrategy();
+        const strategy = new BallAttachedStrategy(gameConfigs);
         const unattachedBall = { attachedPlayer: null };
         const ball = {
             attachedPlayer: {
                 movementPosition: {
-                    position: new Point(10, 20),
+                    position: new Point(100, 100),
                     size: 5,
                     getSpeed: (): number => 1,
                     getSpeedAngle: (): number => 0,
@@ -63,11 +63,11 @@ describe("BallAttachedStrategy", () => {
     });
 
     it("should snap to the player direction and normalize out-of-range angles", () => {
-        const strategy = new BallAttachedStrategy();
+        const strategy = new BallAttachedStrategy(gameConfigs);
         const ball = {
             attachedPlayer: {
                 movementPosition: {
-                    position: new Point(10, 20),
+                    position: new Point(100, 100),
                     size: 5,
                     getSpeed: (): number => 1,
                     getSpeedAngle: (): number => 0,
@@ -84,6 +84,38 @@ describe("BallAttachedStrategy", () => {
         expect(ball.angleWithPlayer).toBe(Math.PI);
         expect(internals.normalizeAngle(2 * Math.PI)).toBe(0);
         expect(internals.normalizeAngle(-2 * Math.PI)).toBe(0);
+    });
+
+    it("should recover from the border and rotate to the inward side of the player", () => {
+        const ballSize = 2;
+        const playerSize = 5;
+        const topLimit = gameConfigs.fieldBorderSize + ballSize;
+        const playerY = topLimit + playerSize + ballSize - 1;
+        const ball = {
+            attachedPlayer: {
+                movementPosition: {
+                    position: new Point(100, playerY),
+                    size: playerSize,
+                    getSpeed: (): number => 1,
+                    getSpeedAngle: (): number => Math.PI / 2,
+                },
+                normalMaxSpeed: 1,
+            },
+            angleWithPlayer: -Math.PI / 2,
+            movementPosition: {
+                position: new Point(100, playerY - playerSize - ballSize),
+                size: ballSize,
+            },
+        };
+        const strategy = new BallAttachedStrategy(gameConfigs);
+
+        for (let i = 0; i < 20; i++) {
+            strategy.apply(ball as never, playingWorld, 16);
+            expect(ball.movementPosition.position.y).toBeGreaterThanOrEqual(topLimit);
+        }
+
+        expect(ball.angleWithPlayer).toBeCloseTo(Math.PI / 2);
+        expect(ball.movementPosition.position.y).toBeGreaterThan(playerY);
     });
 });
 

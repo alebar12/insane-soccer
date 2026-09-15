@@ -40,7 +40,7 @@ export class MovementSystemFactory {
             [
                 new WaitingBallStrategy(),
                 new FreeBallStrategy(),
-                new BallAttachedStrategy(),
+                new BallAttachedStrategy(gameConfigs),
                 new BallAttachedWithKeyPressedStrategy(keyboardInputManager),
                 new MoveToGoalPowerShotStrategy(gameConfigs),
             ],

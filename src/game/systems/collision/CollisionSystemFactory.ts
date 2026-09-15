@@ -7,6 +7,7 @@ import { BallPlayerCollisionStrategy } from "./strategies/BallPlayerCollisionStr
 import { BouncingPowerShotCollisionStrategy } from "./strategies/BouncingPowerShotCollisionStrategy";
 import { PlayerBorderCollisionStrategy } from "./strategies/PlayerBorderCollisionStrategy";
 import { PlayerCollisionStrategy } from "./strategies/PlayerCollisionStrategy";
+import { AttachedBallOppositePlayerCollisionStrategy } from "./strategies/AttachedBallOppositePlayerCollisionStrategy";
 
 export class CollisionSystemFactory {
     public static create(gameConfigs: GameConfigs): CollisionSystem {
@@ -18,6 +19,7 @@ export class CollisionSystemFactory {
             new BallBorderCollisionStrategy(gameConfigs),
             new BallGoalStakesCollisionStrategy(gameConfigs),
             new BouncingPowerShotCollisionStrategy(gameConfigs),
+            new AttachedBallOppositePlayerCollisionStrategy(gameConfigs),
         ]);
     }
 }

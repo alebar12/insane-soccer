@@ -7,7 +7,6 @@ import { BallAttachedWithKeyPressedStrategy } from "./ballStrategies/BallAttache
 import { FreeBallStrategy } from "./ballStrategies/FreeBallStrategy";
 import { MoveToGoalPowerShotStrategy } from "./ballStrategies/MoveToGoalPowerShotStrategy";
 import { WaitingBallStrategy } from "./ballStrategies/WaitingBallStrategy";
-import { AiCpuStrategy } from "./playersStrategies/AiCpuStrategy";
 import { MenuStrategy } from "./playersStrategies/MenuStrategy";
 import { PlayerInputStrategy } from "./playersStrategies/PlayerInputStrategy";
 import { ScriptedCpuStrategy } from "./playersStrategies/ScriptedCpuStrategy";
@@ -17,6 +16,7 @@ import { SubstitutionBeforeSwitchStrategy } from "./playersStrategies/Substituti
 import { SubstitutionTrainingStrategy } from "./playersStrategies/SubstitutionTrainingStrategy";
 import { WaitingBallPlayerStrategy } from "./playersStrategies/WaitingBallPlayerStrategy";
 import { WinningPlayerStrategy } from "./playersStrategies/WinningPlayerStrategy";
+import { AiCpuStrategy } from "./playersStrategies/AiCpuStrategy";
 
 export class MovementSystemFactory {
     public static create(

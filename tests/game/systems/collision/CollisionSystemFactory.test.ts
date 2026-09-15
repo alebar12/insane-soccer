@@ -1,6 +1,7 @@
 import { CollisionSystem } from "@/game/systems/collision/CollisionSystem";
 import { CollisionSystemFactory } from "@/game/systems/collision/CollisionSystemFactory";
 import { AbstractCollisionStrategy } from "@/game/systems/collision/strategies/AbstractCollisionStrategy";
+import { AttachedBallOppositePlayerCollisionStrategy } from "@/game/systems/collision/strategies/AttachedBallOppositePlayerCollisionStrategy";
 import { BallBorderCollisionStrategy } from "@/game/systems/collision/strategies/BallBorderCollisionStrategy";
 import { BallGoalCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalCollisionStrategy";
 import { BallGoalStakesCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalStakesCollisionStrategy";
@@ -29,6 +30,7 @@ describe("CollisionSystemFactory", () => {
             BallBorderCollisionStrategy,
             BallGoalStakesCollisionStrategy,
             BouncingPowerShotCollisionStrategy,
+            AttachedBallOppositePlayerCollisionStrategy,
         ]);
     });
 });

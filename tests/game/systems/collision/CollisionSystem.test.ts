@@ -6,6 +6,7 @@ import { MovementPoint } from "@/game/geometry/MovementPoint";
 import { Point } from "@/game/geometry/Point";
 import { CollisionSystem } from "@/game/systems/collision/CollisionSystem";
 import { AbstractCollisionStrategy } from "@/game/systems/collision/strategies/AbstractCollisionStrategy";
+import { AttachedBallOppositePlayerCollisionStrategy } from "@/game/systems/collision/strategies/AttachedBallOppositePlayerCollisionStrategy";
 import { BallBorderCollisionStrategy } from "@/game/systems/collision/strategies/BallBorderCollisionStrategy";
 import { BallGoalCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalCollisionStrategy";
 import { BallGoalStakesCollisionStrategy } from "@/game/systems/collision/strategies/BallGoalStakesCollisionStrategy";
@@ -250,6 +251,77 @@ describe("BallPlayerCollisionStrategy", () => {
         } as unknown as GameWorld;
 
         expect(new BallPlayerCollisionStrategy(gameConfigs).canBeApplied(gameWorld)).toBe(true);
+    });
+});
+
+describe("AttachedBallOppositePlayerCollisionStrategy", () => {
+    it("should attach the ball to an active opposite player touching the ball", () => {
+        const playerWithBall = {
+            isSubstitute: false,
+            movementPosition: new MovementPoint(new Point(-15, 0), new Point(0, 0), 0, 5),
+        };
+        const oppositePlayer = {
+            isSubstitute: false,
+            movementPosition: new MovementPoint(new Point(1, 0), new Point(0, 0), 0, 5),
+        };
+        const attachToPlayer = vi.fn();
+        const gameWorld = {
+            gameStatusManager: { gameStatus: GameStatus.PLAYING },
+            players: [playerWithBall, oppositePlayer],
+            ball: {
+                ballStatus: BallStatus.ATTACHED,
+                attachedPlayer: playerWithBall,
+                movementPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 5),
+                attachToPlayer,
+            },
+        } as unknown as GameWorld;
+
+        new AttachedBallOppositePlayerCollisionStrategy(gameConfigs).apply(gameWorld);
+
+        expect(attachToPlayer).toHaveBeenCalledWith(oppositePlayer);
+    });
+
+    it("should not transfer the ball while the players are touching", () => {
+        const playerWithBall = {
+            isSubstitute: false,
+            movementPosition: new MovementPoint(new Point(-5, 0), new Point(0, 0), 0, 5),
+        };
+        const oppositePlayer = {
+            isSubstitute: false,
+            movementPosition: new MovementPoint(new Point(1, 0), new Point(0, 0), 0, 5),
+        };
+        const attachToPlayer = vi.fn();
+        const gameWorld = {
+            gameStatusManager: { gameStatus: GameStatus.PLAYING },
+            players: [playerWithBall, oppositePlayer],
+            ball: {
+                ballStatus: BallStatus.ATTACHED,
+                attachedPlayer: playerWithBall,
+                movementPosition: new MovementPoint(new Point(0, 0), new Point(0, 0), 0, 5),
+                attachToPlayer,
+            },
+        } as unknown as GameWorld;
+
+        new AttachedBallOppositePlayerCollisionStrategy(gameConfigs).apply(gameWorld);
+
+        expect(attachToPlayer).not.toHaveBeenCalled();
+    });
+
+    it("should be eligible only for an attached ball while playing", () => {
+        const gameWorld = {
+            gameStatusManager: { gameStatus: GameStatus.PLAYING },
+            ball: { ballStatus: BallStatus.ATTACHED },
+        } as unknown as GameWorld;
+        const strategy = new AttachedBallOppositePlayerCollisionStrategy(gameConfigs);
+
+        expect(strategy.canBeApplied(gameWorld)).toBe(true);
+
+        gameWorld.ball.ballStatus = BallStatus.FREE;
+        expect(strategy.canBeApplied(gameWorld)).toBe(false);
+
+        gameWorld.ball.ballStatus = BallStatus.ATTACHED;
+        gameWorld.gameStatusManager.gameStatus = GameStatus.MENU;
+        expect(strategy.canBeApplied(gameWorld)).toBe(false);
     });
 });
 
